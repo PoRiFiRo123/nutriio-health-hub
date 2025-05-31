@@ -1,19 +1,21 @@
 
 import React from 'react';
-import Header from '../components/Header';
 import HeroSection from '../components/HeroSection';
 import ProductCategories from '../components/ProductCategories';
 import FeaturedProducts from '../components/FeaturedProducts';
-import Footer from '../components/Footer';
+import Testimonials from '../components/Testimonials';
+import EducationalContent from '../components/EducationalContent';
+import AboutCompany from '../components/AboutCompany';
 
 const Index = () => {
   return (
     <div className="min-h-screen">
-      <Header />
       <HeroSection />
       <ProductCategories />
       <FeaturedProducts />
-      <Footer />
+      <Testimonials />
+      <EducationalContent />
+      <AboutCompany />
     </div>
   );
 };
