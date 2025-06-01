@@ -51,9 +51,11 @@ const Header = () => {
             </button>
             
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center text-gray-700 hover:text-orange-600 font-medium transition-colors">
-                Products
-                <ChevronDown className="w-4 h-4 ml-1" />
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center text-gray-700 hover:text-orange-600 font-medium transition-colors group">
+                  Products
+                  <ChevronDown className="w-4 h-4 ml-1 group-hover:rotate-180 transition-transform duration-200" />
+                </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-white shadow-lg border border-gray-200 rounded-lg p-2 min-w-[200px] z-50">
                 <DropdownMenuItem 
@@ -77,12 +79,12 @@ const Header = () => {
             <button onClick={() => navigate('/blog')} className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
               Blog
             </button>
-            <a href="#about" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
+            <button onClick={() => navigate('/about')} className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
               About
-            </a>
-            <a href="#contact" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
+            </button>
+            <button onClick={() => navigate('/contact')} className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
               Contact
-            </a>
+            </button>
           </nav>
 
           {/* Search Bar */}
@@ -156,20 +158,18 @@ const Header = () => {
             >
               Blog
             </button>
-            <a 
-              href="#about" 
-              onClick={() => setIsMobileMenuOpen(false)}
+            <button 
+              onClick={() => { navigate('/about'); setIsMobileMenuOpen(false); }}
               className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-orange-50 rounded"
             >
               About
-            </a>
-            <a 
-              href="#contact" 
-              onClick={() => setIsMobileMenuOpen(false)}
+            </button>
+            <button 
+              onClick={() => { navigate('/contact'); setIsMobileMenuOpen(false); }}
               className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-orange-50 rounded"
             >
               Contact
-            </a>
+            </button>
           </div>
         )}
       </div>

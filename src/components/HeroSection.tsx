@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ArrowRight, Shield, Leaf, Heart } from 'lucide-react';
 import {
   Carousel,
@@ -7,9 +7,12 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  CarouselApi,
 } from '@/components/ui/carousel';
 
 const HeroSection = () => {
+  const [api, setApi] = React.useState<CarouselApi>();
+
   const carouselImages = [
     {
       url: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=400&fit=crop",
@@ -27,6 +30,20 @@ const HeroSection = () => {
       subtitle: "Guilt-free indulgence"
     }
   ];
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    const autoPlay = () => {
+      api.scrollNext();
+    };
+
+    const interval = setInterval(autoPlay, 3000);
+
+    return () => clearInterval(interval);
+  }, [api]);
 
   return (
     <section className="relative bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 py-20 overflow-hidden">
@@ -86,7 +103,10 @@ const HeroSection = () => {
 
           {/* Hero Carousel */}
           <div className="relative">
-            <Carousel className="w-full max-w-lg mx-auto">
+            <Carousel setApi={setApi} className="w-full max-w-lg mx-auto" opts={{
+              align: "start",
+              loop: true,
+            }}>
               <CarouselContent>
                 {carouselImages.map((image, index) => (
                   <CarouselItem key={index}>
