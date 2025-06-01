@@ -39,13 +39,15 @@ const SearchHeader = ({ onSearch }: SearchHeaderProps) => {
     setIsSearching(true);
     try {
       const { data, error } = await supabase
-        .from('products' as any)
+        .from('products')
         .select('*')
         .or(`name.ilike.%${term}%,description.ilike.%${term}%`)
         .limit(5);
       
       if (error) throw error;
-      setSearchResults(data || []);
+      if (data && Array.isArray(data)) {
+        setSearchResults(data as Product[]);
+      }
       setShowResults(true);
     } catch (error) {
       console.error('Error searching products:', error);

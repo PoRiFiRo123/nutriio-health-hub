@@ -46,11 +46,13 @@ const Products = () => {
   const fetchProducts = async () => {
     try {
       const { data, error } = await supabase
-        .from('products' as any)
+        .from('products')
         .select('*');
       
       if (error) throw error;
-      setProducts(data || []);
+      if (data && Array.isArray(data)) {
+        setProducts(data as Product[]);
+      }
     } catch (error) {
       console.error('Error fetching products:', error);
     } finally {
@@ -61,11 +63,13 @@ const Products = () => {
   const fetchCategories = async () => {
     try {
       const { data, error } = await supabase
-        .from('categories' as any)
+        .from('categories')
         .select('*');
       
       if (error) throw error;
-      setCategories(data || []);
+      if (data && Array.isArray(data)) {
+        setCategories(data as Category[]);
+      }
     } catch (error) {
       console.error('Error fetching categories:', error);
     }

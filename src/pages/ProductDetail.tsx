@@ -44,23 +44,26 @@ const ProductDetail = () => {
   const fetchProduct = async (productSlug: string) => {
     try {
       const { data: productData, error: productError } = await supabase
-        .from('products' as any)
+        .from('products')
         .select('*')
         .eq('slug', productSlug)
         .single();
       
       if (productError) throw productError;
-      setProduct(productData);
+      if (productData && typeof productData === 'object' && 'id' in productData) {
+        const typedProduct = productData as Product;
+        setProduct(typedProduct);
 
-      if (productData?.category_id) {
-        const { data: categoryData, error: categoryError } = await supabase
-          .from('categories' as any)
-          .select('*')
-          .eq('id', productData.category_id)
-          .single();
-        
-        if (!categoryError) {
-          setCategory(categoryData);
+        if (typedProduct.category_id) {
+          const { data: categoryData, error: categoryError } = await supabase
+            .from('categories')
+            .select('*')
+            .eq('id', typedProduct.category_id)
+            .single();
+          
+          if (!categoryError && categoryData && typeof categoryData === 'object' && 'id' in categoryData) {
+            setCategory(categoryData as Category);
+          }
         }
       }
     } catch (error) {

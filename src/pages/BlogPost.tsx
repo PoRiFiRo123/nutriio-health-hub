@@ -31,13 +31,15 @@ const BlogPost = () => {
   const fetchBlogPost = async (postSlug: string) => {
     try {
       const { data, error } = await supabase
-        .from('blogs' as any)
+        .from('blogs')
         .select('*')
         .eq('slug', postSlug)
         .single();
       
       if (error) throw error;
-      setPost(data);
+      if (data && typeof data === 'object' && 'id' in data) {
+        setPost(data as BlogPost);
+      }
     } catch (error) {
       console.error('Error fetching blog post:', error);
     } finally {

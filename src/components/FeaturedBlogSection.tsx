@@ -29,14 +29,16 @@ const FeaturedBlogSection = () => {
   const fetchFeaturedPosts = async () => {
     try {
       const { data, error } = await supabase
-        .from('blogs' as any)
+        .from('blogs')
         .select('*')
         .eq('featured', true)
         .order('publish_date', { ascending: false })
         .limit(3);
       
       if (error) throw error;
-      setFeaturedPosts(data || []);
+      if (data && Array.isArray(data)) {
+        setFeaturedPosts(data as BlogPost[]);
+      }
     } catch (error) {
       console.error('Error fetching featured posts:', error);
     } finally {

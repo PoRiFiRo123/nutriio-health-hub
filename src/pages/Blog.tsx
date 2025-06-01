@@ -39,12 +39,14 @@ const Blog = () => {
   const fetchBlogPosts = async () => {
     try {
       const { data, error } = await supabase
-        .from('blogs' as any)
+        .from('blogs')
         .select('*')
         .order('publish_date', { ascending: false });
       
       if (error) throw error;
-      setPosts(data || []);
+      if (data && Array.isArray(data)) {
+        setPosts(data as BlogPost[]);
+      }
     } catch (error) {
       console.error('Error fetching blog posts:', error);
     } finally {
