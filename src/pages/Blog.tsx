@@ -39,7 +39,7 @@ const Blog = () => {
   const fetchBlogPosts = async () => {
     try {
       const { data, error } = await supabase
-        .from('blogs')
+        .from('blogs' as any)
         .select('*')
         .order('publish_date', { ascending: false });
       

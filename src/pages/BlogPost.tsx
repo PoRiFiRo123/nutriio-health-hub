@@ -31,7 +31,7 @@ const BlogPost = () => {
   const fetchBlogPost = async (postSlug: string) => {
     try {
       const { data, error } = await supabase
-        .from('blogs')
+        .from('blogs' as any)
         .select('*')
         .eq('slug', postSlug)
         .single();

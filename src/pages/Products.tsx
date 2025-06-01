@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Search, Filter, ShoppingCart, Heart } from 'lucide-react';
@@ -45,7 +46,7 @@ const Products = () => {
   const fetchProducts = async () => {
     try {
       const { data, error } = await supabase
-        .from('products')
+        .from('products' as any)
         .select('*');
       
       if (error) throw error;
@@ -60,7 +61,7 @@ const Products = () => {
   const fetchCategories = async () => {
     try {
       const { data, error } = await supabase
-        .from('categories')
+        .from('categories' as any)
         .select('*');
       
       if (error) throw error;
