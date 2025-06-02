@@ -1,8 +1,9 @@
 
 import React, { useState } from 'react';
-import { ShoppingCart, Search, Menu, X, ChevronDown } from 'lucide-react';
+import { ShoppingCart, Menu, X, ChevronDown } from 'lucide-react';
 import { useCart } from '@/hooks/useCart';
 import { useNavigate } from 'react-router-dom';
+import SearchHeader from './SearchHeader';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -50,31 +51,31 @@ const Header = () => {
               Home
             </button>
             
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="flex items-center text-gray-700 hover:text-orange-600 font-medium transition-colors group">
-                  Products
-                  <ChevronDown className="w-4 h-4 ml-1 group-hover:rotate-180 transition-transform duration-200" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white shadow-lg border border-gray-200 rounded-lg p-2 min-w-[200px] z-50">
-                <DropdownMenuItem 
+            <div className="relative group">
+              <button className="flex items-center text-gray-700 hover:text-orange-600 font-medium transition-colors group">
+                Products
+                <ChevronDown className="w-4 h-4 ml-1 group-hover:rotate-180 transition-transform duration-200" />
+              </button>
+              
+              {/* Hover Dropdown */}
+              <div className="absolute left-0 top-full mt-2 w-56 bg-white shadow-lg border border-gray-200 rounded-lg p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <button 
                   onClick={() => navigate('/products')}
-                  className="w-full text-left px-3 py-2 hover:bg-orange-50 rounded cursor-pointer"
+                  className="w-full text-left px-3 py-2 hover:bg-orange-50 rounded cursor-pointer text-gray-700 hover:text-orange-600 transition-colors"
                 >
                   All Products
-                </DropdownMenuItem>
+                </button>
                 {productCategories.map((category) => (
-                  <DropdownMenuItem 
+                  <button 
                     key={category}
                     onClick={() => handleCategoryClick(category)}
-                    className="w-full text-left px-3 py-2 hover:bg-orange-50 rounded cursor-pointer"
+                    className="w-full text-left px-3 py-2 hover:bg-orange-50 rounded cursor-pointer text-gray-700 hover:text-orange-600 transition-colors"
                   >
                     {category}
-                  </DropdownMenuItem>
+                  </button>
                 ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+              </div>
+            </div>
 
             <button onClick={() => navigate('/blog')} className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
               Blog
@@ -88,13 +89,8 @@ const Header = () => {
           </nav>
 
           {/* Search Bar */}
-          <div className="hidden lg:flex items-center bg-gray-100 rounded-full px-4 py-2 w-80">
-            <Search className="w-4 h-4 text-gray-500 mr-2" />
-            <input 
-              type="text" 
-              placeholder="Search for healthy products..." 
-              className="bg-transparent outline-none flex-1 text-sm"
-            />
+          <div className="hidden lg:block">
+            <SearchHeader />
           </div>
 
           {/* Action Icons */}
@@ -119,6 +115,11 @@ const Header = () => {
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
+        </div>
+
+        {/* Mobile Search Bar */}
+        <div className="lg:hidden py-2">
+          <SearchHeader />
         </div>
 
         {/* Mobile Menu */}

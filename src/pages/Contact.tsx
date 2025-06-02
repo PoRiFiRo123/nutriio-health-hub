@@ -196,6 +196,30 @@ const Contact = () => {
           </div>
         </div>
       </section>
+
+      {/* Google Maps Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Find Us</h2>
+            <p className="text-gray-600">Visit our office or reach out to us digitally</p>
+          </div>
+          
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3772.3867894931236!2d72.8260377!3d19.0175781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7cf26f5b4b2af%3A0x18bb4e1a8c8e2c5!2sHealth%20Street%2C%20Mumbai%2C%20Maharashtra%20400001%2C%20India!5e0!3m2!1sen!2sus!4v1234567890"
+              width="100%"
+              height="400"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Nutriio Office Location"
+              className="w-full h-96 md:h-[400px]"
+            />
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
