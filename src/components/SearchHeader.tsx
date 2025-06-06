@@ -70,7 +70,7 @@ const SearchHeader = ({ onSearch }: SearchHeaderProps) => {
   };
 
   return (
-    <div className="relative flex-1 max-w-md mx-4">
+    <div className="relative flex-1 max-w-xs sm:max-w-md mx-2 sm:mx-4">
       <div className="relative">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
         <Input
@@ -78,7 +78,7 @@ const SearchHeader = ({ onSearch }: SearchHeaderProps) => {
           placeholder="Search products..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10 pr-10"
+          className="pl-10 pr-10 h-9 sm:h-10 text-sm"
           onFocus={() => searchTerm.length > 2 && setShowResults(true)}
         />
         {searchTerm && (
@@ -95,22 +95,22 @@ const SearchHeader = ({ onSearch }: SearchHeaderProps) => {
         <Card className="absolute top-full left-0 right-0 mt-2 shadow-lg z-50 max-h-80 overflow-y-auto">
           <CardContent className="p-0">
             {isSearching ? (
-              <div className="p-4 text-center text-gray-500">Searching...</div>
+              <div className="p-4 text-center text-gray-500 text-sm">Searching...</div>
             ) : searchResults.length > 0 ? (
               <div className="divide-y">
                 {searchResults.map((product) => (
                   <div
                     key={product.id}
-                    className="p-4 hover:bg-gray-50 cursor-pointer flex items-center gap-3"
+                    className="p-3 sm:p-4 hover:bg-gray-50 cursor-pointer flex items-center gap-3"
                     onClick={() => handleProductClick(product.slug)}
                   >
                     <img
                       src={product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100"}
                       alt={product.name}
-                      className="w-12 h-12 object-cover rounded"
+                      className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded"
                     />
-                    <div className="flex-1">
-                      <h4 className="font-medium text-sm">{product.name}</h4>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-medium text-sm truncate">{product.name}</h4>
                       <p className="text-xs text-gray-500 line-clamp-1">{product.description}</p>
                       <p className="text-sm font-semibold text-green-600">₹{product.price}</p>
                     </div>
@@ -129,7 +129,7 @@ const SearchHeader = ({ onSearch }: SearchHeaderProps) => {
                 </div>
               </div>
             ) : (
-              <div className="p-4 text-center text-gray-500">
+              <div className="p-4 text-center text-gray-500 text-sm">
                 No products found for "{searchTerm}"
               </div>
             )}

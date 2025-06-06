@@ -4,12 +4,6 @@ import { ShoppingCart, Menu, X, ChevronDown } from 'lucide-react';
 import { useCart } from '@/hooks/useCart';
 import { useNavigate } from 'react-router-dom';
 import SearchHeader from './SearchHeader';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 
 const Header = () => {
   const { totalItems } = useCart();
@@ -34,19 +28,19 @@ const Header = () => {
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate('/')}>
-            <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-amber-600 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl">N</span>
+          <div className="flex items-center space-x-2 cursor-pointer flex-shrink-0" onClick={() => navigate('/')}>
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-orange-500 to-amber-600 rounded-full flex items-center justify-center">
+              <span className="text-white font-bold text-lg sm:text-xl">N</span>
             </div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+            <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
               Nutriio
             </h1>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
             <button onClick={() => navigate('/')} className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
               Home
             </button>
@@ -88,13 +82,13 @@ const Header = () => {
             </button>
           </nav>
 
-          {/* Search Bar */}
-          <div className="hidden lg:block">
+          {/* Search Bar - Desktop */}
+          <div className="hidden sm:block flex-1 max-w-sm mx-4">
             <SearchHeader />
           </div>
 
           {/* Action Icons */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4">
             <button 
               onClick={() => navigate('/cart')}
               className="p-2 hover:bg-orange-50 rounded-full transition-colors relative"
@@ -118,7 +112,7 @@ const Header = () => {
         </div>
 
         {/* Mobile Search Bar */}
-        <div className="lg:hidden py-2">
+        <div className="sm:hidden py-2 border-t border-gray-100">
           <SearchHeader />
         </div>
 

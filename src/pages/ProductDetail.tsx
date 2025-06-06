@@ -116,17 +116,17 @@ const ProductDetail = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-6 sm:py-8">
         <Button 
           variant="ghost" 
           onClick={() => navigate('/products')}
-          className="mb-6"
+          className="mb-4 sm:mb-6"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Products
         </Button>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
           {/* Product Image */}
           <div className="space-y-4">
             <div className="aspect-square overflow-hidden rounded-lg bg-white">
@@ -139,17 +139,17 @@ const ProductDetail = () => {
           </div>
 
           {/* Product Details */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div>
               {category && (
                 <p className="text-green-600 font-medium mb-2">{category.name}</p>
               )}
-              <h1 className="text-3xl font-bold text-gray-900 mb-4">
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
                 {product.name}
               </h1>
               
               {product.rating && (
-                <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center gap-2 mb-3 sm:mb-4">
                   <div className="flex">
                     {renderStars(product.rating)}
                   </div>
@@ -157,18 +157,18 @@ const ProductDetail = () => {
                 </div>
               )}
 
-              <div className="text-3xl font-bold text-green-600 mb-6">
+              <div className="text-2xl sm:text-3xl font-bold text-green-600 mb-4 sm:mb-6">
                 ₹{product.price}
               </div>
 
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base leading-relaxed">
                 {product.description}
               </p>
             </div>
 
             {/* Quantity Selector */}
-            <div className="flex items-center gap-4 mb-6">
-              <span className="font-medium">Quantity:</span>
+            <div className="flex items-center gap-4 mb-4 sm:mb-6">
+              <span className="font-medium text-sm sm:text-base">Quantity:</span>
               <div className="flex items-center border border-gray-300 rounded-md">
                 <Button
                   variant="ghost"
@@ -178,7 +178,7 @@ const ProductDetail = () => {
                 >
                   <Minus className="w-4 h-4" />
                 </Button>
-                <span className="px-4 py-1 border-x border-gray-300 min-w-[3rem] text-center">
+                <span className="px-3 sm:px-4 py-1 border-x border-gray-300 min-w-[2.5rem] sm:min-w-[3rem] text-center text-sm sm:text-base">
                   {quantity}
                 </span>
                 <Button
@@ -193,16 +193,16 @@ const ProductDetail = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-4">
+            <div className="flex gap-3 sm:gap-4">
               <Button
                 onClick={handleAddToCart}
                 disabled={!product.in_stock}
-                className="flex-1 bg-green-600 hover:bg-green-700"
+                className="flex-1 bg-green-600 hover:bg-green-700 h-10 sm:h-11 text-sm sm:text-base"
               >
                 <ShoppingCart className="w-4 h-4 mr-2" />
                 {product.in_stock ? 'Add to Cart' : 'Out of Stock'}
               </Button>
-              <Button variant="outline" size="icon">
+              <Button variant="outline" size="icon" className="h-10 w-10 sm:h-11 sm:w-11">
                 <Heart className="w-4 h-4" />
               </Button>
             </div>
@@ -223,10 +223,10 @@ const ProductDetail = () => {
 
         {/* Detailed Description */}
         {product.detailed_description && (
-          <Card className="mt-12">
-            <CardContent className="p-8">
-              <h2 className="text-2xl font-bold mb-6">Product Details</h2>
-              <div className="prose max-w-none">
+          <Card className="mt-8 sm:mt-12">
+            <CardContent className="p-4 sm:p-6 lg:p-8">
+              <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Product Details</h2>
+              <div className="prose max-w-none text-sm sm:text-base">
                 <div dangerouslySetInnerHTML={{ __html: product.detailed_description }} />
               </div>
             </CardContent>
