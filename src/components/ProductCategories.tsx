@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +11,7 @@ const ProductCategories = () => {
       name: "SuperFoods",
       description: "Nutrient-dense foods packed with vitamins and minerals",
       image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop",
-      color: "from-purple-500 to-pink-500",
+      color: "from-orange-500 to-amber-500",
       products: "25+ Products"
     },
     {
@@ -28,7 +27,7 @@ const ProductCategories = () => {
       name: "Ready to Cook",
       description: "Convenient, healthy meal solutions for busy families",
       image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=300&h=200&fit=crop",
-      color: "from-green-500 to-emerald-500",
+      color: "from-orange-600 to-amber-600",
       products: "18+ Items"
     },
     {
@@ -36,7 +35,7 @@ const ProductCategories = () => {
       name: "Healthy Snacks",
       description: "Guilt-free snacking options for every craving",
       image: "https://images.unsplash.com/photo-1599909533026-128f7ad90043?w=300&h=200&fit=crop",
-      color: "from-blue-500 to-cyan-500",
+      color: "from-amber-600 to-orange-600",
       products: "30+ Options"
     },
     {
@@ -44,7 +43,7 @@ const ProductCategories = () => {
       name: "Organic Oils",
       description: "Cold-pressed, unrefined oils for cooking and wellness",
       image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=300&h=200&fit=crop",
-      color: "from-yellow-500 to-amber-500",
+      color: "from-orange-500 to-amber-500",
       products: "8+ Varieties"
     },
     {
@@ -52,7 +51,7 @@ const ProductCategories = () => {
       name: "Natural Salts & Jaggery",
       description: "Unprocessed, mineral-rich sweeteners and salts",
       image: "https://images.unsplash.com/photo-1471943311424-646960669fbc?w=300&h=200&fit=crop",
-      color: "from-red-500 to-pink-500",
+      color: "from-amber-500 to-orange-500",
       products: "15+ Types"
     }
   ];
@@ -68,7 +67,7 @@ const ProductCategories = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
             Explore Our
-            <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"> Categories</span>
+            <span className="bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent"> Categories</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             From superfoods to ready-to-cook meals, discover products crafted for your family's health and happiness
@@ -100,21 +99,21 @@ const ProductCategories = () => {
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
+                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">
                   {category.name}
                 </h3>
                 <p className="text-gray-600 mb-4 leading-relaxed">
                   {category.description}
                 </p>
                 
-                <div className="flex items-center text-green-600 font-semibold hover:text-green-700 transition-colors group">
+                <div className="flex items-center text-orange-600 font-semibold hover:text-orange-700 transition-colors group">
                   Explore Category
                   <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
 
               {/* Hover Effect Border */}
-              <div className="absolute inset-0 border-2 border-transparent group-hover:border-green-200 rounded-2xl transition-colors duration-500"></div>
+              <div className="absolute inset-0 border-2 border-transparent group-hover:border-orange-200 rounded-2xl transition-colors duration-500"></div>
             </div>
           ))}
         </div>
@@ -123,7 +122,7 @@ const ProductCategories = () => {
         <div className="text-center mt-16">
           <button 
             onClick={() => navigate('/products')}
-            className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
+            className="bg-gradient-to-r from-orange-600 to-amber-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
           >
             View All Products
           </button>

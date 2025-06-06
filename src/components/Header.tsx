@@ -16,8 +16,7 @@ const Header = () => {
     'Ready to Cook',
     'Healthy Snacks',
     'Organic Oils',
-    'Natural Salts',
-    'Jaggery'
+    'Natural Salts & Jaggery'
   ];
 
   const handleCategoryClick = (category: string) => {
@@ -27,6 +26,7 @@ const Header = () => {
 
   const handleProductsClick = () => {
     navigate('/products');
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -59,10 +59,10 @@ const Header = () => {
               </button>
               
               {/* Hover Dropdown */}
-              <div className="absolute left-0 top-full mt-2 w-56 bg-white shadow-lg border border-gray-200 rounded-lg p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div className="absolute left-0 top-full mt-2 w-56 bg-white shadow-xl border border-gray-200 rounded-lg p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 <button 
                   onClick={() => navigate('/products')}
-                  className="w-full text-left px-3 py-2 hover:bg-orange-50 rounded cursor-pointer text-gray-700 hover:text-orange-600 transition-colors"
+                  className="w-full text-left px-3 py-2 hover:bg-orange-50 rounded cursor-pointer text-gray-700 hover:text-orange-600 transition-colors font-medium"
                 >
                   All Products
                 </button>
@@ -128,7 +128,7 @@ const Header = () => {
           <div className="md:hidden border-t border-gray-200 py-4 space-y-2">
             <button 
               onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }}
-              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-orange-50 rounded"
+              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded transition-colors"
             >
               Home
             </button>
@@ -137,7 +137,7 @@ const Header = () => {
               <div className="text-gray-700 font-medium py-2">
                 <button 
                   onClick={() => { navigate('/products'); setIsMobileMenuOpen(false); }}
-                  className="w-full text-left"
+                  className="w-full text-left hover:text-orange-600 transition-colors"
                 >
                   Products
                 </button>
@@ -145,7 +145,7 @@ const Header = () => {
               <div className="pl-4 space-y-1">
                 <button 
                   onClick={() => { navigate('/products'); setIsMobileMenuOpen(false); }}
-                  className="block w-full text-left py-1 text-sm text-gray-600 hover:text-orange-600"
+                  className="block w-full text-left py-1 text-sm text-gray-600 hover:text-orange-600 transition-colors"
                 >
                   All Products
                 </button>
@@ -153,7 +153,7 @@ const Header = () => {
                   <button 
                     key={category}
                     onClick={() => handleCategoryClick(category)}
-                    className="block w-full text-left py-1 text-sm text-gray-600 hover:text-orange-600"
+                    className="block w-full text-left py-1 text-sm text-gray-600 hover:text-orange-600 transition-colors"
                   >
                     {category}
                   </button>
@@ -163,19 +163,19 @@ const Header = () => {
 
             <button 
               onClick={() => { navigate('/blog'); setIsMobileMenuOpen(false); }}
-              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-orange-50 rounded"
+              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded transition-colors"
             >
               Blog
             </button>
             <button 
               onClick={() => { navigate('/about'); setIsMobileMenuOpen(false); }}
-              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-orange-50 rounded"
+              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded transition-colors"
             >
               About
             </button>
             <button 
               onClick={() => { navigate('/contact'); setIsMobileMenuOpen(false); }}
-              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-orange-50 rounded"
+              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded transition-colors"
             >
               Contact
             </button>

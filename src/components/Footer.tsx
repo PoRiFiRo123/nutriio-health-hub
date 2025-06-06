@@ -1,8 +1,24 @@
 
 import React from 'react';
 import { Leaf, Mail, Phone, MapPin, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Footer = () => {
+  const navigate = useNavigate();
+
+  const productCategories = [
+    'SuperFoods',
+    'Sprouted Flour', 
+    'Ready to Cook',
+    'Healthy Snacks',
+    'Organic Oils',
+    'Natural Salts & Jaggery'
+  ];
+
+  const handleCategoryClick = (category: string) => {
+    navigate(`/products?category=${encodeURIComponent(category)}`);
+  };
+
   return (
     <footer className="bg-gray-900 text-white w-full">
       <div className="w-full px-4 py-12">
@@ -10,7 +26,7 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Company Info */}
             <div className="space-y-4">
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate('/')}>
                 <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-amber-600 rounded-full flex items-center justify-center">
                   <Leaf className="w-5 h-5 text-white" />
                 </div>
@@ -29,31 +45,71 @@ const Footer = () => {
 
             {/* Quick Links */}
             <div className="space-y-4">
-              <h4 className="text-lg font-semibold">Quick Links</h4>
+              <h4 className="text-lg font-semibold text-orange-400">Quick Links</h4>
               <ul className="space-y-2">
-                <li><a href="/" className="text-gray-300 hover:text-orange-500 transition-colors">Home</a></li>
-                <li><a href="/products" className="text-gray-300 hover:text-orange-500 transition-colors">Products</a></li>
-                <li><a href="/blog" className="text-gray-300 hover:text-orange-500 transition-colors">Blog</a></li>
-                <li><a href="/about" className="text-gray-300 hover:text-orange-500 transition-colors">About Us</a></li>
-                <li><a href="/contact" className="text-gray-300 hover:text-orange-500 transition-colors">Contact</a></li>
+                <li>
+                  <button 
+                    onClick={() => navigate('/')} 
+                    className="text-gray-300 hover:text-orange-500 transition-colors text-left"
+                  >
+                    Home
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    onClick={() => navigate('/products')} 
+                    className="text-gray-300 hover:text-orange-500 transition-colors text-left"
+                  >
+                    Products
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    onClick={() => navigate('/blog')} 
+                    className="text-gray-300 hover:text-orange-500 transition-colors text-left"
+                  >
+                    Blog
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    onClick={() => navigate('/about')} 
+                    className="text-gray-300 hover:text-orange-500 transition-colors text-left"
+                  >
+                    About Us
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    onClick={() => navigate('/contact')} 
+                    className="text-gray-300 hover:text-orange-500 transition-colors text-left"
+                  >
+                    Contact
+                  </button>
+                </li>
               </ul>
             </div>
 
             {/* Categories */}
             <div className="space-y-4">
-              <h4 className="text-lg font-semibold">Categories</h4>
+              <h4 className="text-lg font-semibold text-orange-400">Categories</h4>
               <ul className="space-y-2">
-                <li><a href="/products?category=SuperFoods" className="text-gray-300 hover:text-orange-500 transition-colors">SuperFoods</a></li>
-                <li><a href="/products?category=Sprouted%20Flour" className="text-gray-300 hover:text-orange-500 transition-colors">Sprouted Flour</a></li>
-                <li><a href="/products?category=Ready%20to%20Cook" className="text-gray-300 hover:text-orange-500 transition-colors">Ready to Cook</a></li>
-                <li><a href="/products?category=Healthy%20Snacks" className="text-gray-300 hover:text-orange-500 transition-colors">Healthy Snacks</a></li>
-                <li><a href="/products?category=Organic%20Oils" className="text-gray-300 hover:text-orange-500 transition-colors">Organic Oils</a></li>
+                {productCategories.map((category) => (
+                  <li key={category}>
+                    <button 
+                      onClick={() => handleCategoryClick(category)}
+                      className="text-gray-300 hover:text-orange-500 transition-colors text-left"
+                    >
+                      {category}
+                    </button>
+                  </li>
+                ))}
               </ul>
             </div>
 
             {/* Contact Info */}
             <div className="space-y-4">
-              <h4 className="text-lg font-semibold">Contact Info</h4>
+              <h4 className="text-lg font-semibold text-orange-400">Contact Info</h4>
               <div className="space-y-3">
                 <div className="flex items-start space-x-3">
                   <MapPin className="w-5 h-5 text-orange-500 mt-0.5" />
@@ -80,9 +136,15 @@ const Footer = () => {
               © 2024 Nutriio. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-gray-400 hover:text-orange-500 text-sm transition-colors">Privacy Policy</a>
-              <a href="#" className="text-gray-400 hover:text-orange-500 text-sm transition-colors">Terms of Service</a>
-              <a href="#" className="text-gray-400 hover:text-orange-500 text-sm transition-colors">Return Policy</a>
+              <button className="text-gray-400 hover:text-orange-500 text-sm transition-colors">
+                Privacy Policy
+              </button>
+              <button className="text-gray-400 hover:text-orange-500 text-sm transition-colors">
+                Terms of Service
+              </button>
+              <button className="text-gray-400 hover:text-orange-500 text-sm transition-colors">
+                Return Policy
+              </button>
             </div>
           </div>
         </div>
