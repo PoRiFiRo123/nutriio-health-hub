@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Search, Filter, ShoppingCart, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -17,6 +18,7 @@ interface Product {
   rating: number;
   stock: number;
   in_stock: boolean;
+  slug: string;
 }
 
 interface Category {
@@ -25,11 +27,13 @@ interface Category {
 }
 
 const Products = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '');
+  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'all');
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const [loading, setLoading] = useState(true);
   const { addItem } = useCart();
@@ -86,7 +90,10 @@ const Products = () => {
     }
 
     if (selectedCategory !== 'all') {
-      filtered = filtered.filter(product => product.category_id === selectedCategory);
+      const category = categories.find(cat => cat.name === selectedCategory);
+      if (category) {
+        filtered = filtered.filter(product => product.category_id === category.id);
+      }
     }
 
     filtered = filtered.filter(product => 
@@ -103,6 +110,10 @@ const Products = () => {
       price: product.price,
       image: product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"
     });
+  };
+
+  const handleProductClick = (slug: string) => {
+    navigate(`/products/${slug}`);
   };
 
   const addToWishlist = (product: Product) => {
@@ -167,7 +178,7 @@ const Products = () => {
                 >
                   <option value="all">All Categories</option>
                   {categories.map((category) => (
-                    <option key={category.id} value={category.id}>
+                    <option key={category.id} value={category.name}>
                       {category.name}
                     </option>
                   ))}
@@ -205,7 +216,11 @@ const Products = () => {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredProducts.map((product) => (
-                <Card key={product.id} className="group hover:shadow-lg transition-shadow duration-300">
+                <Card 
+                  key={product.id} 
+                  className="group hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                  onClick={() => handleProductClick(product.slug)}
+                >
                   <div className="relative overflow-hidden">
                     <img
                       src={product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"}
@@ -213,7 +228,10 @@ const Products = () => {
                       className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <button
-                      onClick={() => addToWishlist(product)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addToWishlist(product);
+                      }}
                       className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-md hover:bg-gray-50"
                     >
                       <Heart className="w-4 h-4 text-gray-600" />
@@ -246,7 +264,10 @@ const Products = () => {
                     </div>
 
                     <Button
-                      onClick={() => addToCart(product)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addToCart(product);
+                      }}
                       disabled={!product.in_stock}
                       className="w-full bg-green-600 hover:bg-green-700"
                     >

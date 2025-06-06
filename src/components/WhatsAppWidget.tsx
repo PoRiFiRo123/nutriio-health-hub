@@ -12,11 +12,11 @@ const WhatsAppWidget = () => {
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-20 left-6 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg z-40 transition-all duration-300 hover:scale-105"
+      className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-xl z-50 transition-all duration-300 hover:scale-110"
       title="Chat with us on WhatsApp"
     >
       <svg
-        className="w-5 h-5"
+        className="w-6 h-6"
         fill="currentColor"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"

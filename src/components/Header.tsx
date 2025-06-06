@@ -25,6 +25,10 @@ const Header = () => {
     setIsMobileMenuOpen(false);
   };
 
+  const handleProductsClick = () => {
+    navigate('/products');
+  };
+
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="container mx-auto px-4">
@@ -46,7 +50,10 @@ const Header = () => {
             </button>
             
             <div className="relative group">
-              <button className="flex items-center text-gray-700 hover:text-orange-600 font-medium transition-colors group">
+              <button 
+                onClick={handleProductsClick}
+                className="flex items-center text-gray-700 hover:text-orange-600 font-medium transition-colors group"
+              >
                 Products
                 <ChevronDown className="w-4 h-4 ml-1 group-hover:rotate-180 transition-transform duration-200" />
               </button>
@@ -127,7 +134,14 @@ const Header = () => {
             </button>
             
             <div className="px-4">
-              <div className="text-gray-700 font-medium py-2">Products</div>
+              <div className="text-gray-700 font-medium py-2">
+                <button 
+                  onClick={() => { navigate('/products'); setIsMobileMenuOpen(false); }}
+                  className="w-full text-left"
+                >
+                  Products
+                </button>
+              </div>
               <div className="pl-4 space-y-1">
                 <button 
                   onClick={() => { navigate('/products'); setIsMobileMenuOpen(false); }}

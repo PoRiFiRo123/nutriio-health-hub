@@ -16,7 +16,6 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import ChatBot from "./components/ChatBot";
 import WhatsAppWidget from "./components/WhatsAppWidget";
 
 const queryClient = new QueryClient();
@@ -45,7 +44,6 @@ const App = () => (
               </Routes>
             </main>
             <Footer />
-            <ChatBot />
             <WhatsAppWidget />
           </div>
         </BrowserRouter>

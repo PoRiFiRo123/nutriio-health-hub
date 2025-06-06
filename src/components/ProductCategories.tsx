@@ -1,8 +1,11 @@
 
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCategories = () => {
+  const navigate = useNavigate();
+
   const categories = [
     {
       id: 1,
@@ -54,6 +57,10 @@ const ProductCategories = () => {
     }
   ];
 
+  const handleCategoryClick = (categoryName: string) => {
+    navigate(`/products?category=${encodeURIComponent(categoryName)}`);
+  };
+
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
@@ -73,7 +80,8 @@ const ProductCategories = () => {
           {categories.map((category) => (
             <div 
               key={category.id} 
-              className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2"
+              className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 cursor-pointer"
+              onClick={() => handleCategoryClick(category.name)}
             >
               {/* Background Gradient */}
               <div className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
@@ -99,10 +107,10 @@ const ProductCategories = () => {
                   {category.description}
                 </p>
                 
-                <button className="flex items-center text-green-600 font-semibold hover:text-green-700 transition-colors group">
+                <div className="flex items-center text-green-600 font-semibold hover:text-green-700 transition-colors group">
                   Explore Category
                   <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
-                </button>
+                </div>
               </div>
 
               {/* Hover Effect Border */}
@@ -113,7 +121,10 @@ const ProductCategories = () => {
 
         {/* CTA Section */}
         <div className="text-center mt-16">
-          <button className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300">
+          <button 
+            onClick={() => navigate('/products')}
+            className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
+          >
             View All Products
           </button>
         </div>

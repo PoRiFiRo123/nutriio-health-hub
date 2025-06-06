@@ -1,8 +1,11 @@
 
 import React from 'react';
 import { Star, Heart, ShoppingCart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const FeaturedProducts = () => {
+  const navigate = useNavigate();
+
   const products = [
     {
       id: 1,
@@ -14,7 +17,8 @@ const FeaturedProducts = () => {
       reviews: 156,
       image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=300&h=300&fit=crop",
       badge: "Bestseller",
-      ageGroup: "6 months+"
+      ageGroup: "6 months+",
+      slug: "sprouted-ragi-mix"
     },
     {
       id: 2,
@@ -26,7 +30,8 @@ const FeaturedProducts = () => {
       reviews: 89,
       image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=300&h=300&fit=crop",
       badge: "New",
-      ageGroup: "All ages"
+      ageGroup: "All ages",
+      slug: "organic-quinoa"
     },
     {
       id: 3,
@@ -38,7 +43,8 @@ const FeaturedProducts = () => {
       reviews: 234,
       image: "https://images.unsplash.com/photo-1599909533026-128f7ad90043?w=300&h=300&fit=crop",
       badge: "Popular",
-      ageGroup: "2 years+"
+      ageGroup: "2 years+",
+      slug: "millet-cookie-mix"
     },
     {
       id: 4,
@@ -50,7 +56,8 @@ const FeaturedProducts = () => {
       reviews: 78,
       image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=300&h=300&fit=crop",
       badge: "Organic",
-      ageGroup: "All ages"
+      ageGroup: "All ages",
+      slug: "cold-pressed-coconut-oil"
     }
   ];
 
@@ -61,6 +68,10 @@ const FeaturedProducts = () => {
         className={`w-4 h-4 ${i < Math.floor(rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
       />
     ));
+  };
+
+  const handleProductClick = (slug: string) => {
+    navigate(`/products/${slug}`);
   };
 
   return (
@@ -82,7 +93,8 @@ const FeaturedProducts = () => {
           {products.map((product) => (
             <div 
               key={product.id}
-              className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2"
+              className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 cursor-pointer"
+              onClick={() => handleProductClick(product.slug)}
             >
               {/* Image Container */}
               <div className="relative overflow-hidden">
@@ -100,7 +112,10 @@ const FeaturedProducts = () => {
                 </div>
 
                 {/* Wishlist Button */}
-                <button className="absolute top-3 right-3 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors">
+                <button 
+                  className="absolute top-3 right-3 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <Heart className="w-4 h-4 text-gray-600 hover:text-red-500 transition-colors" />
                 </button>
 
@@ -111,7 +126,10 @@ const FeaturedProducts = () => {
 
                 {/* Quick Add Overlay */}
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <button className="bg-white text-gray-900 px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors flex items-center space-x-2">
+                  <button 
+                    className="bg-white text-gray-900 px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors flex items-center space-x-2"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <ShoppingCart className="w-4 h-4" />
                     <span>Quick Add</span>
                   </button>
@@ -149,7 +167,10 @@ const FeaturedProducts = () => {
                 </div>
 
                 {/* Add to Cart Button */}
-                <button className="w-full mt-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                <button 
+                  className="w-full mt-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   Add to Cart
                 </button>
               </div>
@@ -159,7 +180,10 @@ const FeaturedProducts = () => {
 
         {/* View All Button */}
         <div className="text-center mt-12">
-          <button className="border-2 border-green-600 text-green-600 px-8 py-3 rounded-full font-semibold hover:bg-green-50 transition-colors">
+          <button 
+            onClick={() => navigate('/products')}
+            className="border-2 border-green-600 text-green-600 px-8 py-3 rounded-full font-semibold hover:bg-green-50 transition-colors"
+          >
             View All Products
           </button>
         </div>
