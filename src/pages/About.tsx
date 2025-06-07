@@ -59,9 +59,7 @@ const About = () => {
               </h2>
               
               <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
-                With backgrounds in nutrition and sustainable agriculture, Nishit and Deepak 
-                founded Nutriio to bridge the gap between traditional wisdom and modern health needs. 
-                Their commitment to quality and purity drives every decision we make.
+                Pavana and Deepak, the powerhouse behind Nutriio, believe in the power of nutrition to transform lives. Their journey began four years ago with a simple yet profound goal: to provide children with healthy, natural alternatives to the artificially flavored foods dominating the market. Starting with their signature nutritional health mixes for kids, they quickly realized the need for wholesome, nutritious options for people of all ages. This led them to expand their offerings to include sprouted flours, activated millets, and ready-to-cook products, all designed to nourish and support a healthy lifestyle from 6 months onwards.
               </p>
 
               <div className="grid grid-cols-2 gap-4 sm:gap-6 max-w-sm">
@@ -148,9 +146,7 @@ const About = () => {
               Our <span className="text-orange-600">Mission</span>
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 leading-relaxed mb-6 sm:mb-8 px-4">
-              To empower families with access to pure, organic, and nutritious products that support 
-              healthy living at every stage of life. We believe that good nutrition should be simple, 
-              accessible, and delicious.
+              Our mission is to nurture a generation that naturally embraces healthy eating, starting with the well-being of children. By fostering these habits early on, we aim to create a positive ripple effect that extends to families and communities, benefiting society as a whole. At Nutriio, we believe that healthy eating should be effortless and accessible, making it more than just a choice—it’s a way of life.
             </p>
             <div className="bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-2xl p-6 sm:p-8">
               <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Join Our Health Revolution</h3>
