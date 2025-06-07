@@ -54,7 +54,7 @@ const About = () => {
               </div>
               
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
-                <span className="text-orange-600">Nishit & Deepak</span><br />
+                <span className="text-orange-600">Pavana & Deepak</span><br />
                 Health Enthusiasts & Entrepreneurs
               </h2>
               
@@ -76,15 +76,15 @@ const About = () => {
 
             <div className="relative order-1 lg:order-2">
               <div className="grid grid-cols-2 gap-4 max-w-md mx-auto lg:max-w-none">
-                {/* Nishit's Image */}
+                {/* Pavana's Image */}
                 <div className="relative group">
                   <img 
                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face" 
-                    alt="Nishit - Co-founder of Nutriio"
+                    alt="Pavana - Co-founder of Nutriio"
                     className="w-full h-48 sm:h-56 object-cover rounded-2xl shadow-lg group-hover:shadow-xl transition-shadow duration-300"
                   />
                   <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-2 text-center">
-                    <h3 className="font-semibold text-gray-900 text-sm sm:text-base">Nishit</h3>
+                    <h3 className="font-semibold text-gray-900 text-sm sm:text-base">Pavana</h3>
                     <p className="text-xs sm:text-sm text-gray-600">Co-founder & CEO</p>
                   </div>
                 </div>

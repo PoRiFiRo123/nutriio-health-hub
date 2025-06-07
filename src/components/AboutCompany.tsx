@@ -15,12 +15,12 @@ const AboutCompany = () => {
             </div>
             
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-              Founded by <span className="text-orange-600">Nishit & Deepak</span>
+              Founded by <span className="text-orange-600">Pavana & Deepak</span>
             </h2>
             
             <p className="text-lg text-gray-600 leading-relaxed">
               Nutriio was born from a simple belief: every family deserves access to pure, nutritious food. 
-              Founded by health enthusiasts Nishit and Deepak, we're committed to bringing you the finest 
+              Founded by health enthusiasts Pavana and Deepak, we're committed to bringing you the finest 
               organic products that nourish your body and soul.
             </p>
 

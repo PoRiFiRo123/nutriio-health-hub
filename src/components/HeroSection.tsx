@@ -71,7 +71,7 @@ const HeroSection = () => {
                 </span>
               </h1>
               <p className="text-lg lg:text-xl text-gray-600 leading-relaxed">
-                Discover premium superfoods, sprouted flours, and healthy snacks crafted with love by Nishit & Deepak. Every product is designed to fuel your wellness journey.
+                Discover premium superfoods, sprouted flours, and healthy snacks crafted with love by Pavana & Deepak. Every product is designed to fuel your wellness journey.
               </p>
             </div>
 
