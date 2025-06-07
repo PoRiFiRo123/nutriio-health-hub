@@ -17,7 +17,7 @@ const Cart = () => {
           <ShoppingBag className="w-16 h-16 text-gray-400 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Your cart is empty</h2>
           <p className="text-gray-600 mb-6">Add some healthy products to get started!</p>
-          <Button onClick={() => navigate('/products')} className="bg-green-600 hover:bg-green-700">
+          <Button onClick={() => navigate('/products')} className="bg-orange-600 hover:bg-orange-700">
             Shop Now
           </Button>
         </div>
@@ -46,7 +46,7 @@ const Cart = () => {
                       
                       <div className="flex-1">
                         <h3 className="font-semibold text-lg">{item.name}</h3>
-                        <p className="text-green-600 font-bold text-xl">₹{item.price}</p>
+                        <p className="text-orange-600 font-bold text-xl">₹{item.price}</p>
                       </div>
 
                       <div className="flex items-center gap-3">
@@ -105,7 +105,7 @@ const Cart = () => {
                 
                 <div className="flex justify-between">
                   <span>Shipping</span>
-                  <span className="text-green-600">Free</span>
+                  <span className="text-orange-600">Free</span>
                 </div>
                 
                 <hr />
@@ -116,7 +116,7 @@ const Cart = () => {
                 </div>
 
                 <Button 
-                  className="w-full bg-green-600 hover:bg-green-700"
+                  className="w-full bg-orange-600 hover:bg-orange-700"
                   onClick={() => navigate('/checkout')}
                 >
                   Proceed to Checkout

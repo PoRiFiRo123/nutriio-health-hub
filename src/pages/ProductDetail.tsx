@@ -142,7 +142,7 @@ const ProductDetail = () => {
           <div className="space-y-4 sm:space-y-6">
             <div>
               {category && (
-                <p className="text-green-600 font-medium mb-2">{category.name}</p>
+                <p className="text-orange-600 font-medium mb-2">{category.name}</p>
               )}
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
                 {product.name}
@@ -157,7 +157,7 @@ const ProductDetail = () => {
                 </div>
               )}
 
-              <div className="text-2xl sm:text-3xl font-bold text-green-600 mb-4 sm:mb-6">
+              <div className="text-2xl sm:text-3xl font-bold text-orange-600 mb-4 sm:mb-6">
                 ₹{product.price}
               </div>
 
@@ -197,7 +197,7 @@ const ProductDetail = () => {
               <Button
                 onClick={handleAddToCart}
                 disabled={!product.in_stock}
-                className="flex-1 bg-green-600 hover:bg-green-700 h-10 sm:h-11 text-sm sm:text-base"
+                className="flex-1 bg-orange-600 hover:bg-orange-700 h-10 sm:h-11 text-sm sm:text-base"
               >
                 <ShoppingCart className="w-4 h-4 mr-2" />
                 {product.in_stock ? 'Add to Cart' : 'Out of Stock'}
@@ -210,7 +210,7 @@ const ProductDetail = () => {
             {/* Stock Status */}
             <div className="text-sm">
               {product.in_stock ? (
-                <span className="text-green-600">✓ In Stock</span>
+                <span className="text-orange-600">✓ In Stock</span>
               ) : (
                 <span className="text-red-600">✗ Out of Stock</span>
               )}

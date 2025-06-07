@@ -112,7 +112,7 @@ const SearchHeader = ({ onSearch }: SearchHeaderProps) => {
                     <div className="flex-1 min-w-0">
                       <h4 className="font-medium text-sm truncate">{product.name}</h4>
                       <p className="text-xs text-gray-500 line-clamp-1">{product.description}</p>
-                      <p className="text-sm font-semibold text-green-600">₹{product.price}</p>
+                      <p className="text-sm font-semibold text-orange-600">₹{product.price}</p>
                     </div>
                   </div>
                 ))}
@@ -122,7 +122,7 @@ const SearchHeader = ({ onSearch }: SearchHeaderProps) => {
                       navigate(`/products?search=${encodeURIComponent(searchTerm)}`);
                       clearSearch();
                     }}
-                    className="text-sm text-green-600 hover:text-green-700 font-medium"
+                    className="text-sm text-orange-600 hover:text-orange-700 font-medium"
                   >
                     View all results for "{searchTerm}"
                   </button>

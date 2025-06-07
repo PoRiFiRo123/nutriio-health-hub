@@ -110,7 +110,7 @@ const Blog = () => {
       <div className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Nutriio <span className="text-green-600">Blog</span>
+            Nutriio <span className="text-orange-600">Blog</span>
           </h1>
           <p className="text-gray-600 text-lg">
             Discover health tips, nutrition guides, and wellness insights
@@ -171,7 +171,7 @@ const Blog = () => {
                         {post.author_name}
                       </div>
                     </div>
-                    <h3 className="text-xl font-bold mb-3 group-hover:text-green-600 transition-colors">
+                    <h3 className="text-xl font-bold mb-3 group-hover:text-orange-600 transition-colors">
                       {post.title}
                     </h3>
                     <p className="text-gray-600 mb-4 line-clamp-3">
@@ -180,7 +180,7 @@ const Blog = () => {
                     {post.categories && (
                       <div className="flex flex-wrap gap-2">
                         {post.categories.map((category, index) => (
-                          <span key={index} className="inline-flex items-center px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+                          <span key={index} className="inline-flex items-center px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded-full">
                             <Tag className="w-3 h-3 mr-1" />
                             {category}
                           </span>
@@ -215,7 +215,7 @@ const Blog = () => {
                       {formatDate(post.publish_date)}
                     </div>
                   </div>
-                  <h3 className="font-bold mb-2 group-hover:text-green-600 transition-colors">
+                  <h3 className="font-bold mb-2 group-hover:text-orange-600 transition-colors">
                     {post.title}
                   </h3>
                   <p className="text-gray-600 text-sm mb-3 line-clamp-2">
@@ -224,7 +224,7 @@ const Blog = () => {
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-500">{post.author_name}</span>
                     {post.categories && post.categories[0] && (
-                      <span className="text-xs text-green-600 font-medium">
+                      <span className="text-xs text-orange-600 font-medium">
                         {post.categories[0]}
                       </span>
                     )}

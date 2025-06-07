@@ -75,7 +75,7 @@ const FeaturedProducts = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 to-green-50">
+    <section className="py-20 bg-gradient-to-br from-gray-50 to-orange-50">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
@@ -106,7 +106,7 @@ const FeaturedProducts = () => {
                 
                 {/* Badge */}
                 <div className="absolute top-3 left-3">
-                  <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                  <span className="bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium">
                     {product.badge}
                   </span>
                 </div>
@@ -138,7 +138,7 @@ const FeaturedProducts = () => {
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
+                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">
                   {product.name}
                 </h3>
                 <p className="text-gray-600 text-sm mb-3 leading-relaxed">
@@ -161,7 +161,7 @@ const FeaturedProducts = () => {
                     <span className="text-xl font-bold text-gray-900">₹{product.price}</span>
                     <span className="text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
                   </div>
-                  <div className="text-sm text-green-600 font-medium">
+                  <div className="text-sm text-orange-600 font-medium">
                     Save ₹{product.originalPrice - product.price}
                   </div>
                 </div>
@@ -182,7 +182,7 @@ const FeaturedProducts = () => {
         <div className="text-center mt-12">
           <button 
             onClick={() => navigate('/products')}
-            className="border-2 border-green-600 text-green-600 px-8 py-3 rounded-full font-semibold hover:bg-green-50 transition-colors"
+            className="border-2 border-orange-600 text-orange-600 px-8 py-3 rounded-full font-semibold hover:bg-orange-50 transition-colors"
           >
             View All Products
           </button>

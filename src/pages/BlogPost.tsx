@@ -114,7 +114,7 @@ const BlogPost = () => {
             {post.categories && post.categories.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-8">
                 {post.categories.map((category, index) => (
-                  <span key={index} className="inline-flex items-center px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">
+                  <span key={index} className="inline-flex items-center px-3 py-1 bg-orange-100 text-orange-800 text-sm rounded-full">
                     <Tag className="w-3 h-3 mr-1" />
                     {category}
                   </span>

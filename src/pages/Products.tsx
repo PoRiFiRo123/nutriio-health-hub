@@ -135,7 +135,7 @@ const Products = () => {
       <div className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Our <span className="text-green-600">Products</span>
+            Our <span className="text-orange-600">Products</span>
           </h1>
           <p className="text-gray-600 text-lg">
             Discover our range of healthy, natural products for your family
@@ -250,7 +250,7 @@ const Products = () => {
                     </p>
                     
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-2xl font-bold text-green-600">
+                      <span className="text-2xl font-bold text-orange-600">
                         ₹{product.price}
                       </span>
                       {product.rating && (
@@ -269,7 +269,7 @@ const Products = () => {
                         addToCart(product);
                       }}
                       disabled={!product.in_stock}
-                      className="w-full bg-green-600 hover:bg-green-700"
+                      className="w-full bg-orange-600 hover:bg-orange-700"
                     >
                       <ShoppingCart className="w-4 h-4 mr-2" />
                       {product.in_stock ? 'Add to Cart' : 'Out of Stock'}

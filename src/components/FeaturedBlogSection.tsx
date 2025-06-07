@@ -67,7 +67,7 @@ const FeaturedBlogSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Featured <span className="text-green-600">Health Tips</span>
+            Featured <span className="text-orange-600">Health Tips</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Discover the latest insights on nutrition, wellness, and healthy living from our experts
@@ -101,7 +101,7 @@ const FeaturedBlogSection = () => {
                   </div>
                 </div>
                 
-                <h3 className="font-bold text-lg mb-3 group-hover:text-green-600 transition-colors line-clamp-2">
+                <h3 className="font-bold text-lg mb-3 group-hover:text-orange-600 transition-colors line-clamp-2">
                   {post.title}
                 </h3>
                 
@@ -109,7 +109,7 @@ const FeaturedBlogSection = () => {
                   {post.summary}
                 </p>
                 
-                <Button variant="ghost" className="p-0 h-auto text-green-600 hover:text-green-700">
+                <Button variant="ghost" className="p-0 h-auto text-orange-600 hover:text-orange-700">
                   Read More
                   <ArrowRight className="w-4 h-4 ml-1" />
                 </Button>
@@ -121,7 +121,7 @@ const FeaturedBlogSection = () => {
         <div className="text-center">
           <Button 
             onClick={() => navigate('/blog')}
-            className="bg-green-600 hover:bg-green-700"
+            className="bg-orange-600 hover:bg-orange-700"
           >
             View All Articles
             <ArrowRight className="w-4 h-4 ml-2" />
