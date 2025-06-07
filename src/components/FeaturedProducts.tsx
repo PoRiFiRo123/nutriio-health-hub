@@ -81,7 +81,7 @@ const FeaturedProducts = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
             Featured
-            <span className="bg-gradient-to-r text-orange-600 to-emerald-600 bg-clip-text text-transparent"> Products</span>
+            <span className="bg-gradient-to-r from-orange-600 to-emerald-600 bg-clip-text text-transparent"> Products</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Hand-picked products loved by families nationwide
@@ -168,7 +168,7 @@ const FeaturedProducts = () => {
 
                 {/* Add to Cart Button */}
                 <button 
-                  className="w-full mt-4 bg-gradient-to-r text-orange-600 to-emerald-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                  className="w-full mt-4 bg-gradient-to-r from-orange-600 to-emerald-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
                   onClick={(e) => e.stopPropagation()}
                 >
                   Add to Cart
