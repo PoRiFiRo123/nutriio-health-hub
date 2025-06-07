@@ -27,6 +27,7 @@ import {
   MapPin,
   Settings
 } from 'lucide-react';
+import SearchHeader from './SearchHeader';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -74,6 +75,11 @@ const Header = () => {
             </Link>
           </nav>
 
+          {/* Search Bar - Desktop */}
+          <div className="hidden md:block">
+            <SearchHeader />
+          </div>
+
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
             {user ? (
@@ -101,7 +107,7 @@ const Header = () => {
                       </Avatar>
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuContent align="end" className="w-56 bg-white">
                     <div className="px-2 py-1.5">
                       <p className="text-sm font-medium">{user.email}</p>
                     </div>
@@ -154,6 +160,11 @@ const Header = () => {
 
           {/* Mobile Menu */}
           <div className="md:hidden flex items-center space-x-2">
+            {/* Search Bar - Mobile */}
+            <div className="flex-1">
+              <SearchHeader />
+            </div>
+
             {/* Cart */}
             <Link to="/cart" className="relative">
               <Button variant="ghost" size="icon">
@@ -173,7 +184,7 @@ const Header = () => {
                   <Menu className="w-5 h-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-64">
+              <SheetContent side="right" className="w-64 bg-white">
                 <div className="flex flex-col space-y-4 mt-8">
                   {user && (
                     <div className="flex items-center space-x-3 pb-4 border-b">
