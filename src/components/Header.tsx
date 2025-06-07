@@ -1,186 +1,297 @@
 
 import React, { useState } from 'react';
-import { ShoppingCart, Menu, X, ChevronDown } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
 import { useCart } from '@/hooks/useCart';
-import { useNavigate } from 'react-router-dom';
-import SearchHeader from './SearchHeader';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuTrigger,
+  DropdownMenuSeparator 
+} from '@/components/ui/dropdown-menu';
+import { 
+  Sheet, 
+  SheetContent, 
+  SheetTrigger 
+} from '@/components/ui/sheet';
+import { 
+  ShoppingCart, 
+  Menu, 
+  User, 
+  LogOut, 
+  Package,
+  MapPin,
+  Settings
+} from 'lucide-react';
 
 const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const { user, signOut } = useAuth();
   const { totalItems } = useCart();
   const navigate = useNavigate();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const productCategories = [
-    'SuperFoods',
-    'Sprouted Flour', 
-    'Ready to Cook',
-    'Healthy Snacks',
-    'Organic Oils',
-    'Natural Salts & Jaggery'
-  ];
-
-  const handleCategoryClick = (category: string) => {
-    navigate(`/products?category=${encodeURIComponent(category)}`);
-    setIsMobileMenuOpen(false);
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
   };
 
-  const handleProductsClick = () => {
-    navigate('/products');
-    setIsMobileMenuOpen(false);
+  const getInitials = (email: string) => {
+    return email?.charAt(0).toUpperCase() || 'U';
   };
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header className="bg-white shadow-sm border-b border-orange-100 sticky top-0 z-50">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-14 sm:h-16">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-2 cursor-pointer flex-shrink-0" onClick={() => navigate('/')}>
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-orange-500 to-amber-600 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-lg sm:text-xl">N</span>
+          <Link to="/" className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-gradient-to-r from-orange-600 to-amber-600 rounded-full flex items-center justify-center">
+              <span className="text-white font-bold text-sm">N</span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
-              Nutriio
-            </h1>
-          </div>
+            <span className="text-xl font-bold text-gray-900">Nutriio</span>
+          </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
-            <button onClick={() => navigate('/')} className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
+          <nav className="hidden md:flex items-center space-x-8">
+            <Link to="/" className="text-gray-700 hover:text-orange-600 transition-colors">
               Home
-            </button>
-            
-            <div className="relative group">
-              <button 
-                onClick={handleProductsClick}
-                className="flex items-center text-gray-700 hover:text-orange-600 font-medium transition-colors group"
-              >
-                Products
-                <ChevronDown className="w-4 h-4 ml-1 group-hover:rotate-180 transition-transform duration-200" />
-              </button>
-              
-              {/* Hover Dropdown */}
-              <div className="absolute left-0 top-full mt-2 w-56 bg-white shadow-xl border border-gray-200 rounded-lg p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <button 
-                  onClick={() => navigate('/products')}
-                  className="w-full text-left px-3 py-2 hover:bg-orange-50 rounded cursor-pointer text-gray-700 hover:text-orange-600 transition-colors font-medium"
-                >
-                  All Products
-                </button>
-                {productCategories.map((category) => (
-                  <button 
-                    key={category}
-                    onClick={() => handleCategoryClick(category)}
-                    className="w-full text-left px-3 py-2 hover:bg-orange-50 rounded cursor-pointer text-gray-700 hover:text-orange-600 transition-colors"
-                  >
-                    {category}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <button onClick={() => navigate('/blog')} className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
+            </Link>
+            <Link to="/products" className="text-gray-700 hover:text-orange-600 transition-colors">
+              Products
+            </Link>
+            <Link to="/blog" className="text-gray-700 hover:text-orange-600 transition-colors">
               Blog
-            </button>
-            <button onClick={() => navigate('/about')} className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
+            </Link>
+            <Link to="/about" className="text-gray-700 hover:text-orange-600 transition-colors">
               About
-            </button>
-            <button onClick={() => navigate('/contact')} className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
+            </Link>
+            <Link to="/contact" className="text-gray-700 hover:text-orange-600 transition-colors">
               Contact
-            </button>
+            </Link>
           </nav>
 
-          {/* Search Bar - Desktop */}
-          <div className="hidden sm:block flex-1 max-w-sm mx-4">
-            <SearchHeader />
+          {/* Desktop Actions */}
+          <div className="hidden md:flex items-center space-x-4">
+            {user ? (
+              <>
+                {/* Cart */}
+                <Link to="/cart" className="relative">
+                  <Button variant="ghost" size="icon">
+                    <ShoppingCart className="w-5 h-5" />
+                    {totalItems > 0 && (
+                      <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center bg-orange-600">
+                        {totalItems}
+                      </Badge>
+                    )}
+                  </Button>
+                </Link>
+
+                {/* User Menu */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="flex items-center space-x-2">
+                      <Avatar className="w-8 h-8">
+                        <AvatarFallback className="bg-orange-100 text-orange-700">
+                          {getInitials(user.email || '')}
+                        </AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <div className="px-2 py-1.5">
+                      <p className="text-sm font-medium">{user.email}</p>
+                    </div>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => navigate('/profile')}>
+                      <Settings className="w-4 h-4 mr-2" />
+                      Profile Settings
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate('/profile?tab=orders')}>
+                      <Package className="w-4 h-4 mr-2" />
+                      Order History
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate('/profile?tab=addresses')}>
+                      <MapPin className="w-4 h-4 mr-2" />
+                      Addresses
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleSignOut}>
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
+            ) : (
+              <>
+                {/* Cart for non-authenticated users */}
+                <Link to="/cart" className="relative">
+                  <Button variant="ghost" size="icon">
+                    <ShoppingCart className="w-5 h-5" />
+                    {totalItems > 0 && (
+                      <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center bg-orange-600">
+                        {totalItems}
+                      </Badge>
+                    )}
+                  </Button>
+                </Link>
+
+                {/* Sign In Button */}
+                <Button 
+                  onClick={() => navigate('/auth')}
+                  className="bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700"
+                >
+                  <User className="w-4 h-4 mr-2" />
+                  Sign In
+                </Button>
+              </>
+            )}
           </div>
 
-          {/* Action Icons */}
-          <div className="flex items-center space-x-2 sm:space-x-4">
-            <button 
-              onClick={() => navigate('/cart')}
-              className="p-2 hover:bg-orange-50 rounded-full transition-colors relative"
-            >
-              <ShoppingCart className="w-5 h-5 text-gray-600" />
-              {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  {totalItems}
-                </span>
-              )}
-            </button>
+          {/* Mobile Menu */}
+          <div className="md:hidden flex items-center space-x-2">
+            {/* Cart */}
+            <Link to="/cart" className="relative">
+              <Button variant="ghost" size="icon">
+                <ShoppingCart className="w-5 h-5" />
+                {totalItems > 0 && (
+                  <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center bg-orange-600">
+                    {totalItems}
+                  </Badge>
+                )}
+              </Button>
+            </Link>
 
-            {/* Mobile Menu Button */}
-            <button 
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 hover:bg-orange-50 rounded-full transition-colors"
-            >
-              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+            {/* Mobile Menu Trigger */}
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Menu className="w-5 h-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-64">
+                <div className="flex flex-col space-y-4 mt-8">
+                  {user && (
+                    <div className="flex items-center space-x-3 pb-4 border-b">
+                      <Avatar className="w-10 h-10">
+                        <AvatarFallback className="bg-orange-100 text-orange-700">
+                          {getInitials(user.email || '')}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="text-sm font-medium">{user.email}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  <nav className="flex flex-col space-y-2">
+                    <Link 
+                      to="/" 
+                      className="text-gray-700 hover:text-orange-600 transition-colors py-2"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Home
+                    </Link>
+                    <Link 
+                      to="/products" 
+                      className="text-gray-700 hover:text-orange-600 transition-colors py-2"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Products
+                    </Link>
+                    <Link 
+                      to="/blog" 
+                      className="text-gray-700 hover:text-orange-600 transition-colors py-2"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Blog
+                    </Link>
+                    <Link 
+                      to="/about" 
+                      className="text-gray-700 hover:text-orange-600 transition-colors py-2"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      About
+                    </Link>
+                    <Link 
+                      to="/contact" 
+                      className="text-gray-700 hover:text-orange-600 transition-colors py-2"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Contact
+                    </Link>
+                  </nav>
+
+                  {user ? (
+                    <div className="pt-4 border-t space-y-2">
+                      <Button 
+                        variant="ghost" 
+                        className="w-full justify-start"
+                        onClick={() => {
+                          navigate('/profile');
+                          setIsOpen(false);
+                        }}
+                      >
+                        <Settings className="w-4 h-4 mr-2" />
+                        Profile Settings
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full justify-start"
+                        onClick={() => {
+                          navigate('/profile?tab=orders');
+                          setIsOpen(false);
+                        }}
+                      >
+                        <Package className="w-4 h-4 mr-2" />
+                        Order History
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full justify-start"
+                        onClick={() => {
+                          navigate('/profile?tab=addresses');
+                          setIsOpen(false);
+                        }}
+                      >
+                        <MapPin className="w-4 h-4 mr-2" />
+                        Addresses
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full justify-start text-red-600 hover:text-red-700"
+                        onClick={() => {
+                          handleSignOut();
+                          setIsOpen(false);
+                        }}
+                      >
+                        <LogOut className="w-4 h-4 mr-2" />
+                        Sign Out
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="pt-4 border-t">
+                      <Button 
+                        onClick={() => {
+                          navigate('/auth');
+                          setIsOpen(false);
+                        }}
+                        className="w-full bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700"
+                      >
+                        <User className="w-4 h-4 mr-2" />
+                        Sign In
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
-
-        {/* Mobile Search Bar */}
-        <div className="sm:hidden py-2 border-t border-gray-100">
-          <SearchHeader />
-        </div>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 py-4 space-y-2">
-            <button 
-              onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }}
-              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded transition-colors"
-            >
-              Home
-            </button>
-            
-            <div className="px-4">
-              <div className="text-gray-700 font-medium py-2">
-                <button 
-                  onClick={() => { navigate('/products'); setIsMobileMenuOpen(false); }}
-                  className="w-full text-left hover:text-orange-600 transition-colors"
-                >
-                  Products
-                </button>
-              </div>
-              <div className="pl-4 space-y-1">
-                <button 
-                  onClick={() => { navigate('/products'); setIsMobileMenuOpen(false); }}
-                  className="block w-full text-left py-1 text-sm text-gray-600 hover:text-orange-600 transition-colors"
-                >
-                  All Products
-                </button>
-                {productCategories.map((category) => (
-                  <button 
-                    key={category}
-                    onClick={() => handleCategoryClick(category)}
-                    className="block w-full text-left py-1 text-sm text-gray-600 hover:text-orange-600 transition-colors"
-                  >
-                    {category}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <button 
-              onClick={() => { navigate('/blog'); setIsMobileMenuOpen(false); }}
-              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded transition-colors"
-            >
-              Blog
-            </button>
-            <button 
-              onClick={() => { navigate('/about'); setIsMobileMenuOpen(false); }}
-              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded transition-colors"
-            >
-              About
-            </button>
-            <button 
-              onClick={() => { navigate('/contact'); setIsMobileMenuOpen(false); }}
-              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded transition-colors"
-            >
-              Contact
-            </button>
-          </div>
-        )}
       </div>
     </header>
   );
