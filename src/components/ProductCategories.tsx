@@ -8,39 +8,39 @@ const ProductCategories = () => {
   const categories = [
     {
       id: 1,
-      name: "SuperFoods",
+      name: "Nutrient Boosters",
       description: "Nutrient-dense foods packed with vitamins and minerals",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop",
+      image: "https://i.pinimg.com/736x/7b/ff/f4/7bfff4fa12ac9b75bc6cefbbd9a8245b.jpg?w=300&h=200&fit=crop",
       color: "from-orange-500 to-amber-500",
-      products: "25+ Products"
+      products: "4+ Products"
     },
     {
       id: 2,
       name: "Sprouted Flour", 
       description: "Easily digestible, nutrient-rich flours for all ages",
-      image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=300&h=200&fit=crop",
+      image: "https://i.pinimg.com/736x/66/ac/ff/66acfff1f0d72aebfac412b5822b1804.jpg?w=300&h=200&fit=crop",
       color: "from-amber-500 to-orange-500",
       products: "12+ Varieties"
     },
     {
       id: 3,
-      name: "Ready to Cook",
+      name: "Meal Moments",
       description: "Convenient, healthy meal solutions for busy families",
-      image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=300&h=200&fit=crop",
+      image: "https://i.pinimg.com/736x/96/00/1e/96001ec5e2088ec4486d472fcc9bba0d.jpg?w=300&h=200&fit=crop",
       color: "from-orange-600 to-amber-600",
       products: "18+ Items"
     },
     {
       id: 4,
-      name: "Healthy Snacks",
+      name: "Healthy Bites",
       description: "Guilt-free snacking options for every craving",
-      image: "https://images.unsplash.com/photo-1599909533026-128f7ad90043?w=300&h=200&fit=crop",
+      image: "https://i.pinimg.com/736x/37/c0/bc/37c0bc060908db489eec419954762236.jpg?w=300&h=200&fit=crop",
       color: "from-amber-600 to-orange-600",
       products: "30+ Options"
     },
     {
       id: 5,
-      name: "Organic Oils",
+      name: "Pure Extracts",
       description: "Cold-pressed, unrefined oils for cooking and wellness",
       image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=300&h=200&fit=crop",
       color: "from-orange-500 to-amber-500",
@@ -48,9 +48,9 @@ const ProductCategories = () => {
     },
     {
       id: 6,
-      name: "Natural Salts & Jaggery",
+      name: "Activated Millet Flours ",
       description: "Unprocessed, mineral-rich sweeteners and salts",
-      image: "https://images.unsplash.com/photo-1471943311424-646960669fbc?w=300&h=200&fit=crop",
+      image: "https://i.pinimg.com/736x/11/66/b8/1166b8888b880f4c20567311276b75cf.jpg?w=300&h=200&fit=crop",
       color: "from-amber-500 to-orange-500",
       products: "15+ Types"
     }

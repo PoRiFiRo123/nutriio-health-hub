@@ -74,12 +74,12 @@ const About = () => {
               </div>
             </div>
 
-            <div className="relative order-1 lg:order-2">
+            <div className="relative order- lg:order-2">
               <div className="grid grid-cols-2 gap-4 max-w-md mx-auto lg:max-w-none">
                 {/* Pavana's Image */}
                 <div className="relative group">
                   <img 
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face" 
+                    src="https://i.pinimg.com/736x/95/b5/0f/95b50fbf304aadc14e5cc82ad200f6b0.jpg?w=500&h=500&fit=crop&crop=face" 
                     alt="Pavana - Co-founder of Nutriio"
                     className="w-full h-48 sm:h-56 object-cover rounded-2xl shadow-lg group-hover:shadow-xl transition-shadow duration-300"
                   />
@@ -92,7 +92,7 @@ const About = () => {
                 {/* Deepak's Image */}
                 <div className="relative group mt-8">
                   <img 
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face" 
+                    src="https://i.pinimg.com/736x/3a/82/76/3a827633ab8706d6968659ebe4ee4459.jpg?w=300&h=300&fit=crop&crop=face" 
                     alt="Deepak - Co-founder of Nutriio"
                     className="w-full h-48 sm:h-56 object-cover rounded-2xl shadow-lg group-hover:shadow-xl transition-shadow duration-300"
                   />

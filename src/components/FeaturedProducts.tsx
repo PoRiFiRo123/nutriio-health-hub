@@ -9,55 +9,55 @@ const FeaturedProducts = () => {
   const products = [
     {
       id: 1,
-      name: "Sprouted Ragi Mix",
-      description: "Rich in calcium, perfect for growing kids",
-      price: 299,
-      originalPrice: 349,
+      name: "Sprouted 4 in 1 Health Mix",
+      description: "Nutriio’s Sprouted 4-in-1 Health Mix blends sprouted ragi, wheat, bajra, and jowar for a protein- and fiber-rich boost. Packed with essential minerals like iron and calcium.",
+      price: 210,
+      originalPrice: 260,
       rating: 4.8,
       reviews: 156,
-      image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=300&h=300&fit=crop",
+      image: "https://i.pinimg.com/736x/93/05/a5/9305a58f1147bb6a09558a264affa50c.jpg?w=300&h=300&fit=crop",
       badge: "Bestseller",
       ageGroup: "6 months+",
-      slug: "sprouted-ragi-mix"
+      slug: "sprouted-four-in-one"
     },
     {
       id: 2,
-      name: "Organic Quinoa",
-      description: "Complete protein superfood for active lifestyles",
-      price: 199,
-      originalPrice: 229,
+      name: "Sprouted Whole Wheat Flour",
+      description: "Nutriio's Sprouted Whole Wheat Flour is a nutrient-rich, easily digestible flour made from sprouted whole grains.",
+      price: 140,
+      originalPrice: 190,
       rating: 4.9,
       reviews: 89,
-      image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=300&h=300&fit=crop",
+      image: "https://i.pinimg.com/736x/9b/38/79/9b387998d9cd5e81cc7bf55d143d9df3.jpg?w=300&h=300&fit=crop",
       badge: "New",
       ageGroup: "All ages",
       slug: "organic-quinoa"
     },
     {
       id: 3,
-      name: "Millet Cookie Mix",
-      description: "Healthy baking mix for homemade treats",
-      price: 149,
-      originalPrice: 179,
+      name: "Sprouted Millet Butter Cookies",
+      description: "Nutriio's Sprouted Millet Butter Cookies blend ragi, bajra, and jowar with creamy butter for a tasty, nutritious snack.",
+      price: 130,
+      originalPrice: 180,
       rating: 4.7,
       reviews: 234,
-      image: "https://images.unsplash.com/photo-1599909533026-128f7ad90043?w=300&h=300&fit=crop",
+      image: "https://i.pinimg.com/736x/4b/73/c4/4b73c4622c1d5fccc5aa1ab48abd42f4.jpg?w=300&h=300&fit=crop",
       badge: "Popular",
       ageGroup: "2 years+",
-      slug: "millet-cookie-mix"
+      slug: "sprouted-millet-butter-cookies"
     },
     {
       id: 4,
-      name: "Cold-Pressed Coconut Oil",
-      description: "Virgin coconut oil for cooking and wellness",
+      name: "Sprouted Peanut Chutney Pudi",
+      description: "Nutriio’s Sprouted Peanut Chutney Pudi combines sprouted peanuts and spices for a protein-rich, gut-friendly boost.",
       price: 399,
       originalPrice: 449,
       rating: 4.6,
       reviews: 78,
-      image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=300&h=300&fit=crop",
+      image: "https://i.pinimg.com/736x/de/00/03/de000324bada3eebaed7a5c5e5b3ac5c.jpg?w=300&h=300&fit=crop",
       badge: "Organic",
       ageGroup: "All ages",
-      slug: "cold-pressed-coconut-oil"
+      slug: "sprouted-peanut-chutney-pudi"
     }
   ];
 

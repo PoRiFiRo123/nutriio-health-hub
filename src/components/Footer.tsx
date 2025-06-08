@@ -114,38 +114,27 @@ const Footer = () => {
                 <div className="flex items-start space-x-3">
                   <MapPin className="w-5 h-5 text-orange-500 mt-0.5" />
                   <p className="text-gray-300 text-sm">
-                    123 Health Street,<br />
-                    Wellness City, WC 12345
+                  Jaya Nagar 1st Block,<br />
+                  Bengaluru, Karnataka 560011
                   </p>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Phone className="w-5 h-5 text-orange-500" />
-                  <p className="text-gray-300 text-sm">+91 98765 43210</p>
+                  <p className="text-gray-300 text-sm">+91 72592 32905</p>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Mail className="w-5 h-5 text-orange-500" />
-                  <p className="text-gray-300 text-sm">hello@nutriio.com</p>
+                  <p className="text-gray-300 text-sm">hello@nutriio.in</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Bottom Bar */}
-          <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <div className="border-t border-gray-800 mt-8 pt-8 flex justify-center items-center">
             <p className="text-gray-400 text-sm">
-              © 2024 Nutriio. All rights reserved.
+              © 2025 Nutriio. All rights reserved.
             </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <button className="text-gray-400 hover:text-orange-500 text-sm transition-colors">
-                Privacy Policy
-              </button>
-              <button className="text-gray-400 hover:text-orange-500 text-sm transition-colors">
-                Terms of Service
-              </button>
-              <button className="text-gray-400 hover:text-orange-500 text-sm transition-colors">
-                Return Policy
-              </button>
-            </div>
           </div>
         </div>
       </div>

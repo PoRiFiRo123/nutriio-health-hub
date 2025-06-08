@@ -33,9 +33,9 @@ const EducationalContent = () => {
             Learn & Grow
           </div>
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-            Educational <span className="text-orange-600">Resources</span>
+            Why <span className="text-orange-600">Choose Us?</span>
           </h2>
-          <p className="text-xl text-gray-600">Empowering you with knowledge for better health choices</p>
+          <p className="text-xl text-gray-600">Empowering you with products for better health choices</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -50,11 +50,11 @@ const EducationalContent = () => {
                 <p className="text-gray-600 mb-4">{article.description}</p>
                 
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-500">{article.readTime}</span>
+                  {/* <span className="text-sm text-gray-500">{article.readTime}</span>
                   <div className="flex items-center text-orange-600 font-medium group-hover:text-orange-700">
                     Read More
                     <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -62,9 +62,9 @@ const EducationalContent = () => {
         </div>
 
         <div className="text-center mt-10">
-          <button className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3 rounded-full font-semibold transition-colors">
+          {/* <button className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3 rounded-full font-semibold transition-colors">
             Explore All Articles
-          </button>
+          </button> */}
         </div>
       </div>
     </section>

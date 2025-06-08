@@ -133,8 +133,8 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">Email</h3>
-                    <p className="text-gray-600">hello@nutriio.com</p>
-                    <p className="text-gray-600">support@nutriio.com</p>
+                    <p className="text-gray-600">hello@nutriio.in</p>
+                    {/* <p className="text-gray-600">support@nutriio.com</p> */}
                   </div>
                 </div>
 
@@ -144,8 +144,8 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">Phone</h3>
-                    <p className="text-gray-600">+91 98765 43210</p>
-                    <p className="text-gray-600">+91 87654 32109</p>
+                    <p className="text-gray-600">+91 72592 32905</p>
+                    {/* <p className="text-gray-600">+91 87654 32109</p> */}
                   </div>
                 </div>
 
@@ -156,9 +156,11 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold text-gray-900">Address</h3>
                     <p className="text-gray-600">
-                      123 Health Street<br />
-                      Nutrition District<br />
-                      Mumbai, Maharashtra 400001
+                    209/30 1st 'A, main,<br />
+                    7th Main Rd,<br />
+                    Jaya Nagar 1st Block, <br />
+                    Byrasandra, Jayanagar, <br />
+                    Bengaluru, Karnataka 560011
                     </p>
                   </div>
                 </div>
@@ -207,7 +209,7 @@ const Contact = () => {
           
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3772.3867894931236!2d72.8260377!3d19.0175781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7cf26f5b4b2af%3A0x18bb4e1a8c8e2c5!2sHealth%20Street%2C%20Mumbai%2C%20Maharashtra%20400001%2C%20India!5e0!3m2!1sen!2sus!4v1234567890"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.6202162622303!2d77.58973991053446!3d12.932113687327057!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae154a4b7774d7%3A0xbf2c8b25054ec2da!2sNutriio%20Products!5e0!3m2!1sen!2sin!4v1724325190987!5m2!1sen!2sin"
               width="100%"
               height="400"
               style={{ border: 0 }}
