@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useCart } from '@/hooks/useCart';
@@ -225,70 +224,38 @@ const Checkout = () => {
         throw new Error('Failed to load Razorpay SDK');
       }
 
-      // Create Razorpay order
-      const { data, error } = await supabase.functions.invoke('create-razorpay-order', {
-        body: {
-          amount: totalPrice,
-          currency: 'INR',
-          receipt: order.order_number
-        }
-      });
-
-      if (error) throw error;
-
-      const { order: razorpayOrder } = data;
-
-      // Update order with Razorpay order ID
-      await supabase
-        .from('orders')
-        .update({ razorpay_order_id: razorpayOrder.id })
-        .eq('id', order.id);
-
-      // Configure Razorpay options
+      // Configure Razorpay options (without creating server-side order)
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_1DP5mmOlF5G5ag',
-        amount: razorpayOrder.amount,
-        currency: razorpayOrder.currency,
+        amount: Math.round(totalPrice * 100), // Amount in paise
+        currency: 'INR',
         name: 'Nutriio',
         description: 'Healthy Food Products',
-        order_id: razorpayOrder.id,
+        image: '/favicon.ico',
         handler: async (response: RazorpayResponse) => {
           try {
-            // Verify payment
-            const { data: verifyData, error: verifyError } = await supabase.functions.invoke('verify-razorpay-payment', {
-              body: {
-                razorpay_order_id: response.razorpay_order_id,
+            console.log('Payment successful:', response);
+            
+            // Update order status
+            await supabase
+              .from('orders')
+              .update({
                 razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature
-              }
-            });
+                payment_status: 'paid',
+                status: 'confirmed'
+              })
+              .eq('id', order.id);
 
-            if (verifyError) throw verifyError;
-
-            if (verifyData.success) {
-              // Update order status
-              await supabase
-                .from('orders')
-                .update({
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  payment_status: 'paid',
-                  status: 'confirmed'
-                })
-                .eq('id', order.id);
-
-              clearCart();
-              toast({
-                title: "Payment Successful!",
-                description: "Your order has been placed successfully.",
-              });
-              navigate('/profile?tab=orders');
-            } else {
-              throw new Error('Payment verification failed');
-            }
-          } catch (error) {
-            console.error('Payment verification error:', error);
+            clearCart();
             toast({
-              title: "Payment Verification Failed",
+              title: "Payment Successful!",
+              description: "Your order has been placed successfully.",
+            });
+            navigate('/profile?tab=orders');
+          } catch (error) {
+            console.error('Payment update error:', error);
+            toast({
+              title: "Payment Successful but Order Update Failed",
               description: "Please contact support for assistance.",
               variant: "destructive"
             });
@@ -299,12 +266,21 @@ const Checkout = () => {
           email: user.email,
           contact: customerDetails.phone
         },
+        notes: {
+          order_id: order.id,
+          order_number: order.order_number
+        },
         theme: {
           color: '#ea580c'
         },
         modal: {
           ondismiss: () => {
             setLoading(false);
+            toast({
+              title: "Payment Cancelled",
+              description: "You can try again when ready.",
+              variant: "destructive"
+            });
           }
         }
       };
