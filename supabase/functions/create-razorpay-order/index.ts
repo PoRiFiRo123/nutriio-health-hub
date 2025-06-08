@@ -1,6 +1,5 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -17,8 +16,21 @@ serve(async (req) => {
     const { amount, currency, receipt } = await req.json();
 
     // Initialize Razorpay
-    const razorpayKeyId = Deno.env.get('VITE_RAZORPAY_KEY_ID')!;
-    const razorpayKeySecret = Deno.env.get('VITE_RAZORPAY_KEY_SECRET')!;
+    const razorpayKeyId = Deno.env.get('VITE_RAZORPAY_KEY_ID');
+    const razorpayKeySecret = Deno.env.get('VITE_RAZORPAY_KEY_SECRET');
+
+    if (!razorpayKeyId || !razorpayKeySecret) {
+      console.error('Razorpay keys not found in environment');
+      return new Response(
+        JSON.stringify({ success: false, error: 'Razorpay configuration missing' }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 400,
+        }
+      );
+    }
+
+    console.log('Creating order with amount:', amount);
 
     // Create order with Razorpay
     const orderData = {
@@ -38,11 +50,15 @@ serve(async (req) => {
       body: JSON.stringify(orderData),
     });
 
+    const responseText = await response.text();
+    console.log('Razorpay response status:', response.status);
+    console.log('Razorpay response:', responseText);
+
     if (!response.ok) {
-      throw new Error(`Razorpay API error: ${response.statusText}`);
+      throw new Error(`Razorpay API error: ${response.status} - ${responseText}`);
     }
 
-    const order = await response.json();
+    const order = JSON.parse(responseText);
 
     return new Response(
       JSON.stringify({ success: true, order }),
