@@ -28,6 +28,7 @@ import {
   Settings
 } from 'lucide-react';
 import SearchHeader from './SearchHeader';
+import ProductsDropdown from './ProductsDropdown';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -61,9 +62,7 @@ const Header = () => {
             <Link to="/" className="text-gray-700 hover:text-orange-600 transition-colors">
               Home
             </Link>
-            <Link to="/products" className="text-gray-700 hover:text-orange-600 transition-colors">
-              Products
-            </Link>
+            <ProductsDropdown />
             <Link to="/blog" className="text-gray-700 hover:text-orange-600 transition-colors">
               Blog
             </Link>

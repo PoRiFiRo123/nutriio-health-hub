@@ -333,10 +333,10 @@ const Checkout = () => {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50 flex items-center justify-center px-4">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Your cart is empty</h2>
-          <Button onClick={() => navigate('/products')} className="bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700">
+          <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">Your cart is empty</h2>
+          <Button onClick={() => navigate('/products')} className="bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 w-full sm:w-auto">
             Continue Shopping
           </Button>
         </div>
@@ -346,14 +346,14 @@ const Checkout = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
+      <div className="container mx-auto px-4 py-4 md:py-8">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 md:mb-8">Checkout</h1>
         
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid lg:grid-cols-2 gap-6 md:gap-8">
           {/* Delivery Details */}
           <Card className="border-orange-200">
             <CardHeader>
-              <CardTitle className="text-orange-700">Delivery Details</CardTitle>
+              <CardTitle className="text-orange-700 text-lg md:text-xl">Delivery Details</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {addresses.length > 0 && (
@@ -376,7 +376,7 @@ const Checkout = () => {
 
               {(!addresses.length || !selectedAddressId) && (
                 <>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="name">Full Name *</Label>
                       <Input
@@ -413,7 +413,7 @@ const Checkout = () => {
                     />
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="city">City *</Label>
                       <Input
@@ -459,18 +459,20 @@ const Checkout = () => {
           {/* Order Summary */}
           <Card className="border-orange-200">
             <CardHeader>
-              <CardTitle className="text-orange-700">Order Summary</CardTitle>
+              <CardTitle className="text-orange-700 text-lg md:text-xl">Order Summary</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {items.map((item) => (
-                <div key={item.id} className="flex justify-between items-center">
-                  <div>
-                    <p className="font-medium">{item.name}</p>
-                    <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
+              <div className="max-h-48 overflow-y-auto space-y-3">
+                {items.map((item) => (
+                  <div key={item.id} className="flex justify-between items-center">
+                    <div>
+                      <p className="font-medium text-sm">{item.name}</p>
+                      <p className="text-xs text-gray-600">Qty: {item.quantity}</p>
+                    </div>
+                    <p className="font-semibold text-sm">₹{(item.price * item.quantity).toFixed(2)}</p>
                   </div>
-                  <p className="font-semibold">₹{(item.price * item.quantity).toFixed(2)}</p>
-                </div>
-              ))}
+                ))}
+              </div>
               
               <hr className="border-orange-200" />
               
