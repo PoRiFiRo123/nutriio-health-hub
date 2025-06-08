@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -42,6 +41,14 @@ const Products = () => {
     fetchProducts();
     fetchCategories();
   }, []);
+
+  useEffect(() => {
+    // Update selected category when URL changes
+    const categoryFromUrl = searchParams.get('category');
+    if (categoryFromUrl) {
+      setSelectedCategory(categoryFromUrl);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     filterProducts();

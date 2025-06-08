@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -64,7 +63,7 @@ const ProductsDropdown = () => {
               categories.map((category) => (
                 <Link
                   key={category.id}
-                  to={`/products?category=${category.id}`}
+                  to={`/products?category=${encodeURIComponent(category.name)}`}
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                 >
                   {category.name}

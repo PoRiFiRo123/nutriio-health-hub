@@ -224,7 +224,7 @@ const Checkout = () => {
         throw new Error('Failed to load Razorpay SDK');
       }
 
-      // Configure Razorpay options (without creating server-side order)
+      // Configure Razorpay options
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_1DP5mmOlF5G5ag',
         amount: Math.round(totalPrice * 100), // Amount in paise
@@ -247,18 +247,10 @@ const Checkout = () => {
               .eq('id', order.id);
 
             clearCart();
-            toast({
-              title: "Payment Successful!",
-              description: "Your order has been placed successfully.",
-            });
-            navigate('/profile?tab=orders');
+            navigate('/payment/success');
           } catch (error) {
             console.error('Payment update error:', error);
-            toast({
-              title: "Payment Successful but Order Update Failed",
-              description: "Please contact support for assistance.",
-              variant: "destructive"
-            });
+            navigate('/payment/failure');
           }
         },
         prefill: {
@@ -276,11 +268,7 @@ const Checkout = () => {
         modal: {
           ondismiss: () => {
             setLoading(false);
-            toast({
-              title: "Payment Cancelled",
-              description: "You can try again when ready.",
-              variant: "destructive"
-            });
+            navigate('/payment/failure');
           }
         }
       };
@@ -290,11 +278,7 @@ const Checkout = () => {
 
     } catch (error) {
       console.error('Payment initiation error:', error);
-      toast({
-        title: "Payment Failed",
-        description: "Unable to initiate payment. Please try again.",
-        variant: "destructive"
-      });
+      navigate('/payment/failure');
       setLoading(false);
     }
   };
