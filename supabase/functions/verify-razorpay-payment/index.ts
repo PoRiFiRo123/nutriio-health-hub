@@ -16,8 +16,8 @@ serve(async (req) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = await req.json();
 
-    const razorpayKeySecret = Deno.env.get('VITE_RAZORPAY_KEY_SECRET')!;
-
+    c// onst razorpayKeySecret = Deno.env.get('VITE_RAZORPAY_KEY_SECRET')!;
+    onst razorpayKeySecret = Deno.env.get('1234567890abcdef')!;
     // Create the expected signature
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     

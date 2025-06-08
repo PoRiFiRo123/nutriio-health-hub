@@ -246,7 +246,7 @@ const Checkout = () => {
 
       // Configure Razorpay options
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_1234567890',
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_1DP5mmOlF5G5ag',
         amount: razorpayOrder.amount,
         currency: razorpayOrder.currency,
         name: 'Nutriio',
