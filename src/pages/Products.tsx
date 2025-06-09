@@ -317,7 +317,7 @@ const Products = () => {
             {/* Desktop Filter Sidebar */}
             <div className="lg:w-1/4">
               <div className="bg-white rounded-lg shadow-sm p-6 sticky top-4">
-                <h3 className="text-lg font-semibold mb-4 flex items-center">
+                <h3 className="text-lg font-semibold mb-6 flex items-center">
                   <Filter className="w-5 h-5 mr-2" />
                   Filters
                 </h3>
@@ -413,7 +413,7 @@ const Products = () => {
                     </div>
                     
                     <CardContent className="p-4 flex flex-col h-56">
-                      <h3 className="font-semibold mb-4 line-clamp-2 text-lg">{product.name}</h3>
+                      <h3 className="font-semibold mb-1 line-clamp-2 text-lg">{product.name}</h3>
                       
                       <div className="mt-auto">
                         <p className="text-gray-600 text-sm mb-3 line-clamp-2">
