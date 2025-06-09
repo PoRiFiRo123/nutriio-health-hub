@@ -411,37 +411,39 @@ const Products = () => {
                       )}
                     </div>
                     
-                    <CardContent className="p-4">
-                      <h3 className="font-semibold mb-2 line-clamp-2 text-lg">{product.name}</h3>
+                    <CardContent className="p-4 flex flex-col h-48">
+                      <h3 className="font-semibold mb-2 line-clamp-2 text-lg flex-grow">{product.name}</h3>
                       <p className="text-gray-600 text-sm mb-3 line-clamp-2">
                         {product.description}
                       </p>
                       
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="font-bold text-orange-600 text-xl">
-                          ₹{product.price}
-                        </span>
-                        {product.rating && (
-                          <div className="flex items-center">
-                            <span className="text-yellow-500">★</span>
-                            <span className="text-sm text-gray-600 ml-1">
-                              {product.rating}
-                            </span>
-                          </div>
-                        )}
-                      </div>
+                      <div className="mt-auto">
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="font-bold text-orange-600 text-xl">
+                            ₹{product.price}
+                          </span>
+                          {product.rating && (
+                            <div className="flex items-center">
+                              <span className="text-yellow-500">★</span>
+                              <span className="text-sm text-gray-600 ml-1">
+                                {product.rating}
+                              </span>
+                            </div>
+                          )}
+                        </div>
 
-                      <Button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          addToCart(product);
-                        }}
-                        disabled={!product.in_stock}
-                        className="w-full bg-orange-600 hover:bg-orange-700"
-                      >
-                        <ShoppingCart className="mr-1 w-4 h-4" />
-                        {product.in_stock ? 'Add to Cart' : 'Out of Stock'}
-                      </Button>
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            addToCart(product);
+                          }}
+                          disabled={!product.in_stock}
+                          className="w-full bg-orange-600 hover:bg-orange-700"
+                        >
+                          <ShoppingCart className="mr-1 w-4 h-4" />
+                          {product.in_stock ? 'Add to Cart' : 'Out of Stock'}
+                        </Button>
+                      </div>
                     </CardContent>
                   </Card>
                 ))}
