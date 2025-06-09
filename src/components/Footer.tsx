@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Leaf, Mail, Phone, MapPin, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Footer = () => {
@@ -27,8 +26,8 @@ const Footer = () => {
             {/* Company Info */}
             <div className="space-y-4">
               <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate('/')}>
-                <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-amber-600 rounded-full flex items-center justify-center">
-                  <Leaf className="w-5 h-5 text-white" />
+                <div className="w-8 h-8 bg-gradient-to-r  rounded-full flex items-center justify-center">
+                  <img src="/favicon.ico" alt="Nutriio Logo" className="w-5 h-5" />
                 </div>
                 <h3 className="text-xl font-bold">Nutriio</h3>
               </div>
