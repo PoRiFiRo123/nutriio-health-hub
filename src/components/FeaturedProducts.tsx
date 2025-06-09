@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Star, Heart, ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +9,7 @@ const FeaturedProducts = () => {
     {
       id: 1,
       name: "Sprouted 4 in 1 Health Mix",
-      description: "Nutriio’s Sprouted 4-in-1 Health Mix blends sprouted ragi, wheat, bajra, and jowar for a protein- and fiber-rich boost.",
+      description: "Nutriio's Sprouted 4-in-1 Health Mix blends sprouted ragi, wheat, bajra, and jowar for a protein- and fiber-rich boost.",
       price: 210,
       originalPrice: 260,
       rating: 4.8,
@@ -49,7 +48,7 @@ const FeaturedProducts = () => {
     {
       id: 4,
       name: "Sprouted Peanut Chutney Pudi",
-      description: "Nutriio’s Sprouted Peanut Chutney Pudi combines sprouted peanuts and spices for a protein-rich, gut-friendly boost.",
+      description: "Nutriio's Sprouted Peanut Chutney Pudi combines sprouted peanuts and spices for a protein-rich, gut-friendly boost.",
       price: 399,
       originalPrice: 449,
       rating: 4.6,
@@ -101,7 +100,7 @@ const FeaturedProducts = () => {
                 <img 
                   src={product.image} 
                   alt={product.name}
-                  className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-64 object-contain bg-[#dbe1e1] transition-transform duration-500 group-hover:scale-110"
                 />
                 
                 {/* Badge */}
