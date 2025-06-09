@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
@@ -26,11 +25,8 @@ import {
   LogOut, 
   Package,
   MapPin,
-  Settings,
-  ChevronDown,
-  ChevronUp
+  Settings
 } from 'lucide-react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import SearchHeader from './SearchHeader';
 import ProductsDropdown from './ProductsDropdown';
 
@@ -42,7 +38,6 @@ interface Category {
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [isProductsOpen, setIsProductsOpen] = useState(false);
   const { user, signOut } = useAuth();
   const { totalItems } = useCart();
   const navigate = useNavigate();
@@ -243,22 +238,16 @@ const Header = () => {
                       Home
                     </Link>
                     
-                    {/* Products with Categories */}
-                    <Collapsible open={isProductsOpen} onOpenChange={setIsProductsOpen}>
-                      <CollapsibleTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          className="w-full justify-between p-0 h-auto text-gray-700 hover:text-orange-600 transition-colors py-2"
-                        >
-                          Products
-                          {isProductsOpen ? (
-                            <ChevronUp className="w-4 h-4" />
-                          ) : (
-                            <ChevronDown className="w-4 h-4" />
-                          )}
-                        </Button>
-                      </CollapsibleTrigger>
-                      <CollapsibleContent className="ml-4 mt-2 space-y-2">
+                    {/* Products with Categories as Default Submenu */}
+                    <div>
+                      <Link 
+                        to="/products" 
+                        className="text-gray-700 hover:text-orange-600 transition-colors py-2 block"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        Products
+                      </Link>
+                      <div className="ml-4 mt-2 space-y-2">
                         <Link 
                           to="/products" 
                           className="block text-gray-600 hover:text-orange-600 transition-colors py-1 text-sm"
@@ -275,8 +264,8 @@ const Header = () => {
                             {category.name}
                           </button>
                         ))}
-                      </CollapsibleContent>
-                    </Collapsible>
+                      </div>
+                    </div>
                     
                     <Link 
                       to="/blog" 

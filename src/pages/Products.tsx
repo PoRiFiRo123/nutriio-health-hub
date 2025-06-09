@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -269,26 +268,36 @@ const Products = () => {
                       )}
                     </div>
                     
-                    <CardContent className="p-3">
-                      <h3 className="font-semibold mb-2 line-clamp-2 text-sm">{product.name}</h3>
+                    <CardContent className="p-3 flex flex-col h-32">
+                      <h3 className="font-semibold mb-2 line-clamp-2 text-sm flex-grow">{product.name}</h3>
                       
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="font-bold text-orange-600 text-lg">
-                          ₹{product.price}
-                        </span>
-                      </div>
+                      <div className="mt-auto">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-bold text-orange-600 text-sm">
+                            ₹{product.price}
+                          </span>
+                          {product.rating && (
+                            <div className="flex items-center">
+                              <span className="text-yellow-500 text-xs">★</span>
+                              <span className="text-xs text-gray-600 ml-1">
+                                {product.rating}
+                              </span>
+                            </div>
+                          )}
+                        </div>
 
-                      <Button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          addToCart(product);
-                        }}
-                        disabled={!product.in_stock}
-                        className="w-full bg-orange-600 hover:bg-orange-700 text-xs py-1 h-8"
-                      >
-                        <ShoppingCart className="mr-1 w-3 h-3" />
-                        {product.in_stock ? 'Add to Cart' : 'Out of Stock'}
-                      </Button>
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            addToCart(product);
+                          }}
+                          disabled={!product.in_stock}
+                          className="w-full bg-orange-600 hover:bg-orange-700 text-xs py-1 h-7"
+                        >
+                          <ShoppingCart className="mr-1 w-3 h-3" />
+                          {product.in_stock ? 'Add to Cart' : 'Out of Stock'}
+                        </Button>
+                      </div>
                     </CardContent>
                   </Card>
                 ))}
