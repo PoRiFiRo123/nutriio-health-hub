@@ -66,6 +66,10 @@ const PaymentSuccess = () => {
             Your order has been placed successfully. You can view your order details in your profile.
           </p>
 
+          <p className="text-gray-600 mb-8">
+            The order will be shown in the "Order Details" page after payment verification
+          </p>
+
           <Button
             onClick={() => navigate('/profile?tab=orders')}
             className="w-full bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700"
