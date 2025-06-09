@@ -211,13 +211,6 @@ const Checkout = () => {
     setLoading(true);
 
     try {
-      // Create order first
-      const order = await createOrder();
-      if (!order) {
-        setLoading(false);
-        return;
-      }
-
       // Load Razorpay script
       const scriptLoaded = await loadRazorpayScript();
       if (!scriptLoaded) {
@@ -236,7 +229,13 @@ const Checkout = () => {
           try {
             console.log('Payment successful:', response);
             
-            // Update order status
+            // Create order only after successful payment
+            const order = await createOrder();
+            if (!order) {
+              throw new Error('Failed to create order');
+            }
+
+            // Update order with payment details
             await supabase
               .from('orders')
               .update({
@@ -257,10 +256,6 @@ const Checkout = () => {
           name: customerDetails.name || user.email,
           email: user.email,
           contact: customerDetails.phone
-        },
-        notes: {
-          order_id: order.id,
-          order_number: order.order_number
         },
         theme: {
           color: '#ea580c'

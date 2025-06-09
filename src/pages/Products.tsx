@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -251,7 +250,7 @@ const Products = () => {
                       <img
                         src={product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"}
                         alt={product.name}
-                        className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-32 object-contain bg-[#dbe1e1] group-hover:scale-105 transition-transform duration-300"
                       />
                       <button
                         onClick={(e) => {
@@ -394,7 +393,7 @@ const Products = () => {
                       <img
                         src={product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"}
                         alt={product.name}
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-48 object-contain bg-[#dbe1e1] group-hover:scale-105 transition-transform duration-300"
                       />
                       <button
                         onClick={(e) => {
