@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { useCart } from '@/hooks/useCart';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -24,16 +26,45 @@ import {
   LogOut, 
   Package,
   MapPin,
-  Settings
+  Settings,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import SearchHeader from './SearchHeader';
 import ProductsDropdown from './ProductsDropdown';
 
+interface Category {
+  id: string;
+  name: string;
+}
+
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [isProductsOpen, setIsProductsOpen] = useState(false);
   const { user, signOut } = useAuth();
   const { totalItems } = useCart();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('categories')
+        .select('*');
+      
+      if (error) throw error;
+      if (data && Array.isArray(data)) {
+        setCategories(data as Category[]);
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
 
   const handleSignOut = async () => {
     await signOut();
@@ -42,6 +73,11 @@ const Header = () => {
 
   const getInitials = (email: string) => {
     return email?.charAt(0).toUpperCase() || 'U';
+  };
+
+  const handleCategoryClick = (categoryName: string) => {
+    navigate(`/products?category=${categoryName}`);
+    setIsOpen(false);
   };
 
   return (
@@ -206,13 +242,42 @@ const Header = () => {
                     >
                       Home
                     </Link>
-                    <Link 
-                      to="/products" 
-                      className="text-gray-700 hover:text-orange-600 transition-colors py-2"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Products
-                    </Link>
+                    
+                    {/* Products with Categories */}
+                    <Collapsible open={isProductsOpen} onOpenChange={setIsProductsOpen}>
+                      <CollapsibleTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          className="w-full justify-between p-0 h-auto text-gray-700 hover:text-orange-600 transition-colors py-2"
+                        >
+                          Products
+                          {isProductsOpen ? (
+                            <ChevronUp className="w-4 h-4" />
+                          ) : (
+                            <ChevronDown className="w-4 h-4" />
+                          )}
+                        </Button>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="ml-4 mt-2 space-y-2">
+                        <Link 
+                          to="/products" 
+                          className="block text-gray-600 hover:text-orange-600 transition-colors py-1 text-sm"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          All Products
+                        </Link>
+                        {categories.map((category) => (
+                          <button
+                            key={category.id}
+                            onClick={() => handleCategoryClick(category.name)}
+                            className="block text-left text-gray-600 hover:text-orange-600 transition-colors py-1 text-sm w-full"
+                          >
+                            {category.name}
+                          </button>
+                        ))}
+                      </CollapsibleContent>
+                    </Collapsible>
+                    
                     <Link 
                       to="/blog" 
                       className="text-gray-700 hover:text-orange-600 transition-colors py-2"
