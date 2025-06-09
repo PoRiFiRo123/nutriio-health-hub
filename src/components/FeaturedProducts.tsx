@@ -10,7 +10,7 @@ const FeaturedProducts = () => {
     {
       id: 1,
       name: "Sprouted 4 in 1 Health Mix",
-      description: "Nutriio’s Sprouted 4-in-1 Health Mix blends sprouted ragi, wheat, bajra, and jowar for a protein- and fiber-rich boost. Packed with essential minerals like iron and calcium.",
+      description: "Nutriio’s Sprouted 4-in-1 Health Mix blends sprouted ragi, wheat, bajra, and jowar for a protein- and fiber-rich boost.",
       price: 210,
       originalPrice: 260,
       rating: 4.8,
