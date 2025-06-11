@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Star, Heart, ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -88,7 +89,7 @@ const FeaturedProducts = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
           {products.map((product) => (
             <div 
               key={product.id}
@@ -100,31 +101,31 @@ const FeaturedProducts = () => {
                 <img 
                   src={product.image} 
                   alt={product.name}
-                  className="w-full h-64 object-contain bg-[#dbe1e1] transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-32 md:h-64 object-contain bg-[#dbe1e1] transition-transform duration-500 group-hover:scale-110"
                 />
                 
                 {/* Badge */}
-                <div className="absolute top-3 left-3">
-                  <span className="bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                <div className="absolute top-2 md:top-3 left-2 md:left-3">
+                  <span className="bg-orange-500 text-white px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs font-medium">
                     {product.badge}
                   </span>
                 </div>
 
                 {/* Wishlist Button */}
                 <button 
-                  className="absolute top-3 right-3 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
+                  className="absolute top-2 md:top-3 right-2 md:right-3 p-1 md:p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <Heart className="w-4 h-4 text-gray-600 hover:text-red-500 transition-colors" />
+                  <Heart className="w-3 h-3 md:w-4 md:h-4 text-gray-600 hover:text-red-500 transition-colors" />
                 </button>
 
                 {/* Age Group */}
-                <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
+                <div className="absolute bottom-2 md:bottom-3 left-2 md:left-3 bg-white/90 backdrop-blur-sm rounded-full px-2 md:px-3 py-0.5 md:py-1">
                   <span className="text-xs font-medium text-gray-700">{product.ageGroup}</span>
                 </div>
 
-                {/* Quick Add Overlay */}
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                {/* Quick Add Overlay - Hidden on mobile */}
+                <div className="hidden md:flex absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center">
                   <button 
                     className="bg-white text-gray-900 px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors flex items-center space-x-2"
                     onClick={(e) => e.stopPropagation()}
@@ -136,16 +137,16 @@ const FeaturedProducts = () => {
               </div>
 
               {/* Content */}
-              <div className="p-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">
+              <div className="p-3 md:p-6">
+                <h3 className="text-sm md:text-lg font-bold text-gray-900 mb-1 md:mb-2 group-hover:text-orange-600 transition-colors line-clamp-2">
                   {product.name}
                 </h3>
-                <p className="text-gray-600 text-sm mb-3 leading-relaxed">
+                <p className="text-gray-600 text-xs md:text-sm mb-2 md:mb-3 leading-relaxed line-clamp-2 md:line-clamp-none">
                   {product.description}
                 </p>
 
-                {/* Rating */}
-                <div className="flex items-center space-x-1 mb-3">
+                {/* Rating - Hidden on mobile */}
+                <div className="hidden md:flex items-center space-x-1 mb-3">
                   <div className="flex space-x-1">
                     {renderStars(product.rating)}
                   </div>
@@ -155,19 +156,19 @@ const FeaturedProducts = () => {
                 </div>
 
                 {/* Price */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-xl font-bold text-gray-900">₹{product.price}</span>
-                    <span className="text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
+                <div className="flex items-center justify-between mb-2 md:mb-0">
+                  <div className="flex items-center space-x-1 md:space-x-2">
+                    <span className="text-sm md:text-xl font-bold text-gray-900">₹{product.price}</span>
+                    <span className="text-xs md:text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
                   </div>
-                  <div className="text-sm text-orange-600 font-medium">
+                  <div className="text-xs md:text-sm text-orange-600 font-medium">
                     Save ₹{product.originalPrice - product.price}
                   </div>
                 </div>
 
                 {/* Add to Cart Button */}
                 <button 
-                  className="w-full mt-4 bg-gradient-to-r from-orange-600 to-orange-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                  className="w-full mt-2 md:mt-4 bg-gradient-to-r from-orange-600 to-orange-600 text-white py-2 md:py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 text-xs md:text-base"
                   onClick={(e) => e.stopPropagation()}
                 >
                   Add to Cart
