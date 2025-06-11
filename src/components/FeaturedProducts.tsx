@@ -65,7 +65,7 @@ const FeaturedProducts = () => {
     return [...Array(5)].map((_, i) => (
       <Star 
         key={i} 
-        className={`w-4 h-4 transition-colors duration-200 ${i < Math.floor(rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
+        className={`w-4 h-4 ${i < Math.floor(rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
       />
     ));
   };
@@ -75,29 +75,25 @@ const FeaturedProducts = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 to-orange-50 overflow-hidden">
+    <section className="py-20 bg-gradient-to-br from-gray-50 to-orange-50">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4 animate-scale-in">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
             Featured
             <span className="bg-gradient-to-r from-orange-600 to-orange-600 bg-clip-text text-transparent"> Products</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto animate-fade-in animation-delay-200">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Hand-picked products loved by families nationwide
           </p>
         </div>
 
         {/* Products Grid */}
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-          {products.map((product, index) => (
+          {products.map((product) => (
             <div 
               key={product.id}
-              className={`group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 cursor-pointer animate-fade-in opacity-0`}
-              style={{ 
-                animationDelay: `${index * 150}ms`,
-                animationFillMode: 'forwards'
-              }}
+              className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 cursor-pointer"
               onClick={() => handleProductClick(product.slug)}
             >
               {/* Image Container */}
@@ -105,11 +101,11 @@ const FeaturedProducts = () => {
                 <img 
                   src={product.image} 
                   alt={product.name}
-                  className="w-full h-32 md:h-64 object-contain bg-[#dbe1e1] transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-32 md:h-64 object-contain bg-[#dbe1e1] transition-transform duration-500 group-hover:scale-110"
                 />
                 
                 {/* Badge */}
-                <div className="absolute top-2 md:top-3 left-2 md:left-3 transform -translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                <div className="absolute top-2 md:top-3 left-2 md:left-3">
                   <span className="bg-orange-500 text-white px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs font-medium">
                     {product.badge}
                   </span>
@@ -117,21 +113,21 @@ const FeaturedProducts = () => {
 
                 {/* Wishlist Button */}
                 <button 
-                  className="absolute top-2 md:top-3 right-2 md:right-3 p-1 md:p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-all duration-300 transform translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
+                  className="absolute top-2 md:top-3 right-2 md:right-3 p-1 md:p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <Heart className="w-3 h-3 md:w-4 md:h-4 text-gray-600 hover:text-red-500 transition-colors" />
                 </button>
 
                 {/* Age Group */}
-                <div className="absolute bottom-2 md:bottom-3 left-2 md:left-3 bg-white/90 backdrop-blur-sm rounded-full px-2 md:px-3 py-0.5 md:py-1 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 delay-75">
+                <div className="absolute bottom-2 md:bottom-3 left-2 md:left-3 bg-white/90 backdrop-blur-sm rounded-full px-2 md:px-3 py-0.5 md:py-1">
                   <span className="text-xs font-medium text-gray-700">{product.ageGroup}</span>
                 </div>
 
                 {/* Quick Add Overlay - Hidden on mobile */}
                 <div className="hidden md:flex absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center">
                   <button 
-                    className="bg-white text-gray-900 px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-all duration-300 flex items-center space-x-2 transform scale-75 group-hover:scale-100"
+                    className="bg-white text-gray-900 px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors flex items-center space-x-2"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <ShoppingCart className="w-4 h-4" />
@@ -142,15 +138,15 @@ const FeaturedProducts = () => {
 
               {/* Content */}
               <div className="p-3 md:p-6">
-                <h3 className="text-sm md:text-lg font-bold text-gray-900 mb-1 md:mb-2 group-hover:text-orange-600 transition-colors line-clamp-2 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                <h3 className="text-sm md:text-lg font-bold text-gray-900 mb-1 md:mb-2 group-hover:text-orange-600 transition-colors line-clamp-2">
                   {product.name}
                 </h3>
-                <p className="text-gray-600 text-xs md:text-sm mb-2 md:mb-3 leading-relaxed line-clamp-2 md:line-clamp-none transform translate-y-2 opacity-70 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 delay-75">
+                <p className="text-gray-600 text-xs md:text-sm mb-2 md:mb-3 leading-relaxed line-clamp-2 md:line-clamp-none">
                   {product.description}
                 </p>
 
                 {/* Rating - Hidden on mobile */}
-                <div className="hidden md:flex items-center space-x-1 mb-3 transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 delay-100">
+                <div className="hidden md:flex items-center space-x-1 mb-3">
                   <div className="flex space-x-1">
                     {renderStars(product.rating)}
                   </div>
@@ -160,7 +156,7 @@ const FeaturedProducts = () => {
                 </div>
 
                 {/* Price */}
-                <div className="flex items-center justify-between mb-2 md:mb-0 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-150">
+                <div className="flex items-center justify-between mb-2 md:mb-0">
                   <div className="flex items-center space-x-1 md:space-x-2">
                     <span className="text-sm md:text-xl font-bold text-gray-900">₹{product.price}</span>
                     <span className="text-xs md:text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
@@ -172,7 +168,7 @@ const FeaturedProducts = () => {
 
                 {/* Add to Cart Button */}
                 <button 
-                  className="w-full mt-2 md:mt-4 bg-gradient-to-r from-orange-600 to-orange-600 text-white py-2 md:py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 text-xs md:text-base hover:scale-105"
+                  className="w-full mt-2 md:mt-4 bg-gradient-to-r from-orange-600 to-orange-600 text-white py-2 md:py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 text-xs md:text-base"
                   onClick={(e) => e.stopPropagation()}
                 >
                   Add to Cart
@@ -183,10 +179,10 @@ const FeaturedProducts = () => {
         </div>
 
         {/* View All Button */}
-        <div className="text-center mt-12 animate-fade-in animation-delay-600">
+        <div className="text-center mt-12">
           <button 
             onClick={() => navigate('/products')}
-            className="border-2 border-orange-600 text-orange-600 px-8 py-3 rounded-full font-semibold hover:bg-orange-50 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+            className="border-2 border-orange-600 text-orange-600 px-8 py-3 rounded-full font-semibold hover:bg-orange-50 transition-colors"
           >
             View All Products
           </button>

@@ -62,29 +62,25 @@ const ProductCategories = () => {
   };
 
   return (
-    <section className="py-20 bg-white overflow-hidden">
+    <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4 animate-scale-in">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
             Explore Our
             <span className="bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent"> Categories</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto animate-fade-in animation-delay-200">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             From superfoods to ready-to-cook meals, discover products crafted for your family's health and happiness
           </p>
         </div>
 
         {/* Categories Grid */}
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-          {categories.map((category, index) => (
+          {categories.map((category) => (
             <div 
               key={category.id} 
-              className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 cursor-pointer animate-fade-in opacity-0`}
-              style={{ 
-                animationDelay: `${index * 100}ms`,
-                animationFillMode: 'forwards'
-              }}
+              className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 cursor-pointer"
               onClick={() => handleCategoryClick(category.name)}
             >
               {/* Background Gradient */}
@@ -95,23 +91,23 @@ const ProductCategories = () => {
                 <img 
                   src={category.image} 
                   alt={category.name}
-                  className="w-full h-32 md:h-48 object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-32 md:h-48 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="absolute top-2 md:top-4 right-2 md:right-4 bg-white/90 backdrop-blur-sm rounded-full px-2 md:px-3 py-1 transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                <div className="absolute top-2 md:top-4 right-2 md:right-4 bg-white/90 backdrop-blur-sm rounded-full px-2 md:px-3 py-1">
                   <span className="text-xs md:text-sm font-medium text-gray-700">{category.products}</span>
                 </div>
               </div>
 
               {/* Content */}
               <div className="p-3 md:p-6">
-                <h3 className="text-sm md:text-xl font-bold text-gray-900 mb-1 md:mb-2 group-hover:text-orange-600 transition-colors line-clamp-2 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                <h3 className="text-sm md:text-xl font-bold text-gray-900 mb-1 md:mb-2 group-hover:text-orange-600 transition-colors line-clamp-2">
                   {category.name}
                 </h3>
-                <p className="text-gray-600 text-xs md:text-base mb-2 md:mb-4 leading-relaxed line-clamp-2 md:line-clamp-none transform translate-y-2 opacity-70 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 delay-75">
+                <p className="text-gray-600 text-xs md:text-base mb-2 md:mb-4 leading-relaxed line-clamp-2 md:line-clamp-none">
                   {category.description}
                 </p>
                 
-                <div className="flex items-center text-orange-600 font-semibold hover:text-orange-700 transition-colors group text-xs md:text-base transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 delay-150">
+                <div className="flex items-center text-orange-600 font-semibold hover:text-orange-700 transition-colors group text-xs md:text-base">
                   Explore Category
                   <ArrowRight className="w-3 h-3 md:w-4 md:h-4 ml-1 md:ml-2 transform group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -124,10 +120,10 @@ const ProductCategories = () => {
         </div>
 
         {/* CTA Section */}
-        <div className="text-center mt-16 animate-fade-in animation-delay-600">
+        <div className="text-center mt-16">
           <button 
             onClick={() => navigate('/products')}
-            className="bg-gradient-to-r from-orange-600 to-amber-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 hover:scale-105"
+            className="bg-gradient-to-r from-orange-600 to-amber-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
           >
             View All Products
           </button>
