@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -75,7 +76,7 @@ const ProductCategories = () => {
         </div>
 
         {/* Categories Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
           {categories.map((category) => (
             <div 
               key={category.id} 
@@ -90,25 +91,25 @@ const ProductCategories = () => {
                 <img 
                   src={category.image} 
                   alt={category.name}
-                  className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-32 md:h-48 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
-                  <span className="text-sm font-medium text-gray-700">{category.products}</span>
+                <div className="absolute top-2 md:top-4 right-2 md:right-4 bg-white/90 backdrop-blur-sm rounded-full px-2 md:px-3 py-1">
+                  <span className="text-xs md:text-sm font-medium text-gray-700">{category.products}</span>
                 </div>
               </div>
 
               {/* Content */}
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">
+              <div className="p-3 md:p-6">
+                <h3 className="text-sm md:text-xl font-bold text-gray-900 mb-1 md:mb-2 group-hover:text-orange-600 transition-colors line-clamp-2">
                   {category.name}
                 </h3>
-                <p className="text-gray-600 mb-4 leading-relaxed">
+                <p className="text-gray-600 text-xs md:text-base mb-2 md:mb-4 leading-relaxed line-clamp-2 md:line-clamp-none">
                   {category.description}
                 </p>
                 
-                <div className="flex items-center text-orange-600 font-semibold hover:text-orange-700 transition-colors group">
+                <div className="flex items-center text-orange-600 font-semibold hover:text-orange-700 transition-colors group text-xs md:text-base">
                   Explore Category
-                  <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-3 h-3 md:w-4 md:h-4 ml-1 md:ml-2 transform group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
 

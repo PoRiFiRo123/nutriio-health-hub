@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +13,13 @@ const Footer = () => {
     'Healthy Snacks',
     'Organic Oils',
     'Natural Salts & Jaggery'
+  ];
+
+  const socialLinks = [
+    { icon: Facebook, url: "https://facebook.com/nutriio", label: "Facebook" },
+    { icon: Instagram, url: "https://instagram.com/nutriio", label: "Instagram" },
+    { icon: Twitter, url: "https://twitter.com/nutriio", label: "Twitter" },
+    { icon: Youtube, url: "https://youtube.com/nutriio", label: "YouTube" }
   ];
 
   const handleCategoryClick = (category: string) => {
@@ -35,10 +43,18 @@ const Footer = () => {
                 Premium superfoods, sprouted flours, and healthy snacks crafted with love for your family's wellness journey.
               </p>
               <div className="flex space-x-4">
-                <Facebook className="w-5 h-5 text-gray-400 hover:text-orange-500 cursor-pointer transition-colors" />
-                <Instagram className="w-5 h-5 text-gray-400 hover:text-orange-500 cursor-pointer transition-colors" />
-                <Twitter className="w-5 h-5 text-gray-400 hover:text-orange-500 cursor-pointer transition-colors" />
-                <Youtube className="w-5 h-5 text-gray-400 hover:text-orange-500 cursor-pointer transition-colors" />
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-orange-500 cursor-pointer transition-colors"
+                    aria-label={social.label}
+                  >
+                    <social.icon className="w-5 h-5" />
+                  </a>
+                ))}
               </div>
             </div>
 
