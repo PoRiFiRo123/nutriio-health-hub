@@ -8,6 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { useCart } from '@/hooks/useCart';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useToast } from '@/hooks/use-toast';
 
 interface Product {
   id: string;
@@ -40,6 +41,7 @@ const Products = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { addItem, getItemQuantity, updateQuantity } = useCart();
   const isMobile = useIsMobile();
+  const { toast } = useToast();
 
   useEffect(() => {
     fetchProducts();
@@ -120,13 +122,43 @@ const Products = () => {
       price: product.price,
       image: product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"
     });
+    
+    toast({
+      title: "Added to cart",
+      description: `${product.name} has been added to your cart`,
+      duration: 3000,
+    });
   };
 
   const handleQuantityChange = (productId: string, change: number) => {
     const currentQuantity = getItemQuantity(productId);
     const newQuantity = currentQuantity + change;
+    const product = products.find(p => p.id === productId);
+    
     if (newQuantity >= 0) {
       updateQuantity(productId, newQuantity);
+      
+      if (product) {
+        if (change > 0) {
+          toast({
+            title: "Added to cart",
+            description: `${product.name} quantity increased`,
+            duration: 3000,
+          });
+        } else if (newQuantity === 0) {
+          toast({
+            title: "Removed from cart",
+            description: `${product.name} has been removed from your cart`,
+            duration: 3000,
+          });
+        } else {
+          toast({
+            title: "Updated cart",
+            description: `${product.name} quantity decreased`,
+            duration: 3000,
+          });
+        }
+      }
     }
   };
 
@@ -295,7 +327,7 @@ const Products = () => {
                               {product.in_stock ? 'Add to Cart' : 'Out of Stock'}
                             </Button>
                           ) : (
-                            <div className="w-full flex items-center justify-center bg-orange-50 border border-orange-200 rounded-md py-1">
+                            <div className="w-full flex items-center justify-between bg-orange-50 border border-orange-200 rounded-md py-1 px-2">
                               <button
                                 className="p-1 hover:bg-orange-100 rounded-full transition-colors"
                                 onClick={(e) => {
@@ -306,7 +338,7 @@ const Products = () => {
                                 <Minus className="w-3 h-3 text-orange-600" />
                               </button>
                               
-                              <span className="mx-2 font-bold text-orange-600 text-xs">
+                              <span className="font-bold text-orange-600 text-xs">
                                 {itemQuantity}
                               </span>
                               
@@ -421,7 +453,7 @@ const Products = () => {
                         <img
                           src={product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"}
                           alt={product.name}
-                          className="w-full h-48 object-contain bg-[#dbe1e1] group-hover:scale-105 transition-transform duration-300"
+                          className="w-full h-64 object-contain bg-[#dbe1e1] group-hover:scale-105 transition-transform duration-300"
                         />
                         {!product.in_stock && (
                           <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -430,11 +462,11 @@ const Products = () => {
                         )}
                       </div>
                       
-                      <CardContent className="p-4 flex flex-col h-56">
+                      <CardContent className="p-4 flex flex-col h-72">
                         <h3 className="font-semibold mb-4 line-clamp-2 text-lg">{product.name}</h3>
                         
                         <div className="mt-auto">
-                          <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                          <p className="text-gray-600 text-sm mb-3 line-clamp-3">
                             {product.description}
                           </p>
                           
@@ -465,7 +497,7 @@ const Products = () => {
                               {product.in_stock ? 'Add to Cart' : 'Out of Stock'}
                             </Button>
                           ) : (
-                            <div className="w-full flex items-center justify-center bg-orange-50 border border-orange-200 rounded-md py-3">
+                            <div className="w-full flex items-center justify-between bg-orange-50 border border-orange-200 rounded-md py-3 px-4">
                               <button
                                 className="p-2 hover:bg-orange-100 rounded-full transition-colors"
                                 onClick={(e) => {
@@ -476,7 +508,7 @@ const Products = () => {
                                 <Minus className="w-4 h-4 text-orange-600" />
                               </button>
                               
-                              <span className="mx-4 font-bold text-orange-600 text-base">
+                              <span className="font-bold text-orange-600 text-base">
                                 {itemQuantity}
                               </span>
                               

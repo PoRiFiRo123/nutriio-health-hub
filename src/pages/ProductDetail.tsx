@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -6,6 +5,7 @@ import { ArrowLeft, ShoppingCart, Star, Plus, Minus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useCart } from '@/hooks/useCart';
+import { useToast } from '@/hooks/use-toast';
 
 interface Product {
   id: string;
@@ -33,6 +33,7 @@ const ProductDetail = () => {
   const [category, setCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(true);
   const { addItem, getItemQuantity, updateQuantity } = useCart();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (slug) {
@@ -80,6 +81,12 @@ const ProductDetail = () => {
         price: product.price,
         image: product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"
       });
+      
+      toast({
+        title: "Added to cart",
+        description: `${product.name} has been added to your cart`,
+        duration: 3000,
+      });
     }
   };
 
@@ -89,6 +96,26 @@ const ProductDetail = () => {
       const newQuantity = currentQuantity + change;
       if (newQuantity >= 0) {
         updateQuantity(product.id, newQuantity);
+        
+        if (change > 0) {
+          toast({
+            title: "Added to cart",
+            description: `${product.name} quantity increased`,
+            duration: 3000,
+          });
+        } else if (newQuantity === 0) {
+          toast({
+            title: "Removed from cart",
+            description: `${product.name} has been removed from your cart`,
+            duration: 3000,
+          });
+        } else {
+          toast({
+            title: "Updated cart",
+            description: `${product.name} quantity decreased`,
+            duration: 3000,
+          });
+        }
       }
     }
   };
@@ -187,7 +214,7 @@ const ProductDetail = () => {
                   {product.in_stock ? 'Add to Cart' : 'Out of Stock'}
                 </Button>
               ) : (
-                <div className="flex-1 flex items-center justify-center bg-orange-50 border border-orange-200 rounded-md h-10 sm:h-11">
+                <div className="flex-1 flex items-center justify-between bg-orange-50 border border-orange-200 rounded-md h-10 sm:h-11 px-4">
                   <button
                     className="p-2 hover:bg-orange-100 rounded-full transition-colors"
                     onClick={() => handleQuantityChange(-1)}
@@ -195,7 +222,7 @@ const ProductDetail = () => {
                     <Minus className="w-4 h-4 text-orange-600" />
                   </button>
                   
-                  <span className="mx-4 font-bold text-orange-600 text-base sm:text-lg">
+                  <span className="font-bold text-orange-600 text-base sm:text-lg">
                     {itemQuantity} in cart
                   </span>
                   

@@ -3,10 +3,12 @@ import React from 'react';
 import { Star, ShoppingCart, Plus, Minus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/hooks/useCart';
+import { useToast } from '@/hooks/use-toast';
 
 const FeaturedProducts = () => {
   const navigate = useNavigate();
   const { addItem, getItemQuantity, updateQuantity } = useCart();
+  const { toast } = useToast();
 
   const products = [
     {
@@ -83,13 +85,43 @@ const FeaturedProducts = () => {
       price: product.price,
       image: product.image
     });
+    
+    toast({
+      title: "Added to cart",
+      description: `${product.name} has been added to your cart`,
+      duration: 3000,
+    });
   };
 
   const handleQuantityChange = (productId: string, change: number) => {
     const currentQuantity = getItemQuantity(productId);
     const newQuantity = currentQuantity + change;
+    const product = products.find(p => p.id === productId);
+    
     if (newQuantity >= 0) {
       updateQuantity(productId, newQuantity);
+      
+      if (product) {
+        if (change > 0) {
+          toast({
+            title: "Added to cart",
+            description: `${product.name} quantity increased`,
+            duration: 3000,
+          });
+        } else if (newQuantity === 0) {
+          toast({
+            title: "Removed from cart",
+            description: `${product.name} has been removed from your cart`,
+            duration: 3000,
+          });
+        } else {
+          toast({
+            title: "Updated cart",
+            description: `${product.name} quantity decreased`,
+            duration: 3000,
+          });
+        }
+      }
     }
   };
 
@@ -195,7 +227,7 @@ const FeaturedProducts = () => {
                       Add to Cart
                     </button>
                   ) : (
-                    <div className="w-full mt-2 md:mt-4 flex items-center justify-center bg-orange-50 border border-orange-200 rounded-xl py-2 md:py-3">
+                    <div className="w-full mt-2 md:mt-4 flex items-center justify-between bg-orange-50 border border-orange-200 rounded-xl py-2 md:py-3 px-2 md:px-4">
                       <button
                         className="p-1 md:p-2 hover:bg-orange-100 rounded-full transition-colors"
                         onClick={(e) => {
@@ -206,7 +238,7 @@ const FeaturedProducts = () => {
                         <Minus className="w-3 h-3 md:w-4 md:h-4 text-orange-600" />
                       </button>
                       
-                      <span className="mx-3 md:mx-4 font-bold text-orange-600 text-sm md:text-base">
+                      <span className="font-bold text-orange-600 text-sm md:text-base">
                         {itemQuantity}
                       </span>
                       
