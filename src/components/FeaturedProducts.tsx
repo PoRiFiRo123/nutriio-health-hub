@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Star, ShoppingCart, Plus, Minus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -35,7 +34,7 @@ const FeaturedProducts = () => {
       image: "https://i.pinimg.com/736x/9b/38/79/9b387998d9cd5e81cc7bf55d143d9df3.jpg?w=300&h=300&fit=crop",
       badge: "New",
       ageGroup: "All ages",
-      slug: "organic-quinoa"
+      slug: "sprouted-whole-wheat-flour"
     },
     {
       id: "3",
@@ -215,44 +214,16 @@ const FeaturedProducts = () => {
                     </div>
                   </div>
 
-                  {/* Add to Cart Button or Quantity Controller */}
-                  {itemQuantity === 0 ? (
-                    <button 
-                      className="w-full mt-2 md:mt-4 bg-gradient-to-r from-orange-600 to-orange-600 text-white py-2 md:py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 text-xs md:text-base"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleAddToCart(product);
-                      }}
-                    >
-                      Add to Cart
-                    </button>
-                  ) : (
-                    <div className="w-full mt-2 md:mt-4 flex items-center justify-between bg-orange-50 border border-orange-200 rounded-xl py-2 md:py-3 px-2 md:px-4">
-                      <button
-                        className="p-1 md:p-2 hover:bg-orange-100 rounded-full transition-colors"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleQuantityChange(product.id, -1);
-                        }}
-                      >
-                        <Minus className="w-3 h-3 md:w-4 md:h-4 text-orange-600" />
-                      </button>
-                      
-                      <span className="font-bold text-orange-600 text-sm md:text-base">
-                        {itemQuantity}
-                      </span>
-                      
-                      <button
-                        className="p-1 md:p-2 hover:bg-orange-100 rounded-full transition-colors"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleQuantityChange(product.id, 1);
-                        }}
-                      >
-                        <Plus className="w-3 h-3 md:w-4 md:h-4 text-orange-600" />
-                      </button>
-                    </div>
-                  )}
+                  {/* Explore Product Button */}
+                  <button 
+                    className="w-full mt-2 md:mt-4 bg-gradient-to-r from-orange-600 to-orange-600 text-white py-2 md:py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 text-xs md:text-base"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleProductClick(product.slug);
+                    }}
+                  >
+                    Explore Product
+                  </button>
                 </div>
               </div>
             );

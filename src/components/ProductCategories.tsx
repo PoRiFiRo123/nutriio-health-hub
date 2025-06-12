@@ -49,7 +49,7 @@ const ProductCategories = () => {
     },
     {
       id: 6,
-      name: "Activated Millet Flours ",
+      name: "Activated Millet Flours",
       description: "Unprocessed, mineral-rich sweeteners and salts",
       image: "https://i.pinimg.com/736x/11/66/b8/1166b8888b880f4c20567311276b75cf.jpg?w=300&h=200&fit=crop",
       color: "from-amber-500 to-orange-500",
