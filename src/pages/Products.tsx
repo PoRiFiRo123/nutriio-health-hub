@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent } from '@/components/ui/card';
@@ -175,7 +176,7 @@ const Products = () => {
                 <Card key={product.id} className="group hover:shadow-lg transition-shadow duration-300 overflow-hidden">
                   <CardContent className="p-0 relative">
                     {/* Product Image */}
-                    <div className="aspect-square overflow-hidden bg-white">
+                    <div className="aspect-[4/3] overflow-hidden bg-white">
                       <img
                         src={product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"}
                         alt={product.name}
