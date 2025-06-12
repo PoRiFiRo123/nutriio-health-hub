@@ -1,14 +1,16 @@
 
 import React from 'react';
-import { Star, Heart, ShoppingCart } from 'lucide-react';
+import { Star, ShoppingCart, Plus, Minus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useCart } from '@/hooks/useCart';
 
 const FeaturedProducts = () => {
   const navigate = useNavigate();
+  const { addItem, getItemQuantity, updateQuantity } = useCart();
 
   const products = [
     {
-      id: 1,
+      id: "1",
       name: "Sprouted 4 in 1 Health Mix",
       description: "Nutriio's Sprouted 4-in-1 Health Mix blends sprouted ragi, wheat, bajra, and jowar for a protein- and fiber-rich boost.",
       price: 210,
@@ -21,7 +23,7 @@ const FeaturedProducts = () => {
       slug: "sprouted-four-in-one"
     },
     {
-      id: 2,
+      id: "2",
       name: "Sprouted Whole Wheat Flour",
       description: "Nutriio's Sprouted Whole Wheat Flour is a nutrient-rich, easily digestible flour made from sprouted whole grains.",
       price: 140,
@@ -34,7 +36,7 @@ const FeaturedProducts = () => {
       slug: "organic-quinoa"
     },
     {
-      id: 3,
+      id: "3",
       name: "Sprouted Millet Butter Cookies",
       description: "Nutriio's Sprouted Millet Butter Cookies blend ragi, bajra, and jowar with creamy butter for a tasty, nutritious snack.",
       price: 130,
@@ -47,7 +49,7 @@ const FeaturedProducts = () => {
       slug: "sprouted-millet-butter-cookies"
     },
     {
-      id: 4,
+      id: "4",
       name: "Sprouted Peanut Chutney Pudi",
       description: "Nutriio's Sprouted Peanut Chutney Pudi combines sprouted peanuts and spices for a protein-rich, gut-friendly boost.",
       price: 399,
@@ -74,6 +76,23 @@ const FeaturedProducts = () => {
     navigate(`/products/${slug}`);
   };
 
+  const handleAddToCart = (product: any) => {
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image
+    });
+  };
+
+  const handleQuantityChange = (productId: string, change: number) => {
+    const currentQuantity = getItemQuantity(productId);
+    const newQuantity = currentQuantity + change;
+    if (newQuantity >= 0) {
+      updateQuantity(productId, newQuantity);
+    }
+  };
+
   return (
     <section className="py-20 bg-gradient-to-br from-gray-50 to-orange-50">
       <div className="container mx-auto px-4">
@@ -90,92 +109,122 @@ const FeaturedProducts = () => {
 
         {/* Products Grid */}
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-          {products.map((product) => (
-            <div 
-              key={product.id}
-              className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 cursor-pointer"
-              onClick={() => handleProductClick(product.slug)}
-            >
-              {/* Image Container */}
-              <div className="relative overflow-hidden">
-                <img 
-                  src={product.image} 
-                  alt={product.name}
-                  className="w-full h-32 md:h-64 object-contain bg-[#dbe1e1] transition-transform duration-500 group-hover:scale-110"
-                />
-                
-                {/* Badge */}
-                <div className="absolute top-2 md:top-3 left-2 md:left-3">
-                  <span className="bg-orange-500 text-white px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs font-medium">
-                    {product.badge}
-                  </span>
+          {products.map((product) => {
+            const itemQuantity = getItemQuantity(product.id);
+            
+            return (
+              <div 
+                key={product.id}
+                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 cursor-pointer"
+                onClick={() => handleProductClick(product.slug)}
+              >
+                {/* Image Container */}
+                <div className="relative overflow-hidden">
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-32 md:h-64 object-contain bg-[#dbe1e1] transition-transform duration-500 group-hover:scale-110"
+                  />
+                  
+                  {/* Badge */}
+                  <div className="absolute top-2 md:top-3 left-2 md:left-3">
+                    <span className="bg-orange-500 text-white px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs font-medium">
+                      {product.badge}
+                    </span>
+                  </div>
+
+                  {/* Age Group */}
+                  <div className="absolute bottom-2 md:bottom-3 left-2 md:left-3 bg-white/90 backdrop-blur-sm rounded-full px-2 md:px-3 py-0.5 md:py-1">
+                    <span className="text-xs font-medium text-gray-700">{product.ageGroup}</span>
+                  </div>
+
+                  {/* Quick Add Overlay - Hidden on mobile */}
+                  <div className="hidden md:flex absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center">
+                    <button 
+                      className="bg-white text-gray-900 px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors flex items-center space-x-2"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAddToCart(product);
+                      }}
+                    >
+                      <ShoppingCart className="w-4 h-4" />
+                      <span>Quick Add</span>
+                    </button>
+                  </div>
                 </div>
 
-                {/* Wishlist Button */}
-                <button 
-                  className="absolute top-2 md:top-3 right-2 md:right-3 p-1 md:p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <Heart className="w-3 h-3 md:w-4 md:h-4 text-gray-600 hover:text-red-500 transition-colors" />
-                </button>
+                {/* Content */}
+                <div className="p-3 md:p-6">
+                  <h3 className="text-sm md:text-lg font-bold text-gray-900 mb-1 md:mb-2 group-hover:text-orange-600 transition-colors line-clamp-2">
+                    {product.name}
+                  </h3>
+                  <p className="text-gray-600 text-xs md:text-sm mb-2 md:mb-3 leading-relaxed line-clamp-2 md:line-clamp-none">
+                    {product.description}
+                  </p>
 
-                {/* Age Group */}
-                <div className="absolute bottom-2 md:bottom-3 left-2 md:left-3 bg-white/90 backdrop-blur-sm rounded-full px-2 md:px-3 py-0.5 md:py-1">
-                  <span className="text-xs font-medium text-gray-700">{product.ageGroup}</span>
-                </div>
+                  {/* Rating - Hidden on mobile */}
+                  <div className="hidden md:flex items-center space-x-1 mb-3">
+                    <div className="flex space-x-1">
+                      {renderStars(product.rating)}
+                    </div>
+                    <span className="text-sm text-gray-600 ml-1">
+                      {product.rating} ({product.reviews})
+                    </span>
+                  </div>
 
-                {/* Quick Add Overlay - Hidden on mobile */}
-                <div className="hidden md:flex absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center">
-                  <button 
-                    className="bg-white text-gray-900 px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors flex items-center space-x-2"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <ShoppingCart className="w-4 h-4" />
-                    <span>Quick Add</span>
-                  </button>
+                  {/* Price */}
+                  <div className="flex items-center justify-between mb-2 md:mb-0">
+                    <div className="flex items-center space-x-1 md:space-x-2">
+                      <span className="text-sm md:text-xl font-bold text-gray-900">₹{product.price}</span>
+                      <span className="text-xs md:text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
+                    </div>
+                    <div className="text-xs md:text-sm text-orange-600 font-medium">
+                      Save ₹{product.originalPrice - product.price}
+                    </div>
+                  </div>
+
+                  {/* Add to Cart Button or Quantity Controller */}
+                  {itemQuantity === 0 ? (
+                    <button 
+                      className="w-full mt-2 md:mt-4 bg-gradient-to-r from-orange-600 to-orange-600 text-white py-2 md:py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 text-xs md:text-base"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAddToCart(product);
+                      }}
+                    >
+                      Add to Cart
+                    </button>
+                  ) : (
+                    <div className="w-full mt-2 md:mt-4 flex items-center justify-center bg-orange-50 border border-orange-200 rounded-xl py-2 md:py-3">
+                      <button
+                        className="p-1 md:p-2 hover:bg-orange-100 rounded-full transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleQuantityChange(product.id, -1);
+                        }}
+                      >
+                        <Minus className="w-3 h-3 md:w-4 md:h-4 text-orange-600" />
+                      </button>
+                      
+                      <span className="mx-3 md:mx-4 font-bold text-orange-600 text-sm md:text-base">
+                        {itemQuantity}
+                      </span>
+                      
+                      <button
+                        className="p-1 md:p-2 hover:bg-orange-100 rounded-full transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleQuantityChange(product.id, 1);
+                        }}
+                      >
+                        <Plus className="w-3 h-3 md:w-4 md:h-4 text-orange-600" />
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
-
-              {/* Content */}
-              <div className="p-3 md:p-6">
-                <h3 className="text-sm md:text-lg font-bold text-gray-900 mb-1 md:mb-2 group-hover:text-orange-600 transition-colors line-clamp-2">
-                  {product.name}
-                </h3>
-                <p className="text-gray-600 text-xs md:text-sm mb-2 md:mb-3 leading-relaxed line-clamp-2 md:line-clamp-none">
-                  {product.description}
-                </p>
-
-                {/* Rating - Hidden on mobile */}
-                <div className="hidden md:flex items-center space-x-1 mb-3">
-                  <div className="flex space-x-1">
-                    {renderStars(product.rating)}
-                  </div>
-                  <span className="text-sm text-gray-600 ml-1">
-                    {product.rating} ({product.reviews})
-                  </span>
-                </div>
-
-                {/* Price */}
-                <div className="flex items-center justify-between mb-2 md:mb-0">
-                  <div className="flex items-center space-x-1 md:space-x-2">
-                    <span className="text-sm md:text-xl font-bold text-gray-900">₹{product.price}</span>
-                    <span className="text-xs md:text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
-                  </div>
-                  <div className="text-xs md:text-sm text-orange-600 font-medium">
-                    Save ₹{product.originalPrice - product.price}
-                  </div>
-                </div>
-
-                {/* Add to Cart Button */}
-                <button 
-                  className="w-full mt-2 md:mt-4 bg-gradient-to-r from-orange-600 to-orange-600 text-white py-2 md:py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 text-xs md:text-base"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* View All Button */}

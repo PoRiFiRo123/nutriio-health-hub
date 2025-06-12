@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { Search, Filter, ShoppingCart, Heart, ChevronDown, ChevronUp } from 'lucide-react';
+import { Search, Filter, ShoppingCart, Heart, ChevronDown, ChevronUp, Plus, Minus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -38,7 +38,7 @@ const Products = () => {
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const [loading, setLoading] = useState(true);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const { addItem } = useCart();
+  const { addItem, getItemQuantity, updateQuantity } = useCart();
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -47,7 +47,6 @@ const Products = () => {
   }, []);
 
   useEffect(() => {
-    // Update selected category when URL changes
     const categoryFromUrl = searchParams.get('category');
     if (categoryFromUrl) {
       setSelectedCategory(categoryFromUrl);
@@ -123,13 +122,16 @@ const Products = () => {
     });
   };
 
-  const handleProductClick = (slug: string) => {
-    navigate(`/products/${slug}`);
+  const handleQuantityChange = (productId: string, change: number) => {
+    const currentQuantity = getItemQuantity(productId);
+    const newQuantity = currentQuantity + change;
+    if (newQuantity >= 0) {
+      updateQuantity(productId, newQuantity);
+    }
   };
 
-  const addToWishlist = (product: Product) => {
-    console.log('Adding to wishlist:', product);
-    // Wishlist functionality will be implemented
+  const handleProductClick = (slug: string) => {
+    navigate(`/products/${slug}`);
   };
 
   if (loading) {
@@ -240,67 +242,90 @@ const Products = () => {
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                {filteredProducts.map((product) => (
-                  <Card 
-                    key={product.id} 
-                    className="group hover:shadow-lg transition-shadow duration-300 cursor-pointer"
-                    onClick={() => handleProductClick(product.slug)}
-                  >
-                    <div className="relative overflow-hidden">
-                      <img
-                        src={product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"}
-                        alt={product.name}
-                        className="w-full h-32 object-contain bg-[#dbe1e1] group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          addToWishlist(product);
-                        }}
-                        className="absolute top-2 right-2 p-1 bg-white rounded-full shadow-md hover:bg-gray-50 w-6 h-6"
-                      >
-                        <Heart className="text-gray-600 w-3 h-3" />
-                      </button>
-                      {!product.in_stock && (
-                        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                          <span className="text-white font-semibold text-xs">Out of Stock</span>
-                        </div>
-                      )}
-                    </div>
-                    
-                    <CardContent className="p-3 flex flex-col h-32">
-                      <h3 className="font-semibold mb-2 line-clamp-2 text-sm flex-grow">{product.name}</h3>
+                {filteredProducts.map((product) => {
+                  const itemQuantity = getItemQuantity(product.id);
+                  
+                  return (
+                    <Card 
+                      key={product.id} 
+                      className="group hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                      onClick={() => handleProductClick(product.slug)}
+                    >
+                      <div className="relative overflow-hidden">
+                        <img
+                          src={product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"}
+                          alt={product.name}
+                          className="w-full h-32 object-contain bg-[#dbe1e1] group-hover:scale-105 transition-transform duration-300"
+                        />
+                        {!product.in_stock && (
+                          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                            <span className="text-white font-semibold text-xs">Out of Stock</span>
+                          </div>
+                        )}
+                      </div>
                       
-                      <div className="mt-auto">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="font-bold text-orange-600 text-sm">
-                            ₹{product.price}
-                          </span>
-                          {product.rating && (
-                            <div className="flex items-center">
-                              <span className="text-yellow-500 text-xs">★</span>
-                              <span className="text-xs text-gray-600 ml-1">
-                                {product.rating}
+                      <CardContent className="p-3 flex flex-col h-32">
+                        <h3 className="font-semibold mb-2 line-clamp-2 text-sm flex-grow">{product.name}</h3>
+                        
+                        <div className="mt-auto">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="font-bold text-orange-600 text-sm">
+                              ₹{product.price}
+                            </span>
+                            {product.rating && (
+                              <div className="flex items-center">
+                                <span className="text-yellow-500 text-xs">★</span>
+                                <span className="text-xs text-gray-600 ml-1">
+                                  {product.rating}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+
+                          {itemQuantity === 0 ? (
+                            <Button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                addToCart(product);
+                              }}
+                              disabled={!product.in_stock}
+                              className="w-full bg-orange-600 hover:bg-orange-700 text-xs py-1 h-7"
+                            >
+                              <ShoppingCart className="mr-1 w-3 h-3" />
+                              {product.in_stock ? 'Add to Cart' : 'Out of Stock'}
+                            </Button>
+                          ) : (
+                            <div className="w-full flex items-center justify-center bg-orange-50 border border-orange-200 rounded-md py-1">
+                              <button
+                                className="p-1 hover:bg-orange-100 rounded-full transition-colors"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleQuantityChange(product.id, -1);
+                                }}
+                              >
+                                <Minus className="w-3 h-3 text-orange-600" />
+                              </button>
+                              
+                              <span className="mx-2 font-bold text-orange-600 text-xs">
+                                {itemQuantity}
                               </span>
+                              
+                              <button
+                                className="p-1 hover:bg-orange-100 rounded-full transition-colors"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleQuantityChange(product.id, 1);
+                                }}
+                              >
+                                <Plus className="w-3 h-3 text-orange-600" />
+                              </button>
                             </div>
                           )}
                         </div>
-
-                        <Button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            addToCart(product);
-                          }}
-                          disabled={!product.in_stock}
-                          className="w-full bg-orange-600 hover:bg-orange-700 text-xs py-1 h-7"
-                        >
-                          <ShoppingCart className="mr-1 w-3 h-3" />
-                          {product.in_stock ? 'Add to Cart' : 'Out of Stock'}
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                      </CardContent>
+                    </Card>
+                  );
+                })}
               </div>
 
               {filteredProducts.length === 0 && (
@@ -383,71 +408,94 @@ const Products = () => {
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {filteredProducts.map((product) => (
-                  <Card 
-                    key={product.id} 
-                    className="group hover:shadow-lg transition-shadow duration-300 cursor-pointer"
-                    onClick={() => handleProductClick(product.slug)}
-                  >
-                    <div className="relative overflow-hidden">
-                      <img
-                        src={product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"}
-                        alt={product.name}
-                        className="w-full h-48 object-contain bg-[#dbe1e1] group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          addToWishlist(product);
-                        }}
-                        className="absolute top-2 right-2 p-1 bg-white rounded-full shadow-md hover:bg-gray-50 w-8 h-8"
-                      >
-                        <Heart className="text-gray-600 w-4 h-4" />
-                      </button>
-                      {!product.in_stock && (
-                        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                          <span className="text-white font-semibold text-sm">Out of Stock</span>
-                        </div>
-                      )}
-                    </div>
-                    
-                    <CardContent className="p-4 flex flex-col h-56">
-                      <h3 className="font-semibold mb-1 line-clamp-2 text-lg">{product.name}</h3>
+                {filteredProducts.map((product) => {
+                  const itemQuantity = getItemQuantity(product.id);
+                  
+                  return (
+                    <Card 
+                      key={product.id} 
+                      className="group hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                      onClick={() => handleProductClick(product.slug)}
+                    >
+                      <div className="relative overflow-hidden">
+                        <img
+                          src={product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"}
+                          alt={product.name}
+                          className="w-full h-48 object-contain bg-[#dbe1e1] group-hover:scale-105 transition-transform duration-300"
+                        />
+                        {!product.in_stock && (
+                          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                            <span className="text-white font-semibold text-sm">Out of Stock</span>
+                          </div>
+                        )}
+                      </div>
                       
-                      <div className="mt-auto">
-                        <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                          {product.description}
-                        </p>
+                      <CardContent className="p-4 flex flex-col h-56">
+                        <h3 className="font-semibold mb-4 line-clamp-2 text-lg">{product.name}</h3>
                         
-                        <div className="flex items-center justify-between mb-3">
-                          <span className="font-bold text-orange-600 text-xl">
-                            ₹{product.price}
-                          </span>
-                          {product.rating && (
-                            <div className="flex items-center">
-                              <span className="text-yellow-500">★</span>
-                              <span className="text-sm text-gray-600 ml-1">
-                                {product.rating}
+                        <div className="mt-auto">
+                          <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                            {product.description}
+                          </p>
+                          
+                          <div className="flex items-center justify-between mb-3">
+                            <span className="font-bold text-orange-600 text-xl">
+                              ₹{product.price}
+                            </span>
+                            {product.rating && (
+                              <div className="flex items-center">
+                                <span className="text-yellow-500">★</span>
+                                <span className="text-sm text-gray-600 ml-1">
+                                  {product.rating}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+
+                          {itemQuantity === 0 ? (
+                            <Button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                addToCart(product);
+                              }}
+                              disabled={!product.in_stock}
+                              className="w-full bg-orange-600 hover:bg-orange-700"
+                            >
+                              <ShoppingCart className="mr-1 w-4 h-4" />
+                              {product.in_stock ? 'Add to Cart' : 'Out of Stock'}
+                            </Button>
+                          ) : (
+                            <div className="w-full flex items-center justify-center bg-orange-50 border border-orange-200 rounded-md py-3">
+                              <button
+                                className="p-2 hover:bg-orange-100 rounded-full transition-colors"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleQuantityChange(product.id, -1);
+                                }}
+                              >
+                                <Minus className="w-4 h-4 text-orange-600" />
+                              </button>
+                              
+                              <span className="mx-4 font-bold text-orange-600 text-base">
+                                {itemQuantity}
                               </span>
+                              
+                              <button
+                                className="p-2 hover:bg-orange-100 rounded-full transition-colors"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleQuantityChange(product.id, 1);
+                                }}
+                              >
+                                <Plus className="w-4 h-4 text-orange-600" />
+                              </button>
                             </div>
                           )}
                         </div>
-
-                        <Button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            addToCart(product);
-                          }}
-                          disabled={!product.in_stock}
-                          className="w-full bg-orange-600 hover:bg-orange-700"
-                        >
-                          <ShoppingCart className="mr-1 w-4 h-4" />
-                          {product.in_stock ? 'Add to Cart' : 'Out of Stock'}
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                      </CardContent>
+                    </Card>
+                  );
+                })}
               </div>
 
               {filteredProducts.length === 0 && (

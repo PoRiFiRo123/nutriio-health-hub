@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { ArrowLeft, ShoppingCart, Heart, Star, Plus, Minus } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Star, Plus, Minus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useCart } from '@/hooks/useCart';
@@ -31,9 +31,8 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
   const [category, setCategory] = useState<Category | null>(null);
-  const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
-  const { addItem } = useCart();
+  const { addItem, getItemQuantity, updateQuantity } = useCart();
 
   useEffect(() => {
     if (slug) {
@@ -75,13 +74,21 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
     if (product) {
-      for (let i = 0; i < quantity; i++) {
-        addItem({
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          image: product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"
-        });
+      addItem({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"
+      });
+    }
+  };
+
+  const handleQuantityChange = (change: number) => {
+    if (product) {
+      const currentQuantity = getItemQuantity(product.id);
+      const newQuantity = currentQuantity + change;
+      if (newQuantity >= 0) {
+        updateQuantity(product.id, newQuantity);
       }
     }
   };
@@ -113,6 +120,8 @@ const ProductDetail = () => {
       </div>
     );
   }
+
+  const itemQuantity = getItemQuantity(product.id);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -166,45 +175,38 @@ const ProductDetail = () => {
               </p>
             </div>
 
-            {/* Quantity Selector */}
-            <div className="flex items-center gap-4 mb-4 sm:mb-6">
-              <span className="font-medium text-sm sm:text-base">Quantity:</span>
-              <div className="flex items-center border border-gray-300 rounded-md">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="h-8 w-8 p-0"
-                >
-                  <Minus className="w-4 h-4" />
-                </Button>
-                <span className="px-3 sm:px-4 py-1 border-x border-gray-300 min-w-[2.5rem] sm:min-w-[3rem] text-center text-sm sm:text-base">
-                  {quantity}
-                </span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="h-8 w-8 p-0"
-                >
-                  <Plus className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-
             {/* Action Buttons */}
             <div className="flex gap-3 sm:gap-4">
-              <Button
-                onClick={handleAddToCart}
-                disabled={!product.in_stock}
-                className="flex-1 bg-orange-600 hover:bg-orange-700 h-10 sm:h-11 text-sm sm:text-base"
-              >
-                <ShoppingCart className="w-4 h-4 mr-2" />
-                {product.in_stock ? 'Add to Cart' : 'Out of Stock'}
-              </Button>
-              <Button variant="outline" size="icon" className="h-10 w-10 sm:h-11 sm:w-11">
-                <Heart className="w-4 h-4" />
-              </Button>
+              {itemQuantity === 0 ? (
+                <Button
+                  onClick={handleAddToCart}
+                  disabled={!product.in_stock}
+                  className="flex-1 bg-orange-600 hover:bg-orange-700 h-10 sm:h-11 text-sm sm:text-base"
+                >
+                  <ShoppingCart className="w-4 h-4 mr-2" />
+                  {product.in_stock ? 'Add to Cart' : 'Out of Stock'}
+                </Button>
+              ) : (
+                <div className="flex-1 flex items-center justify-center bg-orange-50 border border-orange-200 rounded-md h-10 sm:h-11">
+                  <button
+                    className="p-2 hover:bg-orange-100 rounded-full transition-colors"
+                    onClick={() => handleQuantityChange(-1)}
+                  >
+                    <Minus className="w-4 h-4 text-orange-600" />
+                  </button>
+                  
+                  <span className="mx-4 font-bold text-orange-600 text-base sm:text-lg">
+                    {itemQuantity} in cart
+                  </span>
+                  
+                  <button
+                    className="p-2 hover:bg-orange-100 rounded-full transition-colors"
+                    onClick={() => handleQuantityChange(1)}
+                  >
+                    <Plus className="w-4 h-4 text-orange-600" />
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Stock Status */}
