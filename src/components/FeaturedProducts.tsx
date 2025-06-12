@@ -170,7 +170,7 @@ const FeaturedProducts = () => {
                   </div>
 
                   {/* Quick Add Overlay - Hidden on mobile */}
-                  <div className="hidden md:flex absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center">
+                  {/* <div className="hidden md:flex absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center">
                     <button 
                       className="bg-white text-gray-900 px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors flex items-center space-x-2"
                       onClick={(e) => {
@@ -181,7 +181,7 @@ const FeaturedProducts = () => {
                       <ShoppingCart className="w-4 h-4" />
                       <span>Quick Add</span>
                     </button>
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* Content */}
