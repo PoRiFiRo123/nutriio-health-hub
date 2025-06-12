@@ -1,6 +1,6 @@
 
-import React, { useEffect, useState } from 'react';
-import { ArrowRight, Shield, Leaf, Heart, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { ArrowRight, Shield, Leaf, Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import {
   Carousel,
@@ -13,7 +13,6 @@ import {
 
 const HeroSection = () => {
   const [api, setApi] = React.useState<CarouselApi>();
-  const [scrollY, setScrollY] = useState(0);
   const navigate = useNavigate();
 
   const carouselImages = [
@@ -34,13 +33,6 @@ const HeroSection = () => {
     }
   ];
 
-  const socialLinks = [
-    { icon: Facebook, url: "https://facebook.com/nutriio", label: "Facebook" },
-    { icon: Instagram, url: "https://instagram.com/nutriio", label: "Instagram" },
-    { icon: Twitter, url: "https://twitter.com/nutriio", label: "Twitter" },
-    { icon: Youtube, url: "https://youtube.com/nutriio", label: "YouTube" }
-  ];
-
   useEffect(() => {
     if (!api) {
       return;
@@ -55,35 +47,20 @@ const HeroSection = () => {
     return () => clearInterval(interval);
   }, [api]);
 
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <section className="relative bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 py-12 lg:py-20 overflow-hidden">
-      {/* Animated Background Pattern */}
+      {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
-        <div 
-          className="absolute top-20 left-10 w-32 h-32 bg-orange-200 rounded-full blur-xl transition-transform duration-1000"
-          style={{ transform: `translateY(${scrollY * 0.1}px)` }}
-        ></div>
-        <div 
-          className="absolute bottom-20 right-10 w-40 h-40 bg-amber-200 rounded-full blur-xl transition-transform duration-1000"
-          style={{ transform: `translateY(${-scrollY * 0.1}px)` }}
-        ></div>
+        <div className="absolute top-20 left-10 w-32 h-32 bg-orange-200 rounded-full blur-xl"></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-amber-200 rounded-full blur-xl"></div>
       </div>
 
       <div className="container mx-auto px-4 relative">
         <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Content */}
-          <div 
-            className="space-y-6 lg:space-y-8 order-1 lg:order-1 text-center lg:text-left transition-transform duration-1000"
-            style={{ transform: `translateX(${scrollY * -0.1}px)` }}
-          >
+          <div className="space-y-6 lg:space-y-8 order-1 lg:order-1 text-center lg:text-left">
             <div className="space-y-4">
-              <div className="inline-flex items-center bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium animate-fade-in">
+              <div className="inline-flex items-center bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">
                 <Leaf className="w-4 h-4 mr-2" />
                 100% Natural & Organic
               </div>
@@ -130,29 +107,10 @@ const HeroSection = () => {
                 Learn More
               </button>
             </div>
-
-            {/* Social Media Icons */}
-            <div className="flex justify-center lg:justify-start gap-4 pt-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-orange-100 transition-all duration-300 hover:scale-110 shadow-md"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-5 h-5 text-orange-600" />
-                </a>
-              ))}
-            </div>
           </div>
 
           {/* Hero Carousel */}
-          <div 
-            className="relative order-2 lg:order-2 w-full max-w-lg mx-auto lg:max-w-none transition-transform duration-1000"
-            style={{ transform: `translateX(${scrollY * 0.1}px)` }}
-          >
+          <div className="relative order-2 lg:order-2 w-full max-w-lg mx-auto lg:max-w-none">
             <Carousel setApi={setApi} className="w-full" opts={{
               align: "start",
               loop: true,
