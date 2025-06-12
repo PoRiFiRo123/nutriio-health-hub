@@ -1,240 +1,168 @@
-
-import React from 'react';
-import { Star, ShoppingCart, Plus, Minus } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { ShoppingCart, Plus, Minus } from 'lucide-react';
 import { useCart } from '@/hooks/useCart';
+import { useToast } from '@/hooks/use-toast';
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  category_id: string;
+  rating: number;
+  stock: number;
+  in_stock: boolean;
+  slug: string;
+}
 
 const FeaturedProducts = () => {
-  const navigate = useNavigate();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const { addItem, getItemQuantity, updateQuantity } = useCart();
+  const { toast } = useToast();
 
-  const products = [
-    {
-      id: "1",
-      name: "Sprouted 4 in 1 Health Mix",
-      description: "Nutriio's Sprouted 4-in-1 Health Mix blends sprouted ragi, wheat, bajra, and jowar for a protein- and fiber-rich boost.",
-      price: 210,
-      originalPrice: 260,
-      rating: 4.8,
-      reviews: 156,
-      image: "https://i.pinimg.com/736x/93/05/a5/9305a58f1147bb6a09558a264affa50c.jpg?w=300&h=300&fit=crop",
-      badge: "Bestseller",
-      ageGroup: "6 months+",
-      slug: "sprouted-four-in-one"
-    },
-    {
-      id: "2",
-      name: "Sprouted Whole Wheat Flour",
-      description: "Nutriio's Sprouted Whole Wheat Flour is a nutrient-rich, easily digestible flour made from sprouted whole grains.",
-      price: 140,
-      originalPrice: 190,
-      rating: 4.9,
-      reviews: 89,
-      image: "https://i.pinimg.com/736x/9b/38/79/9b387998d9cd5e81cc7bf55d143d9df3.jpg?w=300&h=300&fit=crop",
-      badge: "New",
-      ageGroup: "All ages",
-      slug: "organic-quinoa"
-    },
-    {
-      id: "3",
-      name: "Sprouted Millet Butter Cookies",
-      description: "Nutriio's Sprouted Millet Butter Cookies blend ragi, bajra, and jowar with creamy butter for a tasty, nutritious snack.",
-      price: 130,
-      originalPrice: 180,
-      rating: 4.7,
-      reviews: 234,
-      image: "https://i.pinimg.com/736x/4b/73/c4/4b73c4622c1d5fccc5aa1ab48abd42f4.jpg?w=300&h=300&fit=crop",
-      badge: "Popular",
-      ageGroup: "2 years+",
-      slug: "sprouted-millet-butter-cookies"
-    },
-    {
-      id: "4",
-      name: "Sprouted Peanut Chutney Pudi",
-      description: "Nutriio's Sprouted Peanut Chutney Pudi combines sprouted peanuts and spices for a protein-rich, gut-friendly boost.",
-      price: 399,
-      originalPrice: 449,
-      rating: 4.6,
-      reviews: 78,
-      image: "https://i.pinimg.com/736x/de/00/03/de000324bada3eebaed7a5c5e5b3ac5c.jpg?w=300&h=300&fit=crop",
-      badge: "Organic",
-      ageGroup: "All ages",
-      slug: "sprouted-peanut-chutney-pudi"
-    }
-  ];
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('products')
+          .select('*')
+          .limit(8);
 
-  const renderStars = (rating) => {
-    return [...Array(5)].map((_, i) => (
-      <Star 
-        key={i} 
-        className={`w-4 h-4 ${i < Math.floor(rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
-      />
-    ));
-  };
+        if (error) {
+          console.error("Error fetching products:", error);
+        }
 
-  const handleProductClick = (slug: string) => {
-    navigate(`/products/${slug}`);
-  };
+        if (data) {
+          setProducts(data as Product[]);
+        }
+      } catch (error) {
+        console.error("Unexpected error fetching products:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const handleAddToCart = (product: any) => {
+    fetchProducts();
+  }, []);
+
+  const handleAddToCart = (product: Product) => {
     addItem({
       id: product.id,
       name: product.name,
       price: product.price,
-      image: product.image
+      image: product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"
+    });
+    
+    toast({
+      title: "Added to cart",
+      description: `${product.name} has been added to your cart.`,
+      duration: 3000,
     });
   };
 
-  const handleQuantityChange = (productId: string, change: number) => {
-    const currentQuantity = getItemQuantity(productId);
+  const handleQuantityChange = (product: Product, change: number) => {
+    const currentQuantity = getItemQuantity(product.id);
     const newQuantity = currentQuantity + change;
+    
     if (newQuantity >= 0) {
-      updateQuantity(productId, newQuantity);
+      updateQuantity(product.id, newQuantity);
+      
+      if (change > 0) {
+        toast({
+          title: "Item added",
+          description: `${product.name} quantity increased.`,
+          duration: 2000,
+        });
+      } else if (newQuantity === 0) {
+        toast({
+          title: "Removed from cart",
+          description: `${product.name} has been removed from your cart.`,
+          duration: 2000,
+        });
+      } else {
+        toast({
+          title: "Item removed",
+          description: `${product.name} quantity decreased.`,
+          duration: 2000,
+        });
+      }
     }
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 to-orange-50">
+    <section className="py-12 bg-white">
       <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Featured
-            <span className="bg-gradient-to-r from-orange-600 to-orange-600 bg-clip-text text-transparent"> Products</span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Hand-picked products loved by families nationwide
-          </p>
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-gray-800">Featured Products</h2>
+          <p className="text-gray-500">Explore our curated selection of top-rated products</p>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {products.map((product) => {
             const itemQuantity = getItemQuantity(product.id);
             
             return (
-              <div 
-                key={product.id}
-                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 cursor-pointer"
-                onClick={() => handleProductClick(product.slug)}
-              >
-                {/* Image Container */}
-                <div className="relative overflow-hidden">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-32 md:h-64 object-contain bg-[#dbe1e1] transition-transform duration-500 group-hover:scale-110"
-                  />
-                  
-                  {/* Badge */}
-                  <div className="absolute top-2 md:top-3 left-2 md:left-3">
-                    <span className="bg-orange-500 text-white px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs font-medium">
-                      {product.badge}
-                    </span>
+              <Card key={product.id} className="group hover:shadow-lg transition-shadow overflow-hidden">
+                <CardContent className="p-0">
+                  <div className="aspect-square overflow-hidden">
+                    <img
+                      src={product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"}
+                      alt={product.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
                   </div>
 
-                  {/* Age Group */}
-                  <div className="absolute bottom-2 md:bottom-3 left-2 md:left-3 bg-white/90 backdrop-blur-sm rounded-full px-2 md:px-3 py-0.5 md:py-1">
-                    <span className="text-xs font-medium text-gray-700">{product.ageGroup}</span>
-                  </div>
-
-                  {/* Quick Add Overlay - Hidden on mobile */}
-                  <div className="hidden md:flex absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center">
-                    <button 
-                      className="bg-white text-gray-900 px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors flex items-center space-x-2"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleAddToCart(product);
-                      }}
-                    >
-                      <ShoppingCart className="w-4 h-4" />
-                      <span>Quick Add</span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-3 md:p-6">
-                  <h3 className="text-sm md:text-lg font-bold text-gray-900 mb-1 md:mb-2 group-hover:text-orange-600 transition-colors line-clamp-2">
-                    {product.name}
-                  </h3>
-                  <p className="text-gray-600 text-xs md:text-sm mb-2 md:mb-3 leading-relaxed line-clamp-2 md:line-clamp-none">
-                    {product.description}
-                  </p>
-
-                  {/* Rating - Hidden on mobile */}
-                  <div className="hidden md:flex items-center space-x-1 mb-3">
-                    <div className="flex space-x-1">
-                      {renderStars(product.rating)}
+                  <div className="p-3 sm:p-4 space-y-2 sm:space-y-3">
+                    <h3 className="font-semibold text-gray-800 text-sm sm:text-base line-clamp-2">
+                      {product.name}
+                    </h3>
+                    <p className="text-gray-500 text-xs sm:text-sm line-clamp-2">
+                      {product.description}
+                    </p>
+                    <div className="font-bold text-orange-600 text-sm sm:text-base">
+                      ₹{product.price}
                     </div>
-                    <span className="text-sm text-gray-600 ml-1">
-                      {product.rating} ({product.reviews})
-                    </span>
-                  </div>
 
-                  {/* Price */}
-                  <div className="flex items-center justify-between mb-2 md:mb-0">
-                    <div className="flex items-center space-x-1 md:space-x-2">
-                      <span className="text-sm md:text-xl font-bold text-gray-900">₹{product.price}</span>
-                      <span className="text-xs md:text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
-                    </div>
-                    <div className="text-xs md:text-sm text-orange-600 font-medium">
-                      Save ₹{product.originalPrice - product.price}
-                    </div>
-                  </div>
-
-                  {/* Add to Cart Button or Quantity Controller */}
-                  {itemQuantity === 0 ? (
-                    <button 
-                      className="w-full mt-2 md:mt-4 bg-gradient-to-r from-orange-600 to-orange-600 text-white py-2 md:py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 text-xs md:text-base"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleAddToCart(product);
-                      }}
-                    >
-                      Add to Cart
-                    </button>
-                  ) : (
-                    <div className="w-full mt-2 md:mt-4 flex items-center justify-center bg-orange-50 border border-orange-200 rounded-xl py-2 md:py-3">
-                      <button
-                        className="p-1 md:p-2 hover:bg-orange-100 rounded-full transition-colors"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleQuantityChange(product.id, -1);
-                        }}
+                    {itemQuantity === 0 ? (
+                      <Button
+                        onClick={() => handleAddToCart(product)}
+                        disabled={!product.in_stock}
+                        className="w-full bg-orange-600 hover:bg-orange-700 text-xs sm:text-sm h-8 sm:h-9"
                       >
-                        <Minus className="w-3 h-3 md:w-4 md:h-4 text-orange-600" />
-                      </button>
-                      
-                      <span className="mx-3 md:mx-4 font-bold text-orange-600 text-sm md:text-base">
-                        {itemQuantity}
-                      </span>
-                      
-                      <button
-                        className="p-1 md:p-2 hover:bg-orange-100 rounded-full transition-colors"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleQuantityChange(product.id, 1);
-                        }}
-                      >
-                        <Plus className="w-3 h-3 md:w-4 md:h-4 text-orange-600" />
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
+                        <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                        {product.in_stock ? 'Add to Cart' : 'Out of Stock'}
+                      </Button>
+                    ) : (
+                      <div className="flex items-center justify-between bg-orange-50 border border-orange-200 rounded-md h-8 sm:h-9 px-1 sm:px-2">
+                        <button
+                          className="p-1 hover:bg-orange-100 rounded-full transition-colors"
+                          onClick={() => handleQuantityChange(product, -1)}
+                        >
+                          <Minus className="w-3 h-3 text-orange-600" />
+                        </button>
+                        
+                        <span className="font-bold text-orange-600 text-xs sm:text-sm px-1">
+                          {itemQuantity}
+                        </span>
+                        
+                        <button
+                          className="p-1 hover:bg-orange-100 rounded-full transition-colors"
+                          onClick={() => handleQuantityChange(product, 1)}
+                        >
+                          <Plus className="w-3 h-3 text-orange-600" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
             );
           })}
-        </div>
-
-        {/* View All Button */}
-        <div className="text-center mt-12">
-          <button 
-            onClick={() => navigate('/products')}
-            className="border-2 border-orange-600 text-orange-600 px-8 py-3 rounded-full font-semibold hover:bg-orange-50 transition-colors"
-          >
-            View All Products
-          </button>
         </div>
       </div>
     </section>
