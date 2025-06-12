@@ -16,10 +16,10 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: Facebook, url: "https://facebook.com/nutriio", label: "Facebook" },
-    { icon: Instagram, url: "https://instagram.com/nutriio", label: "Instagram" },
-    { icon: Twitter, url: "https://twitter.com/nutriio", label: "Twitter" },
-    { icon: Youtube, url: "https://youtube.com/nutriio", label: "YouTube" }
+    { icon: Facebook, url: "https://facebook.com/nutriio.in", label: "Facebook" },
+    { icon: Instagram, url: "https://instagram.com/nutriioproducts", label: "Instagram" },
+    // { icon: Twitter, url: "https://twitter.com/nutriio", label: "Twitter" },
+    { icon: Youtube, url: "https://youtube.com/@nutriioproducts9982", label: "YouTube" }
   ];
 
   const handleCategoryClick = (category: string) => {
