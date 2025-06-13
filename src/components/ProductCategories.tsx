@@ -11,7 +11,7 @@ const ProductCategories = () => {
       id: 1,
       name: "Nutrient Boosters",
       description: "Nutrient-dense foods packed with vitamins and minerals",
-      image: "https://i.pinimg.com/736x/7b/ff/f4/7bfff4fa12ac9b75bc6cefbbd9a8245b.jpg?w=300&h=200&fit=crop",
+      image: "https://i.pinimg.com/736x/4c/66/68/4c66681d8b44b622ced71ca91636439a.jpg?w=300&h=200&fit=crop",
       color: "from-orange-500 to-amber-500",
       products: "4+ Products"
     },
@@ -19,7 +19,7 @@ const ProductCategories = () => {
       id: 2,
       name: "Sprouted Flour", 
       description: "Easily digestible, nutrient-rich flours for all ages",
-      image: "https://i.pinimg.com/736x/66/ac/ff/66acfff1f0d72aebfac412b5822b1804.jpg?w=300&h=200&fit=crop",
+      image: "https://i.pinimg.com/736x/05/14/a4/0514a485daee330db60eeaf85a5d9cfd.jpg?w=300&h=200&fit=crop",
       color: "from-amber-500 to-orange-500",
       products: "12+ Varieties"
     },
@@ -27,7 +27,7 @@ const ProductCategories = () => {
       id: 3,
       name: "Meal Moments",
       description: "Convenient, healthy meal solutions for busy families",
-      image: "https://i.pinimg.com/736x/96/00/1e/96001ec5e2088ec4486d472fcc9bba0d.jpg?w=300&h=200&fit=crop",
+      image: "https://i.pinimg.com/736x/32/52/a9/3252a9471b63a44990b08756e3b6f366.jpg?w=300&h=200&fit=crop",
       color: "from-orange-600 to-amber-600",
       products: "18+ Items"
     },
@@ -35,7 +35,7 @@ const ProductCategories = () => {
       id: 4,
       name: "Healthy Bites",
       description: "Guilt-free snacking options for every craving",
-      image: "https://i.pinimg.com/736x/37/c0/bc/37c0bc060908db489eec419954762236.jpg?w=300&h=200&fit=crop",
+      image: "https://i.pinimg.com/736x/43/4e/39/434e39e331e7e727aa974c0ae25d1864.jpg?w=300&h=200&fit=crop",
       color: "from-amber-600 to-orange-600",
       products: "30+ Options"
     },
@@ -43,7 +43,7 @@ const ProductCategories = () => {
       id: 5,
       name: "Pure Extracts",
       description: "Cold-pressed, unrefined oils for cooking and wellness",
-      image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=300&h=200&fit=crop",
+      image: "https://i.pinimg.com/736x/a4/98/8d/a4988da1c37322d5e5472908b96079f2.jpg?w=300&h=200&fit=crop",
       color: "from-orange-500 to-amber-500",
       products: "8+ Varieties"
     },
@@ -51,7 +51,7 @@ const ProductCategories = () => {
       id: 6,
       name: "Activated Millet Flours",
       description: "Unprocessed, mineral-rich sweeteners and salts",
-      image: "https://i.pinimg.com/736x/11/66/b8/1166b8888b880f4c20567311276b75cf.jpg?w=300&h=200&fit=crop",
+      image: "https://i.pinimg.com/736x/3b/36/11/3b361137af749d000bc9a46ebc250a13.jpg?w=300&h=200&fit=crop",
       color: "from-amber-500 to-orange-500",
       products: "15+ Types"
     }
