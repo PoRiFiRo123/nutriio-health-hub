@@ -255,13 +255,14 @@ const Products = () => {
                   {/* Price Range */}
                   <div>
                     <label className="block text-sm font-medium mb-2">Price Range</label>
-                    <div className="flex gap-2">
+                    <div className="flex items-center gap-2">
                       <Input
                         type="number"
                         placeholder="Min"
                         value={priceRange[0]}
                         onChange={(e) => setPriceRange([parseInt(e.target.value) || 0, priceRange[1]])}
                       />
+                      <span className="text-gray-500">-</span>
                       <Input
                         type="number"
                         placeholder="Max"
@@ -422,13 +423,14 @@ const Products = () => {
                 {/* Price Range */}
                 <div className="mb-6">
                   <label className="block text-sm font-medium mb-2">Price Range</label>
-                  <div className="flex gap-2">
+                  <div className="flex items-center gap-2">
                     <Input
                       type="number"
                       placeholder="Min"
                       value={priceRange[0]}
                       onChange={(e) => setPriceRange([parseInt(e.target.value) || 0, priceRange[1]])}
                     />
+                    <span className="text-gray-500">-</span>
                     <Input
                       type="number"
                       placeholder="Max"
