@@ -179,16 +179,25 @@ const Products = () => {
       {/* Header */}
       <div className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Our <span className="text-orange-600">Products</span>
-          </h1>
-          <p className="text-gray-600 text-lg">
+          <div className="flex items-center justify-between">
+            <h1 className="text-4xl font-bold text-gray-900">
+              Our <span className="text-orange-600">Products</span>
+            </h1>
+          </div>  
+          <p className="text-gray-600 text-lg mt-4">
             Discover our range of healthy, natural products for your family
           </p>
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-8">
+        {/* Category Row Above Product Grid */}
+        {/* {selectedCategory !== 'all' && (
+          <div className="flex items-center justify-between mb-6">
+            <span className="text-2xl font-bold text-orange-600 capitalize">{selectedCategory}</span>
+            <span className="text-gray-600">Showing {filteredProducts.length} of {products.length} products</span>
+          </div>
+        )} */}
         {/* Mobile Filter Section */}
         {isMobile ? (
           <div className="mb-6">
@@ -267,12 +276,12 @@ const Products = () => {
 
             {/* Products Grid for Mobile */}
             <div className="mt-6">
-              <div className="flex justify-between items-center mb-6">
-                <p className="text-gray-600">
-                  Showing {filteredProducts.length} of {products.length} products
-                </p>
-              </div>
-
+              {selectedCategory !== 'all' && (
+                <div className="flex items-center justify-between mb-6">
+                  <span className="text-2xl font-bold text-orange-600 capitalize">{selectedCategory}</span>
+                  <span className="text-gray-600">Showing {filteredProducts.length} of {products.length} products</span>
+                </div>
+              )}
               <div className="grid grid-cols-2 gap-4">
                 {filteredProducts.map((product) => {
                   const itemQuantity = getItemQuantity(product.id);
@@ -433,12 +442,12 @@ const Products = () => {
 
             {/* Desktop Products Grid */}
             <div className="lg:w-3/4">
-              <div className="flex justify-between items-center mb-6">
-                <p className="text-gray-600">
-                  Showing {filteredProducts.length} of {products.length} products
-                </p>
-              </div>
-
+              {selectedCategory !== 'all' && (
+                <div className="flex items-center justify-between mb-6">
+                  <span className="text-2xl font-bold text-orange-600 capitalize">{selectedCategory}</span>
+                  <span className="text-gray-600">Showing {filteredProducts.length} of {products.length} products</span>
+                </div>
+              )}
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredProducts.map((product) => {
                   const itemQuantity = getItemQuantity(product.id);
