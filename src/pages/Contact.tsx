@@ -204,7 +204,7 @@ const Contact = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Find Us</h2>
-            <p className="text-gray-600">Visit our office or reach out to us digitally</p>
+            <p className="text-gray-600">Reach out to us digitally</p>
           </div>
           
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">

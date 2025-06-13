@@ -1,27 +1,28 @@
-
 import React from 'react';
 import { Star, Quote } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPerson, faPersonDress } from '@fortawesome/free-solid-svg-icons';
 
 const Testimonials = () => {
   const testimonials = [
     {
       name: "Priya Sharma",
       role: "Mother of 2",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face",
+      gender: "female",
       rating: 5,
       text: "Nutriio's sprouted ragi flour has been a game-changer for my kids' nutrition. They love the taste and I love the health benefits!"
     },
     {
       name: "Rajesh Kumar",
       role: "Fitness Enthusiast",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
+      gender: "male",
       rating: 5,
       text: "The quality of superfoods is exceptional. I've seen significant improvements in my energy levels since switching to Nutriio."
     },
     {
       name: "Anita Patel",
       role: "Health Coach",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
+      gender: "female",
       rating: 5,
       text: "I recommend Nutriio to all my clients. Their products are pure, organic, and deliver real health benefits."
     }
@@ -41,11 +42,12 @@ const Testimonials = () => {
           {testimonials.map((testimonial, index) => (
             <div key={index} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
               <div className="flex items-center mb-4">
-                <img 
-                  src={testimonial.image} 
-                  alt={testimonial.name}
-                  className="w-12 h-12 rounded-full mr-4"
-                />
+                <div className="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center mr-4">
+                  <FontAwesomeIcon 
+                    icon={testimonial.gender === "female" ? faPersonDress : faPerson}
+                    className="w-6 h-6 text-orange-600"
+                  />
+                </div>
                 <div>
                   <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
                   <p className="text-sm text-gray-600">{testimonial.role}</p>

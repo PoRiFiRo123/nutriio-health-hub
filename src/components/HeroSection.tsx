@@ -69,7 +69,7 @@ const HeroSection = () => {
             <div className="space-y-4">
               <div className="inline-flex items-center bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">
                 <Leaf className="w-4 h-4 mr-2" />
-                100% Natural & Organic
+                100% Natural
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight">
                 Nourish Your
@@ -78,7 +78,7 @@ const HeroSection = () => {
                 </span>
               </h1>
               <p className="text-lg lg:text-xl text-gray-600 leading-relaxed">
-                Discover premium superfoods, sprouted flours, and healthy snacks crafted with love by Pavana & Deepak. Every product is designed to fuel your wellness journey.
+                Discover premium superfoods, sprouted flours, and healthy snacks crafted with love. Every product is designed to fuel your wellness journey.
               </p>
             </div>
 
@@ -88,7 +88,7 @@ const HeroSection = () => {
                 <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
                   <Shield className="w-5 h-5 text-orange-600" />
                 </div>
-                <span className="font-medium text-gray-700 text-sm lg:text-base">Certified Organic</span>
+                <span className="font-medium text-gray-700 text-sm lg:text-base">Gut Friendly</span>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
@@ -171,7 +171,7 @@ const HeroSection = () => {
 
             <div className="absolute -bottom-2 lg:-bottom-4 -right-2 lg:-right-4 bg-white rounded-lg lg:rounded-xl p-2 lg:p-4 shadow-lg animate-pulse">
               <div className="text-center">
-                <div className="text-lg lg:text-2xl font-bold text-orange-600">150+</div>
+                <div className="text-lg lg:text-2xl font-bold text-orange-600">1000+</div>
                 <div className="text-xs text-gray-600">Happy Families</div>
               </div>
             </div>

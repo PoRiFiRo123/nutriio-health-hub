@@ -41,7 +41,7 @@ const AboutCompany = () => {
                 </div>
                 <div>
                   <div className="font-semibold text-gray-900">100%</div>
-                  <div className="text-sm text-gray-600">Organic Products</div>
+                  <div className="text-sm text-gray-600">Natural Products</div>
                 </div>
               </div>
             </div>

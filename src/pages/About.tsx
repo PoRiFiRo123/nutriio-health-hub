@@ -6,8 +6,8 @@ const About = () => {
   const values = [
     {
       icon: Leaf,
-      title: "100% Organic",
-      description: "We source only certified organic ingredients, ensuring purity and quality in every product."
+      title: "100% Natural",
+      description: "We source only natural ingredients, ensuring purity and quality in every product."
     },
     {
       icon: Heart,
@@ -17,7 +17,7 @@ const About = () => {
     {
       icon: Shield,
       title: "Quality Assured",
-      description: "Rigorous testing and quality control measures ensure that every product meets our high standards."
+      description: "Testing and quality control measures ensure that every product meets our high standards."
     },
     {
       icon: Target,
@@ -37,7 +37,7 @@ const About = () => {
             </h1>
             <p className="text-lg sm:text-xl text-gray-600 leading-relaxed px-4">
               Founded with a passion for health and wellness, Nutriio brings you the finest 
-              organic products to nourish your family's journey toward better health.
+              natural products to nourish your family's journey toward better health.
             </p>
           </div>
         </div>
@@ -104,10 +104,10 @@ const About = () => {
               </div>
               
               <div className="absolute -bottom-2 -right-2 sm:-bottom-4 sm:-right-4 bg-white rounded-xl p-2 sm:p-3 shadow-lg">
-                <div className="flex items-center space-x-2">
+                {/* <div className="flex items-center space-x-2">
                   <Award className="w-3 h-3 sm:w-4 sm:h-4 text-orange-600" />
                   <span className="text-xs sm:text-sm font-medium">Certified Organic</span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
