@@ -278,6 +278,33 @@ const Checkout = () => {
     }
   };
 
+  const isEligibleForOnlinePayment = (postalCode: string) => {
+    return postalCode.startsWith('5600');
+  };
+
+  const handleWhatsAppBooking = () => {
+    const selectedAddress = addresses.find(addr => addr.id === selectedAddressId);
+    const postalCode = selectedAddress?.postal_code || customerDetails.pincode;
+    const name = selectedAddress?.full_name || customerDetails.name;
+    const phone = selectedAddress?.phone_number || customerDetails.phone;
+    const address = selectedAddress ? 
+      `${selectedAddress.address_line_1}, ${selectedAddress.city}` : 
+      `${customerDetails.address}, ${customerDetails.city}`;
+
+    const message = `Hello, I would like to place an order:\n\n` +
+      `Name: ${name}\n` +
+      `Phone: ${phone}\n` +
+      `Address: ${address}\n` +
+      `Postal Code: ${postalCode}\n\n` +
+      `Order Items:\n${items.map(item => 
+        `${item.name} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}`
+      ).join('\n')}\n\n` +
+      `Total Amount: ₹${totalPrice.toFixed(2)}`;
+
+    const whatsappUrl = `https://wa.me/919876543210?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
   if (authLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50 flex items-center justify-center">
@@ -436,13 +463,31 @@ const Checkout = () => {
                 <span className="text-orange-600">₹{totalPrice.toFixed(2)}</span>
               </div>
 
-              <Button 
-                onClick={handlePayment}
-                disabled={loading}
-                className="w-full bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700"
-              >
-                {loading ? 'Processing...' : `Pay ₹${totalPrice.toFixed(2)}`}
-              </Button>
+              {(() => {
+                const selectedAddress = addresses.find(addr => addr.id === selectedAddressId);
+                const postalCode = selectedAddress?.postal_code || customerDetails.pincode;
+                
+                if (isEligibleForOnlinePayment(postalCode)) {
+                  return (
+                    <Button 
+                      onClick={handlePayment}
+                      disabled={loading}
+                      className="w-full bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700"
+                    >
+                      {loading ? 'Processing...' : `Pay ₹${totalPrice.toFixed(2)}`}
+                    </Button>
+                  );
+                } else {
+                  return (
+                    <Button 
+                      onClick={handleWhatsAppBooking}
+                      className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800"
+                    >
+                      Book through WhatsApp
+                    </Button>
+                  );
+                }
+              })()}
               
               <Button 
                 variant="outline"
