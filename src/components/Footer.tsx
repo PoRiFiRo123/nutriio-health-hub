@@ -40,7 +40,7 @@ const Footer = () => {
     'Sprouted Flour', 
     'Ready to Cook',
     'Healthy Snacks',
-    'Organic Oils',
+    'Natural Oils',
     'Natural Salts & Jaggery'
   ];
 

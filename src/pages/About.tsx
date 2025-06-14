@@ -106,7 +106,7 @@ const About = () => {
               <div className="absolute -bottom-2 -right-2 sm:-bottom-4 sm:-right-4 bg-white rounded-xl p-2 sm:p-3 shadow-lg">
                 {/* <div className="flex items-center space-x-2">
                   <Award className="w-3 h-3 sm:w-4 sm:h-4 text-orange-600" />
-                  <span className="text-xs sm:text-sm font-medium">Certified Organic</span>
+                  <span className="text-xs sm:text-sm font-medium">Certified Natural</span>
                 </div> */}
               </div>
             </div>

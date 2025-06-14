@@ -21,7 +21,7 @@ const AboutCompany = () => {
             <p className="text-lg text-gray-600 leading-relaxed">
               Nutriio was born from a simple belief: every family deserves access to pure, nutritious food. 
               Founded by health enthusiasts Pavana and Deepak, we're committed to bringing you the finest 
-              organic products that nourish your body and soul.
+              Natural products that nourish your body and soul.
             </p>
 
             <div className="grid grid-cols-2 gap-6">

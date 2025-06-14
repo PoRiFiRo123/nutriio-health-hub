@@ -65,7 +65,7 @@ const ChatBot = () => {
     const input = userInput.toLowerCase();
     
     if (input.includes('product') || input.includes('what') || input.includes('sprouted')) {
-      return 'We offer a wide range of healthy products including SuperFoods, Sprouted Flour, Ready to Cook meals, Healthy Snacks, Organic Oils, and Natural Salts & Jaggery. All our products are carefully sourced and processed to maintain their nutritional value.';
+      return 'We offer a wide range of healthy products including SuperFoods, Sprouted Flour, Ready to Cook meals, Healthy Snacks, Natural Oils, and Natural Salts & Jaggery. All our products are carefully sourced and processed to maintain their nutritional value.';
     }
     
     if (input.includes('shipping') || input.includes('delivery')) {

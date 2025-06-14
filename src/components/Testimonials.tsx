@@ -24,7 +24,7 @@ const Testimonials = () => {
       role: "Health Coach",
       gender: "female",
       rating: 5,
-      text: "I recommend Nutriio to all my clients. Their products are pure, organic, and deliver real health benefits."
+      text: "I recommend Nutriio to all my clients. Their products are pure, Natural, and deliver real health benefits."
     }
   ];
 

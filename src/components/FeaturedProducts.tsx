@@ -58,7 +58,7 @@ const FeaturedProducts = () => {
       rating: 4.6,
       reviews: 78,
       image: "https://i.pinimg.com/736x/de/00/03/de000324bada3eebaed7a5c5e5b3ac5c.jpg?w=300&h=300&fit=crop",
-      badge: "Organic",
+      badge: "Natural",
       ageGroup: "All ages",
       slug: "sprouted-peanut-chutney-pudi"
     }
