@@ -12,7 +12,7 @@ const FeaturedProducts = () => {
   const products = [
     {
       id: "1",
-      name: "Sprouted 4 in 1 Health Mix",
+      name: "Sprouted Four in One Health Mix",
       description: "Nutriio's Sprouted 4-in-1 Health Mix blends sprouted ragi, wheat, bajra, and jowar for a protein- and fiber-rich boost.",
       price: 210,
       originalPrice: 260,

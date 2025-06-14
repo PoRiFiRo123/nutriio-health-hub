@@ -1,10 +1,39 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+
+interface Category {
+  id: string;
+  name: string;
+}
 
 const Footer = () => {
   const navigate = useNavigate();
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('categories')
+        .select('*')
+        .order('name');
+      
+      if (error) throw error;
+      if (data && Array.isArray(data)) {
+        setCategories(data as Category[]);
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const productCategories = [
     'SuperFoods',
@@ -109,16 +138,20 @@ const Footer = () => {
             <div className="space-y-4">
               <h4 className="text-lg font-semibold text-orange-400">Categories</h4>
               <ul className="space-y-2">
-                {productCategories.map((category) => (
-                  <li key={category}>
-                    <button 
-                      onClick={() => handleCategoryClick(category)}
-                      className="text-gray-300 hover:text-orange-500 transition-colors text-left"
-                    >
-                      {category}
-                    </button>
-                  </li>
-                ))}
+                {loading ? (
+                  <li className="text-gray-300 text-sm">Loading categories...</li>
+                ) : (
+                  categories.map((category) => (
+                    <li key={category.id}>
+                      <button 
+                        onClick={() => handleCategoryClick(category.name)}
+                        className="text-gray-300 hover:text-orange-500 transition-colors text-left"
+                      >
+                        {category.name}
+                      </button>
+                    </li>
+                  ))
+                )}
               </ul>
             </div>
 
