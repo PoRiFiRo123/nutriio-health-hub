@@ -17,17 +17,17 @@ const HeroSection = () => {
 
   const carouselImages = [
     {
-      url: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=400&fit=crop",
+      url: "https://i.pinimg.com/736x/ca/eb/8e/caeb8e9edf2e19b10e01bec3bcd7a312.jpg?w=600&h=400&fit=crop",
       title: "Premium Superfoods",
       subtitle: "Nutrition for every age group"
     },
     {
-      url: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&h=400&fit=crop", 
+      url: "https://i.pinimg.com/736x/79/2c/44/792c448ad5fcb2fca93463c44ded5563.jpg?w=600&h=400&fit=crop", 
       title: "Sprouted Flours",
       subtitle: "Ancient grains for modern health"
     },
     {
-      url: "https://images.unsplash.com/photo-1506802913710-40e2e66339c9?w=600&h=400&fit=crop",
+      url: "https://i.pinimg.com/736x/09/1a/f7/091af7a1c110d20cc47408e92b89ce74.jpg?w=600&h=400&fit=crop",
       title: "Healthy Snacks",
       subtitle: "Guilt-free indulgence"
     }

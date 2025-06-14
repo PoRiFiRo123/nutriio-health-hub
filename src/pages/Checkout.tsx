@@ -331,9 +331,9 @@ const Checkout = () => {
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold mb-8">Checkout</h1>
         
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Delivery Details */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-4">
             <div className="bg-white rounded-lg shadow p-6">
               <h2 className="text-lg font-semibold mb-4">Delivery Details</h2>
               
@@ -436,7 +436,7 @@ const Checkout = () => {
           </div>
 
           {/* Order Summary */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-8">
             <div className="bg-white rounded-lg shadow p-6">
               <h2 className="text-lg font-semibold mb-6 pb-2 border-b">Order Summary</h2>
               
