@@ -301,7 +301,7 @@ const Checkout = () => {
       ).join('\n')}\n\n` +
       `Total Amount: ₹${(totalPrice + shippingCost).toFixed(2)}`;
 
-    const whatsappUrl = `https://wa.me/919876543210?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/917259232905?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 

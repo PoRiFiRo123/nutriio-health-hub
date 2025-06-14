@@ -183,7 +183,7 @@ const Contact = () => {
                 <h3 className="text-xl font-bold mb-2">Quick Support on WhatsApp</h3>
                 <p className="mb-4 opacity-90">Get instant answers to your questions</p>
                 <a
-                  href="https://wa.me/919876543210?text=Hi%20Nutriio!%20I%20need%20help%20with..."
+                  href="https://wa.me/917259232905?text=Hi%20Nutriio!%20I%20need%20help%20with..."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center bg-white text-orange-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
