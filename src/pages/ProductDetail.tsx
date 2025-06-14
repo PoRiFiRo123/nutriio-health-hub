@@ -15,10 +15,12 @@ interface Product {
   price: number;
   image: string;
   category_id: string;
+  created_at: string;
   rating: number;
   stock: number;
   in_stock: boolean;
   slug: string;
+  weight?: number;
 }
 
 interface Category {
@@ -79,7 +81,8 @@ const ProductDetail = () => {
         id: product.id,
         name: product.name,
         price: product.price,
-        image: product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"
+        image: product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400",
+        weight: product.weight?.toString()
       });
       
       toast({
@@ -196,6 +199,12 @@ const ProductDetail = () => {
               <div className="text-2xl sm:text-3xl font-bold text-orange-600 mb-4 sm:mb-6">
                 ₹{product.price}
               </div>
+
+              {product.weight && (
+                <p className="text-gray-600 mb-4 sm:mb-6">
+                  Weight: {product.weight} gm
+                </p>
+              )}
 
               <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base leading-relaxed">
                 {product.description}

@@ -38,7 +38,7 @@ declare global {
 
 const Checkout = () => {
   const { user, loading: authLoading } = useAuth();
-  const { items, totalPrice, clearCart } = useCart();
+  const { items, totalPrice, shippingCost, clearCart } = useCart();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
@@ -170,7 +170,7 @@ const Checkout = () => {
         .insert({
           user_id: user?.id,
           order_number: orderNumberData,
-          total_amount: totalPrice,
+          total_amount: totalPrice + shippingCost,
           shipping_address: shippingAddress,
           status: 'pending',
           payment_status: 'pending'
@@ -220,7 +220,7 @@ const Checkout = () => {
       // Configure Razorpay options
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_1DP5mmOlF5G5ag',
-        amount: Math.round(totalPrice * 100), // Amount in paise
+        amount: Math.round((totalPrice + shippingCost) * 100), // Amount in paise
         currency: 'INR',
         name: 'Nutriio',
         description: 'Healthy Food Products',
@@ -297,9 +297,9 @@ const Checkout = () => {
       `Address: ${address}\n` +
       `Postal Code: ${postalCode}\n\n` +
       `Order Items:\n${items.map(item => 
-        `${item.name} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}`
+        `${item.name} x ${item.quantity}${item.weight ? ` (${item.weight} gm)` : ''} = ₹${(item.price * item.quantity).toFixed(2)}`
       ).join('\n')}\n\n` +
-      `Total Amount: ₹${totalPrice.toFixed(2)}`;
+      `Total Amount: ₹${(totalPrice + shippingCost).toFixed(2)}`;
 
     const whatsappUrl = `https://wa.me/919876543210?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
@@ -328,33 +328,30 @@ const Checkout = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50">
-      <div className="container mx-auto px-4 py-4 md:py-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 md:mb-8">Checkout</h1>
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-2xl font-bold mb-8">Checkout</h1>
         
-        <div className="grid lg:grid-cols-2 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Delivery Details */}
-          <Card className="border-orange-200">
-            <CardHeader>
-              <CardTitle className="text-orange-700 text-lg md:text-xl">Delivery Details</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {addresses.length > 0 && (
-                <div>
-                  <Label htmlFor="address-select">Select Delivery Address</Label>
-                  <Select value={selectedAddressId} onValueChange={setSelectedAddressId}>
-                    <SelectTrigger className="border-orange-200 focus:border-orange-500">
-                      <SelectValue placeholder="Select an address" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {addresses.map((address) => (
-                        <SelectItem key={address.id} value={address.id}>
-                          {address.type.charAt(0).toUpperCase() + address.type.slice(1)} - {address.address_line_1}, {address.city}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-lg shadow p-6">
+              <h2 className="text-lg font-semibold mb-4">Delivery Details</h2>
+              
+              <div>
+                <Label htmlFor="address-select">Select Delivery Address</Label>
+                <Select value={selectedAddressId} onValueChange={setSelectedAddressId}>
+                  <SelectTrigger className="border-orange-200 focus:border-orange-500">
+                    <SelectValue placeholder="Select an address" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {addresses.map((address) => (
+                      <SelectItem key={address.id} value={address.id}>
+                        {address.type.charAt(0).toUpperCase() + address.type.slice(1)} - {address.address_line_1}, {address.city}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
               {(!addresses.length || !selectedAddressId) && (
                 <>
@@ -435,69 +432,111 @@ const Checkout = () => {
                   </Button>
                 </div>
               )}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
           {/* Order Summary */}
-          <Card className="border-orange-200">
-            <CardHeader>
-              <CardTitle className="text-orange-700 text-lg md:text-xl">Order Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="max-h-48 overflow-y-auto space-y-3">
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-lg shadow p-6">
+              <h2 className="text-lg font-semibold mb-6 pb-2 border-b">Order Summary</h2>
+              
+              {/* Items List */}
+              <div className="space-y-4 mb-6 max-h-[300px] overflow-y-auto pr-2">
                 {items.map((item) => (
-                  <div key={item.id} className="flex justify-between items-center">
-                    <div>
+                  <div key={item.id} className="flex justify-between items-start">
+                    <div className="flex-1">
                       <p className="font-medium text-sm">{item.name}</p>
-                      <p className="text-xs text-gray-600">Qty: {item.quantity}</p>
+                      <div className="mt-1 space-y-1">
+                        <p className="text-xs text-gray-600">Qty: {item.quantity}</p>
+                        {item.weight && (
+                          <p className="text-xs text-gray-600">
+                            Weight: {parseInt(item.weight) * item.quantity} gm
+                          </p>
+                        )}
+                      </div>
                     </div>
-                    <p className="font-semibold text-sm">₹{(item.price * item.quantity).toFixed(2)}</p>
+                    <p className="font-medium text-sm">₹{item.price * item.quantity}</p>
                   </div>
                 ))}
               </div>
-              
-              <hr className="border-orange-200" />
-              
-              <div className="flex justify-between text-lg font-bold">
-                <span>Total</span>
-                <span className="text-orange-600">₹{totalPrice.toFixed(2)}</span>
+
+              {/* Weight Summary */}
+              <div className="bg-gray-50 rounded-lg p-4 mb-4">
+                <h3 className="text-sm font-medium text-gray-700 mb-2">Weight Summary</h3>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Total Weight</span>
+                    <span className="font-medium">
+                      {items.reduce((sum, item) => sum + (parseInt(item.weight || '0') * item.quantity), 0)} gm
+                    </span>
+                  </div>
+                </div>
               </div>
 
-              {(() => {
-                const selectedAddress = addresses.find(addr => addr.id === selectedAddressId);
-                const postalCode = selectedAddress?.postal_code || customerDetails.pincode;
-                
-                if (isEligibleForOnlinePayment(postalCode)) {
-                  return (
-                    <Button 
-                      onClick={handlePayment}
-                      disabled={loading}
-                      className="w-full bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700"
-                    >
-                      {loading ? 'Processing...' : `Pay ₹${totalPrice.toFixed(2)}`}
-                    </Button>
-                  );
-                } else {
-                  return (
-                    <Button 
-                      onClick={handleWhatsAppBooking}
-                      className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800"
-                    >
-                      Book through WhatsApp
-                    </Button>
-                  );
-                }
-              })()}
-              
-              <Button 
-                variant="outline"
-                className="w-full border-orange-300 text-orange-700 hover:bg-orange-50"
-                onClick={() => navigate('/cart')}
-              >
-                Back to Cart
-              </Button>
-            </CardContent>
-          </Card>
+              {/* Shipping Cost */}
+              <div className="bg-orange-50 rounded-lg p-4 mb-6">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-700">Shipping Cost</h3>
+                    <p className="text-xs text-gray-500 mt-1">
+                      {(() => {
+                        const totalWeight = items.reduce((sum, item) => sum + (parseInt(item.weight || '0') * item.quantity), 0);
+                        if (totalWeight < 3000) return 'Standard delivery (0-3kg)';
+                        if (totalWeight < 7000) return 'Medium delivery (3-7kg)';
+                        if (totalWeight < 15000) return 'Large delivery (7-15kg)';
+                        return 'Extra large delivery (15kg+)';
+                      })()}
+                    </p>
+                  </div>
+                  <span className="font-medium">₹{shippingCost}</span>
+                </div>
+              </div>
+
+              {/* Price Summary */}
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-600">Subtotal</span>
+                  <span>₹{totalPrice}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-600">Shipping</span>
+                  <span>₹{shippingCost}</span>
+                </div>
+                <div className="flex justify-between font-semibold text-lg pt-2 border-t">
+                  <span>Total</span>
+                  <span className="text-orange-600">₹{totalPrice + shippingCost}</span>
+                </div>
+              </div>
+
+              {/* Payment Buttons */}
+              <div className="mt-6 space-y-3">
+                {isEligibleForOnlinePayment ? (
+                  <Button
+                    className="w-full bg-orange-600 hover:bg-orange-700"
+                    onClick={handlePayment}
+                    disabled={loading || !selectedAddressId}
+                  >
+                    {loading ? 'Processing...' : `Pay ₹${(totalPrice + shippingCost).toFixed(2)}`}
+                  </Button>
+                ) : (
+                  <Button
+                    className="w-full bg-green-600 hover:bg-green-700"
+                    onClick={handleWhatsAppBooking}
+                    disabled={loading || !selectedAddressId}
+                  >
+                    Book via WhatsApp
+                  </Button>
+                )}
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => navigate('/cart')}
+                >
+                  Back to Cart
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

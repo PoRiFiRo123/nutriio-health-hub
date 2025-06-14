@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -87,11 +86,11 @@ const ProductCategories = () => {
               <div className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
               
               {/* Image */}
-              <div className="relative overflow-hidden">
+              <div className="relative overflow-hidden aspect-[4/3]">
                 <img 
                   src={category.image} 
                   alt={category.name}
-                  className="w-full h-32 md:h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute top-2 md:top-4 right-2 md:right-4 bg-white/90 backdrop-blur-sm rounded-full px-2 md:px-3 py-1">
                   <span className="text-xs md:text-sm font-medium text-gray-700">{category.products}</span>

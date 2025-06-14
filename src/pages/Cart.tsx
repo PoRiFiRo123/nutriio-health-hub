@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useCart } from '@/hooks/useCart';
 import { Button } from '@/components/ui/button';
@@ -7,7 +6,7 @@ import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
-  const { items, updateQuantity, removeItem, totalPrice, totalItems } = useCart();
+  const { items, updateQuantity, removeItem, totalPrice, totalItems, shippingCost } = useCart();
   const navigate = useNavigate();
 
   if (items.length === 0) {
@@ -26,166 +25,196 @@ const Cart = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-4 md:py-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 md:mb-8">Shopping Cart</h1>
-        
-        <div className="grid lg:grid-cols-3 gap-6 md:gap-8">
-          {/* Cart Items */}
-          <div className="lg:col-span-2 space-y-3 md:space-y-4">
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-2xl font-bold mb-8">Shopping Cart</h1>
+      
+      {items.length === 0 ? (
+        <div className="text-center py-12">
+          <p className="text-gray-600 mb-4">Your cart is empty</p>
+          <Button onClick={() => navigate('/products')}>
+            Continue Shopping
+          </Button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Mobile Cart View */}
+          <div className="lg:hidden space-y-4">
             {items.map((item) => (
-              <Card key={item.id} className="overflow-hidden">
-                <CardContent className="p-3 md:p-6">
-                  {/* Mobile Layout */}
-                  <div className="flex flex-col sm:hidden space-y-3">
-                    <div className="flex items-start gap-3">
-                      <img
-                        src={item.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100"}
-                        alt={item.name}
-                        className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
-                      />
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-base leading-tight">{item.name}</h3>
-                        <p className="text-orange-600 font-bold text-lg">₹{item.price}</p>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => removeItem(item.id)}
-                        className="text-red-600 hover:text-red-700 p-2"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="h-8 w-8 p-0"
-                        >
-                          <Minus className="w-3 h-3" />
-                        </Button>
-                        
-                        <span className="w-8 text-center font-semibold text-sm">
-                          {item.quantity}
-                        </span>
-                        
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="h-8 w-8 p-0"
-                        >
-                          <Plus className="w-3 h-3" />
-                        </Button>
-                      </div>
-                      
-                      <p className="font-bold text-lg">
-                        ₹{(item.price * item.quantity).toFixed(2)}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Desktop Layout */}
-                  <div className="hidden sm:flex items-center gap-4">
-                    <img
-                      src={item.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100"}
-                      alt={item.name}
-                      className="w-20 h-20 object-cover rounded-lg"
-                    />
-                    
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-lg">{item.name}</h3>
-                      <p className="text-orange-600 font-bold text-xl">₹{item.price}</p>
-                    </div>
-
-                    <div className="flex items-center gap-3">
+              <div key={item.id} className="bg-white rounded-lg shadow p-4">
+                <div className="flex items-center space-x-4">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-20 h-20 object-cover rounded-md"
+                  />
+                  <div className="flex-1">
+                    <h3 className="font-medium">{item.name}</h3>
+                    <p className="text-gray-600">₹{item.price}</p>
+                    {item.weight && (
+                      <p className="text-gray-600 text-sm">Weight: {item.weight} gm</p>
+                    )}
+                    <div className="flex items-center space-x-2 mt-2">
                       <Button
                         variant="outline"
-                        size="icon"
+                        size="sm"
                         onClick={() => updateQuantity(item.id, item.quantity - 1)}
                       >
-                        <Minus className="w-4 h-4" />
+                        -
                       </Button>
-                      
-                      <span className="w-12 text-center font-semibold">
-                        {item.quantity}
-                      </span>
-                      
+                      <span>{item.quantity}</span>
                       <Button
                         variant="outline"
-                        size="icon"
+                        size="sm"
                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
                       >
-                        <Plus className="w-4 h-4" />
-                      </Button>
-                    </div>
-
-                    <div className="text-right">
-                      <p className="font-bold text-lg">
-                        ₹{(item.price * item.quantity).toFixed(2)}
-                      </p>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => removeItem(item.id)}
-                        className="text-red-600 hover:text-red-700"
-                      >
-                        <Trash2 className="w-4 h-4" />
+                        +
                       </Button>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => removeItem(item.id)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
             ))}
+          </div>
+
+          {/* Desktop Cart View */}
+          <div className="hidden lg:block lg:col-span-2">
+            <div className="bg-white rounded-lg shadow">
+              <div className="p-6">
+                <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
+                <div className="space-y-4">
+                  {items.map((item) => (
+                    <div key={item.id} className="flex items-center justify-between">
+                      <div className="flex items-center space-x-4">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-16 h-16 object-cover rounded-md"
+                        />
+                        <div>
+                          <h3 className="font-medium">{item.name}</h3>
+                          <p className="text-gray-600">₹{item.price}</p>
+                          {item.weight && (
+                            <p className="text-gray-600 text-sm">Weight: {item.weight} gm</p>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          >
+                            -
+                          </Button>
+                          <span>{item.quantity}</span>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          >
+                            +
+                          </Button>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removeItem(item.id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <Card className="lg:sticky lg:top-4">
-              <CardHeader>
-                <CardTitle className="text-lg md:text-xl">Order Summary</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between text-sm md:text-base">
-                  <span>Items ({totalItems})</span>
-                  <span>₹{totalPrice.toFixed(2)}</span>
+            <div className="bg-white rounded-lg shadow p-6">
+              <h2 className="text-lg font-semibold mb-6 pb-2 border-b">Order Summary</h2>
+              
+              {/* Items Summary */}
+              <div className="space-y-4 mb-6">
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-600">Items ({totalItems})</span>
+                  <span>₹{totalPrice}</span>
                 </div>
                 
-                <div className="flex justify-between text-sm md:text-base">
-                  <span>Shipping</span>
-                  <span className="text-orange-600">Free</span>
-                </div>
-                
-                <hr />
-                
-                <div className="flex justify-between text-lg font-bold">
-                  <span>Total</span>
-                  <span>₹{totalPrice.toFixed(2)}</span>
+                {/* Weight Summary */}
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <h3 className="text-sm font-medium text-gray-700 mb-2">Weight Summary</h3>
+                  <div className="space-y-2">
+                    {items.map((item) => (
+                      <div key={item.id} className="flex justify-between text-sm">
+                        <span className="text-gray-600">{item.name}</span>
+                        <span>{item.weight ? `${parseInt(item.weight) * item.quantity} gm` : 'N/A'}</span>
+                      </div>
+                    ))}
+                    <div className="pt-2 border-t border-gray-200">
+                      <div className="flex justify-between font-medium">
+                        <span>Total Weight</span>
+                        <span>{items.reduce((sum, item) => sum + (parseInt(item.weight || '0') * item.quantity), 0)} gm</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <Button 
-                  className="w-full bg-orange-600 hover:bg-orange-700"
-                  onClick={() => navigate('/checkout')}
-                >
-                  Proceed to Checkout
-                </Button>
-                
-                <Button 
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => navigate('/products')}
-                >
-                  Continue Shopping
-                </Button>
-              </CardContent>
-            </Card>
+                {/* Shipping Cost */}
+                <div className="bg-orange-50 rounded-lg p-4">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <h3 className="text-sm font-medium text-gray-700">Shipping Cost</h3>
+                      <p className="text-xs text-gray-500 mt-1">
+                        {(() => {
+                          const totalWeight = items.reduce((sum, item) => sum + (parseInt(item.weight || '0') * item.quantity), 0);
+                          if (totalWeight < 3000) return 'Standard delivery (0-3kg)';
+                          if (totalWeight < 7000) return 'Medium delivery (3-7kg)';
+                          if (totalWeight < 15000) return 'Large delivery (7-15kg)';
+                          return 'Extra large delivery (15kg+)';
+                        })()}
+                      </p>
+                    </div>
+                    <span className="font-medium">₹{shippingCost}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Total */}
+              <div className="border-t pt-4 space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-600">Subtotal</span>
+                  <span>₹{totalPrice}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-600">Shipping</span>
+                  <span>₹{shippingCost}</span>
+                </div>
+                <div className="flex justify-between font-semibold text-lg pt-2 border-t">
+                  <span>Total</span>
+                  <span className="text-orange-600">₹{totalPrice + shippingCost}</span>
+                </div>
+              </div>
+
+              <Button
+                className="w-full mt-6 bg-orange-600 hover:bg-orange-700"
+                onClick={() => navigate('/checkout')}
+              >
+                Proceed to Checkout
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

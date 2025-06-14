@@ -14,13 +14,16 @@ interface Product {
   id: string;
   name: string;
   description: string;
+  detailed_description: string;
   price: number;
   image: string;
   category_id: string;
+  created_at: string;
   rating: number;
   stock: number;
   in_stock: boolean;
   slug: string;
+  weight?: number;
 }
 
 interface Category {
@@ -120,7 +123,8 @@ const Products = () => {
       id: product.id,
       name: product.name,
       price: product.price,
-      image: product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"
+      image: product.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400",
+      weight: product.weight?.toString()
     });
     
     toast({
