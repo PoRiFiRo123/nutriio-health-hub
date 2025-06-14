@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
@@ -16,8 +15,7 @@ serve(async (req) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = await req.json();
 
-    c// onst razorpayKeySecret = Deno.env.get('VITE_RAZORPAY_KEY_SECRET')!;
-    onst razorpayKeySecret = Deno.env.get('1234567890abcdef')!;
+    const razorpayKeySecret = Deno.env.get('VITE_RAZORPAY_KEY_SECRET')!;
     // Create the expected signature
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     

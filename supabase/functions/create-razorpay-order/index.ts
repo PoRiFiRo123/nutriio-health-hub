@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 
 const corsHeaders = {
@@ -16,11 +15,8 @@ serve(async (req) => {
     const { amount, currency, receipt } = await req.json();
 
     // Initialize Razorpay
-    // const razorpayKeyId = Deno.env.get('VITE_RAZORPAY_KEY_ID');
-    // rzp_test_1DP5mmOlF5G5ag
-    const razorpayKeyId = Deno.env.get('rzp_test_1DP5mmOlF5G5ag');
-    // const razorpayKeySecret = Deno.env.get('VITE_RAZORPAY_KEY_SECRET');
-    const razorpayKeySecret = Deno.env.get('1234567890abcdef');
+    const razorpayKeyId = Deno.env.get('VITE_RAZORPAY_KEY_ID');
+    const razorpayKeySecret = Deno.env.get('VITE_RAZORPAY_KEY_SECRET');
 
     if (!razorpayKeyId || !razorpayKeySecret) {
       console.error('Razorpay keys not found in environment');

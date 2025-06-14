@@ -20,26 +20,39 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Replace these with your actual EmailJS credentials
+      // Log the environment variables (remove in production)
+      console.log('EmailJS Config:', {
+        serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      });
+
       const templateParams = {
         from_name: formData.name,
         from_email: formData.email,
         subject: formData.subject,
         message: formData.message,
+        to_name: 'Nutriio Support', // Add recipient name
       };
 
-      await emailjs.send(
-        'service_tp4rwhr', // Replace with your EmailJS service ID
-        'template_8d9hovi', // Replace with your EmailJS template ID
+      // Log the template parameters (remove in production)
+      console.log('Template Params:', templateParams);
+
+      const response = await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         templateParams,
-        'AFvQZCg-Sylo21WIy' // Replace with your EmailJS public key
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
 
+      console.log('EmailJS Response:', response);
       toast.success('Message sent successfully!');
       setFormData({ name: '', email: '', subject: '', message: '' });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error sending email:', error);
-      toast.error('Failed to send message. Please try again.');
+      // More detailed error message
+      const errorMessage = error?.text || error?.message || 'Failed to send message. Please try again.';
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
