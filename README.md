@@ -62,7 +62,7 @@ A modern e-commerce platform for health and wellness products, built with React,
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/nutriio-health-hub.git
+   git clone https://github.com/PoRiFiRo123/nutriio-health-hub.git
    cd nutriio-health-hub
    ```
 
