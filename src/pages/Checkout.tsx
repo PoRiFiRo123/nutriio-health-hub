@@ -510,23 +510,29 @@ const Checkout = () => {
 
               {/* Payment Buttons */}
               <div className="mt-6 space-y-3">
-                {isEligibleForOnlinePayment ? (
-                  <Button
-                    className="w-full bg-orange-600 hover:bg-orange-700"
-                    onClick={handlePayment}
-                    disabled={loading || !selectedAddressId}
-                  >
-                    {loading ? 'Processing...' : `Pay ₹${(totalPrice + shippingCost).toFixed(2)}`}
-                  </Button>
-                ) : (
-                  <Button
-                    className="w-full bg-green-600 hover:bg-green-700"
-                    onClick={handleWhatsAppBooking}
-                    disabled={loading || !selectedAddressId}
-                  >
-                    Book via WhatsApp
-                  </Button>
-                )}
+                {(() => {
+                  const selectedAddress = addresses.find(addr => addr.id === selectedAddressId);
+                  const postalCode = selectedAddress?.postal_code || customerDetails.pincode;
+                  const isEligible = isEligibleForOnlinePayment(postalCode);
+
+                  return isEligible ? (
+                    <Button
+                      className="w-full bg-orange-600 hover:bg-orange-700"
+                      onClick={handlePayment}
+                      disabled={loading || !selectedAddressId}
+                    >
+                      {loading ? 'Processing...' : `Pay ₹${(totalPrice + shippingCost).toFixed(2)}`}
+                    </Button>
+                  ) : (
+                    <Button
+                      className="w-full bg-green-600 hover:bg-green-700"
+                      onClick={handleWhatsAppBooking}
+                      disabled={loading || !selectedAddressId}
+                    >
+                      Book via WhatsApp
+                    </Button>
+                  );
+                })()}
                 <Button
                   variant="outline"
                   className="w-full"
