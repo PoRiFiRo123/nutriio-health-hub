@@ -1,38 +1,95 @@
-# Welcome to your Lovable project
+# Nutriio Health Hub
 
-## Project info
+A modern e-commerce platform for health and wellness products, built with React, TypeScript, and Supabase.
 
-**URL**: https://lovable.dev/projects/f2437d62-3f9c-4540-9cf7-ba6f91311560
+## 🚀 Features
 
-## How can I edit this code?
+- **User Authentication**
+  - Secure login and registration system
+  - User profile management
+  - Protected routes
 
-There are several ways of editing your application.
+- **Product Management**
+  - Browse products with filtering and search
+  - Detailed product pages
+  - Product categories and tags
 
-**Use Lovable**
+- **Shopping Experience**
+  - Shopping cart functionality
+  - Secure checkout process
+  - Payment integration
+  - Order tracking
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/f2437d62-3f9c-4540-9cf7-ba6f91311560) and start prompting.
+- **Blog System**
+  - Health and wellness articles
+  - Blog post categories
+  - Rich text content
 
-Changes made via Lovable will be committed automatically to this repo.
+- **User Dashboard**
+  - Order history
+  - Profile management
+  - Account settings
 
-**Use your preferred IDE**
+- **Contact & Support**
+  - Contact form
+  - Customer support
+  - FAQ section
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🛠️ Tech Stack
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- **Frontend**
+  - React 18
+  - TypeScript
+  - Vite
+  - Tailwind CSS
+  - Shadcn UI Components
+  - React Router DOM
+  - React Query
+  - React Hook Form
+  - Zod (Form validation)
 
-Follow these steps:
+- **Backend**
+  - Supabase (Authentication, Database, Storage)
+  - EmailJS (Email notifications)
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- **Development Tools**
+  - ESLint
+  - TypeScript
+  - PostCSS
+  - Tailwind CSS
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 📦 Installation
 
-# Step 3: Install the necessary dependencies.
-npm i
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/nutriio-health-hub.git
+   cd nutriio-health-hub
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   bun install
+   ```
+
+3. Set up environment variables:
+   Create a `.env` file in the root directory and add the following:
+   ```
+   VITE_SUPABASE_URL=your_supabase_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   VITE_EMAILJS_PUBLIC_KEY=your_emailjs_public_key
+   VITE_EMAILJS_TEMPLATE_ID=your_emailjs_template_id
+   VITE_EMAILJS_SERVICE_ID=your_emailjs_service_id
+   ```
+
+## 🚀 Development
+
+To start the development server:
+
+```bash
 npm run dev
 # or
 yarn dev
@@ -177,6 +234,7 @@ nutriio-health-hub/
 ├── tsconfig.node.json
 ├── vercel.json
 └── vite.config.ts
+
 ```
 
 ## 🔒 Environment Variables
