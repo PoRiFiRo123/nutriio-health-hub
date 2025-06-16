@@ -236,6 +236,7 @@ nutriio-health-hub/
 ├── vercel.json
 └── vite.config.ts
 
+
 ```
 
 ## 🔒 Environment Variables
